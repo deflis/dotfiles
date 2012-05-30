@@ -90,9 +90,11 @@ inoremap <expr><C-l>     neocomplcache#complete_common_string()
 " SuperTab like snippets behavior.
 "imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
 
+" <CR>: close popup.
+inoremap <expr><CR> pumvisible() ? neocomplcache#smart_close_popup() : "\<CR>"
+" Ctrl+Spaceで補完
+inoremap <expr><Nul> pumvisible() ? "\<C-n>" : neocomplcache#start_manual_complete()
 " Recommended key-mappings.
-" <CR>: close popup and save indent.
-inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
@@ -128,3 +130,19 @@ let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
 let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
 
+" Escで補完を消す
+let &t_ti .= "\e[?7727h"
+let &t_te .= "\e[?7727l"
+ 
+noremap <special> <Esc>O[ <Esc>
+noremap! <special> <Esc>O[ <Esc>
+inoremap <expr><ESC>0[ pumvisible() ? neocomplcachecomplcache#smart_close_popup() . "\<ESC>" : <ESC>
+inoremap <special> <C-V><Esc>O[ <C-V><Esc>
+
+nmap <C-h> <C-w><C-h>
+nmap <C-j> <C-w><C-j>
+nmap <C-k> <C-w><C-k>
+nmap <C-l> <C-w><C-l>
+
+"set mouse=a
+"set ttymouse=xterm2 

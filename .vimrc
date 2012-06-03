@@ -24,6 +24,11 @@ set shiftwidth=4
 set nocompatible               " be iMproved
 filetype plugin indent off     " required!
 
+if has('win32')
+   set runtimepath^=$HOME/.vim
+   set runtimepath+=$HOME/.vim/after
+endif
+
 if has('vim_starting')
     set runtimepath+=~/.vim/bundle/neobundle.vim/
     call neobundle#rc(expand('~/.vim/bundle/'))

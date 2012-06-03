@@ -1,0 +1,11 @@
+alias vi C:\Software\vim\vim.exe
+alias vim C:\Software\vim\vim.exe
+
+set EDITOR=vim
+set HOME=%USER_PROFILE%
+
+alias cp copy
+alias mv move
+alias rm del
+
+alias ll "ls -al"

@@ -1,5 +1,9 @@
 set nocompatible
-set tags=~/.tags
+" set tags=~/.tags
+if has('gui_running') && !has('unix')
+  set encoding=utf-8
+endif
+scriptencoding utf-8
 
 " display
 " ----------------------
@@ -52,11 +56,20 @@ NeoBundle 'thinca/vim-ref'
 NeoBundle 'tpope/vim-markdown'
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'sudo.vim'
+NeoBundle 'vim-ruby/vim-ruby'
+NeoBundle 'majutsushi/tagbar'
+NeoBundle 'scrooloose/nerdtree'
 
 " NeoBundle 'project.vim'
 
 filetype plugin on
 filetype indent on
+
+" 起動時に引数なしならNERDtree起動
+let file_name = expand("%")
+if has('vim_starting') &&  file_name == ""
+    autocmd VimEnter * NERDTree ./
+endif
 
 
 " Disable AutoComplPop.

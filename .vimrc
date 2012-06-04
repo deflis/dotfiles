@@ -59,6 +59,7 @@ NeoBundle 'sudo.vim'
 NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'TwitVim'
 
 " NeoBundle 'project.vim'
 

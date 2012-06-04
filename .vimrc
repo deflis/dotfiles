@@ -67,10 +67,10 @@ filetype plugin on
 filetype indent on
 
 " 起動時に引数なしならNERDtree起動
-let file_name = expand("%")
-if has('vim_starting') &&  file_name == ""
-    autocmd VimEnter * NERDTree ./
-endif
+" let file_name = expand("%")
+" if has('vim_starting') &&  file_name == ""
+"     autocmd VimEnter * NERDTree ./
+" endif
 
 
 " Disable AutoComplPop.

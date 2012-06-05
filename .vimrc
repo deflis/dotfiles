@@ -1,7 +1,7 @@
 set nocompatible
 " set tags=~/.tags
 if has('gui_running') && !has('unix')
-  set encoding=utf-8
+    set encoding=utf-8
 endif
 scriptencoding utf-8
 
@@ -29,8 +29,8 @@ set nocompatible               " be iMproved
 filetype plugin indent off     " required!
 
 if has('win32')
-   set runtimepath^=$HOME/.vim
-   set runtimepath+=$HOME/.vim/after
+    set runtimepath^=$HOME/.vim
+    set runtimepath+=$HOME/.vim/after
 endif
 
 if has('vim_starting')
@@ -90,14 +90,14 @@ let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
 
 " Define dictionary.
 let g:neocomplcache_dictionary_filetype_lists = {
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
-    \ }
+            \ 'default' : '',
+            \ 'vimshell' : $HOME.'/.vimshell_hist',
+            \ 'scheme' : $HOME.'/.gosh_completions'
+            \ }
 
 " Define keyword.
 if !exists('g:neocomplcache_keyword_patterns')
-  let g:neocomplcache_keyword_patterns = {}
+    let g:neocomplcache_keyword_patterns = {}
 endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 
@@ -142,7 +142,7 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 " Enable heavy omni completion.
 if !exists('g:neocomplcache_omni_patterns')
-  let g:neocomplcache_omni_patterns = {}
+    let g:neocomplcache_omni_patterns = {}
 endif
 let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 "autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
@@ -153,7 +153,7 @@ let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
 " Escで補完を消す
 let &t_ti .= "\e[?7727h"
 let &t_te .= "\e[?7727l"
- 
+
 " Escでポップアップを閉じる
 noremap <special> <Esc>O[ <Esc>
 noremap! <special> <Esc>O[ <Esc>
@@ -169,3 +169,23 @@ nmap <C-l> <C-w><C-l>
 " マウス操作
 set mouse=a
 set ttymouse=xterm2 
+
+set ignorecase " 検索時に大文字小文字を区別しない
+
+
+function SetScreenTabName(name)
+    let arg = 'k' . a:name . '\\'
+    silent! exe '!echo -n "' . arg . "\""
+endfunction
+
+if &term =~ "screen"
+    autocmd VimLeave * call SetScreenTabName('shell')
+    autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | call SetScreenTabName("%") | endif 
+endif
+
+
+set list
+set lcs=tab:>.,trail:_,extends:¥
+" 全角スペースの位置を表示
+highlight JpSpace cterm=underline ctermfg=Blue guifg=Blue
+au BufRead,BufNew * match JpSpace /　/

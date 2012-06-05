@@ -141,10 +141,26 @@ alias su="su -l"
 ## terminal configuration
 #
 case "${TERM}" in
+screen*)
+    preexec() {
+        # see [zsh-workers:13180]
+        # http://www.zsh.org/mla/workers/2000/msg03993.html
+        emulate -L zsh
+        local -a cmd; cmd=(${(z)2})
+        echo -n "k$cmd[1]:t\\"
+    }
+
+    precmd() { echo -n "k[`basename $PWD`]\\" }
+    ;;
+esac
+
+case "${TERM}" in
 screen)
     TERM=xterm
     ;;
 esac
+
+function chpwd() { ls }
 
 case "${TERM}" in
 xterm|xterm-color)

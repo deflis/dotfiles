@@ -60,6 +60,7 @@ NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'TwitVim'
+" NeoBundle 'violetyk/cake.vim'
 
 " NeoBundle 'project.vim'
 
@@ -153,15 +154,18 @@ let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
 let &t_ti .= "\e[?7727h"
 let &t_te .= "\e[?7727l"
  
+" Escでポップアップを閉じる
 noremap <special> <Esc>O[ <Esc>
 noremap! <special> <Esc>O[ <Esc>
 inoremap <expr><ESC>0[ pumvisible() ? neocomplcachecomplcache#smart_close_popup() . "\<ESC>" : <ESC>
 inoremap <special> <C-V><Esc>O[ <C-V><Esc>
 
+" Ctrl+HJKLでウインドウ移動
 nmap <C-h> <C-w><C-h>
 nmap <C-j> <C-w><C-j>
 nmap <C-k> <C-w><C-k>
 nmap <C-l> <C-w><C-l>
 
-"set mouse=a
-"set ttymouse=xterm2 
+" マウス操作
+set mouse=a
+set ttymouse=xterm2 

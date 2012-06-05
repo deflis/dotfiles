@@ -168,9 +168,17 @@ nmap <C-l> <C-w><C-l>
 
 " マウス操作
 set mouse=a
-set ttymouse=xterm2 
+set ttymouse=xterm2
 
 set ignorecase " 検索時に大文字小文字を区別しない
+" 大文字小文字の両方が含まれている場合は大文字小文字を区別
+set smartcase
+" 検索時にファイルの最後まで行ったら最初に戻る
+set wrapscan
+" 括弧入力時に対応する括弧を表示
+set showmatch
+" 行番号を表示
+set nonumber
 
 
 function SetScreenTabName(name)

@@ -5,21 +5,6 @@ if has('gui_running') && !has('unix')
 endif
 scriptencoding utf-8
 
-" display
-" ----------------------
-" set number
-" set ruler
-" set cmdheight=2
-" set laststatus=2
-" set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
-" set title
-" set linespace=0
-" set wildmenu
-" set showcmd
-"set textwidth=78
-"set columns=100
-"set lines=150
-
 set expandtab
 set tabstop=4
 set softtabstop=4
@@ -37,8 +22,8 @@ if has('vim_starting')
     set runtimepath+=~/.vim/bundle/neobundle.vim/
     call neobundle#rc(expand('~/.vim/bundle/'))
 endif
+
 " let NeoBundle manage NeoBundle
-" required! 
 NeoBundle 'Shougo/neobundle.vim'
 " recommended to install
 NeoBundle 'Shougo/vimproc'
@@ -197,3 +182,14 @@ set lcs=tab:>.,trail:_,extends:¥
 " 全角スペースの位置を表示
 highlight JpSpace cterm=underline ctermfg=Blue guifg=Blue
 au BufRead,BufNew * match JpSpace /　/
+
+
+""" twitvim
+let twitvim_count = 40
+nnoremap <C-t>p :<C-u>PosttoTwitter<CR>
+nnoremap <C-t><C-t><C-t> :<C-u>PosttoTwitter<CR>
+nnoremap <C-t>t :<C-u>FriendsTwitter<CR><C-w>j
+nnoremap <C-t><C-t> :<C-u>FriendsTwitter<CR>
+nnoremap <C-t>u :<C-u>UserTwitter<CR><C-w>j
+nnoremap <C-t>r :<C-u>RepliesTwitter<CR><C-w>j
+nnoremap <C-t>n :<C-u>NextTwitter<CR>

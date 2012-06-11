@@ -160,8 +160,6 @@ screen)
     ;;
 esac
 
-function chpwd() { ls }
-
 case "${TERM}" in
 xterm|xterm-color)
     export LSCOLORS=exfxcxdxbxegedabagacad

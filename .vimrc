@@ -77,7 +77,9 @@ let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
 let g:neocomplcache_dictionary_filetype_lists = {
             \ 'default' : '',
             \ 'vimshell' : $HOME.'/.vimshell_hist',
-            \ 'scheme' : $HOME.'/.gosh_completions'
+            \ 'scheme' : $HOME.'/.gosh_completions',
+            \ 'php' : $HOME . '/.vim/dict/php.dict',
+            \ 'ctp' : $HOME . '/.vim/dict/php.dict'
             \ }
 
 " Define keyword.

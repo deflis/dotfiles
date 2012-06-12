@@ -160,8 +160,6 @@ screen)
     ;;
 esac
 
-function chpwd() { ls }
-
 case "${TERM}" in
 xterm|xterm-color)
     export LSCOLORS=exfxcxdxbxegedabagacad
@@ -203,6 +201,7 @@ esac
 export EDITOR=vim
 
 source ${HOME}/dotfiles/sudovim.zsh
+source ${HOME}/dotfiles/nvm/nvm.sh
 
 ## load user .zshrc configuration file
 #

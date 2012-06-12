@@ -201,6 +201,7 @@ esac
 export EDITOR=vim
 
 source ${HOME}/dotfiles/sudovim.zsh
+source ${HOME}/dotfiles/nvm/nvm.sh
 
 ## load user .zshrc configuration file
 #

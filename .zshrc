@@ -215,6 +215,7 @@ xterm|xterm-color|kterm|kterm-color)
 esac
 
 export EDITOR=vim
+export LESS='--tabs=4 --no-init --LONG-PROMPT --ignore-case -R'
 
 source ${HOME}/dotfiles/sudovim.zsh
 source ${HOME}/dotfiles/nvm/nvm.sh

@@ -11,6 +11,8 @@ case ${UID} in
     ;;
 esac
 
+# 関数をフック
+autoload -Uz add-zsh-hook
 
 ## Default shell configuration
 #
@@ -25,13 +27,25 @@ case ${UID} in
     SPROMPT="%B%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%}%b "
     ;;
 *)
-    PROMPT="%{${fg[red]}%}%/%%%{${reset_color}%} "
+    PROMPT="%{${fg[red]}%}%~/%%%{${reset_color}%} "
     PROMPT2="%{${fg[red]}%}%_%%%{${reset_color}%} "
     SPROMPT="%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%} "
     [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && 
         PROMPT="%{${fg[cyan]}%}$(echo ${HOST%%.*} | tr '[a-z]' '[A-Z]') ${PROMPT}"
     ;;
 esac
+
+# ブランチ名をRPROMPTで表示
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' formats '(%s)-[%b]'
+zstyle ':vcs_info:*' actionformats '(%s)-[%b|%a]'
+_vcs_precmd () {
+    psvar=()
+    LANG=en_US.UTF-8 vcs_info
+    [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
+}
+add-zsh-hook precmd _vcs_precmd
+RPROMPT="%1(v|%F{green}%1v%f|)"
 
 # auto change directory
 #
@@ -142,15 +156,17 @@ alias su="su -l"
 #
 case "${TERM}" in
 screen*)
-    preexec() {
+    _screen_preexec() {
         # see [zsh-workers:13180]
         # http://www.zsh.org/mla/workers/2000/msg03993.html
         emulate -L zsh
         local -a cmd; cmd=(${(z)2})
         echo -n "k$cmd[1]:t\\"
     }
+    add-zsh-hook preexec _screen_preexec
 
-    precmd() { echo -n "k[`basename $PWD`]\\" }
+    _screen_precmd() { echo -n "k[`basename $PWD`]\\" }
+    add-zsh-hook precmd _screen_precmd
     ;;
 esac
 

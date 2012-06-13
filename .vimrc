@@ -186,9 +186,10 @@ set lcs=tab:>.,trail:_,extends:¥
 highlight JpSpace cterm=underline ctermfg=Blue guifg=Blue
 au BufRead,BufNew * match JpSpace /　/
 
+nnoremap <C-t>b :<C-u>TagbarToggle<CR>
 
 """ twitvim
-let twitvim_count = 40
+let twitvim_count = 100
 nnoremap <C-t>p :<C-u>PosttoTwitter<CR>
 nnoremap <C-t><C-t><C-t> :<C-u>PosttoTwitter<CR>
 nnoremap <C-t>t :<C-u>FriendsTwitter<CR><C-w>j

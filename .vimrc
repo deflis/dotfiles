@@ -46,7 +46,7 @@ NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'TwitVim'
-" NeoBundle 'violetyk/cake.vim'
+NeoBundle 'dbext.vim'
 
 " NeoBundle 'minibufexpl.vim'
 
@@ -216,3 +216,17 @@ nnoremap <C-t>n :<C-u>NextTwitter<CR>
 " nnoremap <C-n> :<C-u>MBEbn<CR>
 " 前のバッファ
 " nnoremap <C-p> :<C-u>MBEbp<CR>
+
+
+
+if v:version >= 703
+    NeoBundle 'violetyk/cake.vim'
+    let g:cakephp_enable_auto_mode = 1
+endif
+
+let g:dbext_default_type         = 'MYSQL'
+let g:dbext_default_user         = 'root'
+let g:dbext_default_password     = '@ask'
+let g:dbext_default_host         = 'localhost'
+let g:dbext_default_dbname       = ''
+let g:dbext_default_buffer_lines = '20'

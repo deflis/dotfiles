@@ -46,7 +46,9 @@ NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'TwitVim'
-" NeoBundle 'violetyk/cake.vim'
+NeoBundle 'dbext.vim'
+
+" NeoBundle 'minibufexpl.vim'
 
 " NeoBundle 'project.vim'
 
@@ -54,10 +56,10 @@ filetype plugin on
 filetype indent on
 
 " 起動時に引数なしならNERDtree起動
-" let file_name = expand("%")
-" if has('vim_starting') &&  file_name == ""
-"     autocmd VimEnter * NERDTree ./
-" endif
+let file_name = expand("%")
+if has('vim_starting') &&  file_name == ""
+    autocmd VimEnter * NERDTree ./
+endif
 
 
 " Disable AutoComplPop.
@@ -186,9 +188,10 @@ set lcs=tab:>.,trail:_,extends:¥
 highlight JpSpace cterm=underline ctermfg=Blue guifg=Blue
 au BufRead,BufNew * match JpSpace /　/
 
+nnoremap <C-t>b :<C-u>TagbarToggle<CR>
 
 """ twitvim
-let twitvim_count = 40
+let twitvim_count = 100
 nnoremap <C-t>p :<C-u>PosttoTwitter<CR>
 nnoremap <C-t><C-t><C-t> :<C-u>PosttoTwitter<CR>
 nnoremap <C-t>t :<C-u>FriendsTwitter<CR><C-w>j
@@ -196,3 +199,34 @@ nnoremap <C-t><C-t> :<C-u>FriendsTwitter<CR>
 nnoremap <C-t>u :<C-u>UserTwitter<CR><C-w>j
 nnoremap <C-t>r :<C-u>RepliesTwitter<CR><C-w>j
 nnoremap <C-t>n :<C-u>NextTwitter<CR>
+
+"minibufexpl
+"let g:miniBufExplMapWindowNavVim=1   "hjklで移動
+"let g:miniBufExplSplitBelow=0        " Put new window above
+"let g:miniBufExplMapWindowNavArrows=1
+"let g:miniBufExplMapCTabSwitchBufs=1
+"let g:miniBufExplModSelTarget=1
+"let g:miniBufExplSplitToEdge=1
+
+" バッファを閉じる
+" nnoremap <C-d> :<C-u>bd<CR>
+" 次のバッファ
+" nnoremap <Space> :<C-u>MBEbn<CR>
+" 次のバッファ
+" nnoremap <C-n> :<C-u>MBEbn<CR>
+" 前のバッファ
+" nnoremap <C-p> :<C-u>MBEbp<CR>
+
+
+
+if v:version >= 703
+    NeoBundle 'violetyk/cake.vim'
+    let g:cakephp_enable_auto_mode = 1
+endif
+
+let g:dbext_default_type         = 'MYSQL'
+let g:dbext_default_user         = 'root'
+let g:dbext_default_password     = '@ask'
+let g:dbext_default_host         = 'localhost'
+let g:dbext_default_dbname       = ''
+let g:dbext_default_buffer_lines = '20'

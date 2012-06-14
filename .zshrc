@@ -220,6 +220,8 @@ export LESS='--tabs=4 --no-init --LONG-PROMPT --ignore-case -R'
 source ${HOME}/dotfiles/sudovim.zsh
 source ${HOME}/dotfiles/nvm/nvm.sh
 
+[ -d ${HOME}/.rbenv ] && source ${HOME}/dotfiles/rbenv.zsh
+
 ## load user .zshrc configuration file
 #
 [ -f ${HOME}/.zshrc.mine ] && source ${HOME}/.zshrc.mine

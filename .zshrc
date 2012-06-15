@@ -111,11 +111,12 @@ setopt share_history        # share command history data
 fpath=(${HOME}/.zsh/functions/Completion ${fpath})
 autoload -U compinit
 compinit
+zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' '+m:{A-Z}={a-z}'
 
 
 ## zsh editor
 #
-autoload zed
+#autoload zed
 
 
 ## Prediction configuration

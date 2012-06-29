@@ -218,7 +218,8 @@ export EDITOR=vim
 export LESS='--tabs=4 --no-init --LONG-PROMPT --ignore-case -R'
 
 source ${HOME}/dotfiles/sudovim.zsh
-[ -f ${HOME}/dotfiles/nvm/nvm.sh ] && source ${HOME}/dotfiles/nvm/nvm.sh
+# [ -f ${HOME}/dotfiles/nvm/nvm.sh ] && source ${HOME}/dotfiles/nvm/nvm.sh
+export PATH=$HOME/.nodebrew/current/bin:$PATH
 
 [ -d ${HOME}/.rbenv ] && source ${HOME}/dotfiles/rbenv.zsh
 

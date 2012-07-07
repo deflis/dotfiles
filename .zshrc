@@ -222,6 +222,11 @@ source ${HOME}/dotfiles/sudovim.zsh
 export PATH=$HOME/.nodebrew/current/bin:$PATH
 
 [ -d ${HOME}/.rbenv ] && source ${HOME}/dotfiles/rbenv.zsh
+if [ -d /Applications/MacVim.app/Contents/MacOS/ ]; then
+    alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim -u $HOME/.vimrc "$@"'
+    alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+    alias ctags='/Applications/MacVim.app/Contents/MacOS/ctags "$@"'
+fi;
 
 ## load user .zshrc configuration file
 #

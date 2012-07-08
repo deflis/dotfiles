@@ -48,6 +48,7 @@ NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'TwitVim'
 NeoBundle 'dbext.vim'
 NeoBundle 'kchmck/vim-coffee-script'
+NeoBundle 'Shougo/vinarise'
 
 " NeoBundle 'minibufexpl.vim'
 

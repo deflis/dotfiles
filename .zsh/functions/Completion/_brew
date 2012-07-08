@@ -1,0 +1,1 @@
+[ -f /usr/local/Library/Contributions/brew_zsh_completion.zsh ] && source /usr/local/Library/Contributions/brew_zsh_completion.zsh

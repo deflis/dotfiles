@@ -1,5 +1,11 @@
 # users generic .zshrc file for zsh(1)
 
+# MacOS判定
+isdarwin(){
+    [[ $OSTYPE == darwin* ]] && return 0
+    return 1
+}
+
 ## Environment variable configuration
 #
 # LANG
@@ -219,9 +225,17 @@ export EDITOR=vim
 export LESS='--tabs=4 --no-init --LONG-PROMPT --ignore-case -R'
 
 source ${HOME}/dotfiles/sudovim.zsh
-[ -f ${HOME}/dotfiles/nvm/nvm.sh ] && source ${HOME}/dotfiles/nvm/nvm.sh
+# [ -f ${HOME}/dotfiles/nvm/nvm.sh ] && source ${HOME}/dotfiles/nvm/nvm.sh
+export PATH=$HOME/.nodebrew/current/bin:$PATH
 
 [ -d ${HOME}/.rbenv ] && source ${HOME}/dotfiles/rbenv.zsh
+if [ -d /Applications/MacVim.app/Contents/MacOS/ ]; then
+    alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim -u $HOME/.vimrc "$@"'
+    alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+    alias ctags='/Applications/MacVim.app/Contents/MacOS/ctags "$@"'
+fi;
+
+isdarwin && export PYTHONPATH=/opt/local/lib/python2.6/site-packages/
 
 ## load user .zshrc configuration file
 #

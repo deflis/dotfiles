@@ -114,6 +114,7 @@ setopt share_history        # share command history data
 
 ## Completion configuration
 #
+[ -d /usr/local/Library/Contributions/ ] && fpath=(/usr/local/Library/Contributions/ ${fpath})
 fpath=(${HOME}/.zsh/functions/Completion ${fpath})
 autoload -U compinit
 compinit
@@ -223,6 +224,9 @@ esac
 
 export EDITOR=vim
 export LESS='--tabs=4 --no-init --LONG-PROMPT --ignore-case -R'
+
+isdarwin && export PATH=/usr/local/bin:/usr/local/sbin:$PATH
+
 
 source ${HOME}/dotfiles/sudovim.zsh
 # [ -f ${HOME}/dotfiles/nvm/nvm.sh ] && source ${HOME}/dotfiles/nvm/nvm.sh

@@ -5,13 +5,9 @@ if has('gui_running') && !has('unix')
 endif
 scriptencoding utf-8
 
-set expandtab
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
-
-set nocompatible               " be iMproved
+filetype off
 filetype plugin indent off     " required!
+
 
 if has('win32')
     set runtimepath^=$HOME/.vim
@@ -56,6 +52,11 @@ NeoBundle 'Shougo/vinarise'
 
 filetype plugin on
 filetype indent on
+
+set expandtab
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
 
 " 起動時に引数なしならNERDtree起動
 let file_name = expand("%")
@@ -232,3 +233,9 @@ let g:dbext_default_password     = '@ask'
 let g:dbext_default_host         = 'localhost'
 let g:dbext_default_dbname       = ''
 let g:dbext_default_buffer_lines = '20'
+
+let g:quickrun_config = {}
+let g:quickrun_config['coffee'] = {'command' : 'coffee', 'exec' : ['%c -cbp %s']}
+
+autocmd BufWritePost *.coffee silent CoffeeMake! -cb | cwindow | redraw!
+

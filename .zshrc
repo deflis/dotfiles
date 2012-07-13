@@ -1,5 +1,11 @@
 # users generic .zshrc file for zsh(1)
 
+# MacOS判定
+isdarwin(){
+    [[ $OSTYPE == darwin* ]] && return 0
+    return 1
+}
+
 ## Environment variable configuration
 #
 # LANG
@@ -11,6 +17,8 @@ case ${UID} in
     ;;
 esac
 
+# 関数をフック
+autoload -Uz add-zsh-hook
 
 ## Default shell configuration
 #
@@ -25,13 +33,25 @@ case ${UID} in
     SPROMPT="%B%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%}%b "
     ;;
 *)
-    PROMPT="%{${fg[red]}%}%/%%%{${reset_color}%} "
+    PROMPT="%{${fg[red]}%}%~/%%%{${reset_color}%} "
     PROMPT2="%{${fg[red]}%}%_%%%{${reset_color}%} "
     SPROMPT="%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%} "
     [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && 
         PROMPT="%{${fg[cyan]}%}$(echo ${HOST%%.*} | tr '[a-z]' '[A-Z]') ${PROMPT}"
     ;;
 esac
+
+# ブランチ名をRPROMPTで表示
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' formats '(%s)-[%b]'
+zstyle ':vcs_info:*' actionformats '(%s)-[%b|%a]'
+_vcs_precmd () {
+    psvar=()
+    LANG=en_US.UTF-8 vcs_info
+    [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
+}
+add-zsh-hook precmd _vcs_precmd
+RPROMPT="%1(v|%F{green}%1v%f|)"
 
 # auto change directory
 #
@@ -94,14 +114,16 @@ setopt share_history        # share command history data
 
 ## Completion configuration
 #
+[ -d /usr/local/Library/Contributions/ ] && fpath=(/usr/local/Library/Contributions/ ${fpath})
 fpath=(${HOME}/.zsh/functions/Completion ${fpath})
 autoload -U compinit
 compinit
+zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' '+m:{A-Z}={a-z}'
 
 
 ## zsh editor
 #
-autoload zed
+#autoload zed
 
 
 ## Prediction configuration
@@ -140,6 +162,22 @@ alias su="su -l"
 
 ## terminal configuration
 #
+case "${TERM}" in
+screen*)
+    _screen_preexec() {
+        # see [zsh-workers:13180]
+        # http://www.zsh.org/mla/workers/2000/msg03993.html
+        emulate -L zsh
+        local -a cmd; cmd=(${(z)2})
+        echo -n "k$cmd[1]:t\\"
+    }
+    add-zsh-hook preexec _screen_preexec
+
+    _screen_precmd() { echo -n "k[`basename $PWD`]\\" }
+    add-zsh-hook precmd _screen_precmd
+    ;;
+esac
+
 case "${TERM}" in
 screen)
     TERM=xterm
@@ -185,8 +223,23 @@ xterm|xterm-color|kterm|kterm-color)
 esac
 
 export EDITOR=vim
+export LESS='--tabs=4 --no-init --LONG-PROMPT --ignore-case -R'
+
+isdarwin && export PATH=/usr/local/bin:/usr/local/sbin:$PATH
+
 
 source ${HOME}/dotfiles/sudovim.zsh
+# [ -f ${HOME}/dotfiles/nvm/nvm.sh ] && source ${HOME}/dotfiles/nvm/nvm.sh
+export PATH=$HOME/.nodebrew/current/bin:$PATH
+
+[ -d ${HOME}/.rbenv ] && source ${HOME}/dotfiles/rbenv.zsh
+if [ -d /Applications/MacVim.app/Contents/MacOS/ ]; then
+    alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim -u $HOME/.vimrc "$@"'
+    alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+    alias ctags='/Applications/MacVim.app/Contents/MacOS/ctags "$@"'
+fi;
+
+isdarwin && export PYTHONPATH=/opt/local/lib/python2.6/site-packages/
 
 ## load user .zshrc configuration file
 #

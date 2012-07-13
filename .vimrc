@@ -1,35 +1,25 @@
 set nocompatible
-set tags=~/.tags
+" set tags=~/.tags
+if has('gui_running') && !has('unix')
+    set encoding=utf-8
+endif
+scriptencoding utf-8
 
-" display
-" ----------------------
-" set number
-" set ruler
-" set cmdheight=2
-" set laststatus=2
-" set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
-" set title
-" set linespace=0
-" set wildmenu
-" set showcmd
-"set textwidth=78
-"set columns=100
-"set lines=150
-
-set expandtab
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
-
-set nocompatible               " be iMproved
+filetype off
 filetype plugin indent off     " required!
+
+
+if has('win32')
+    set runtimepath^=$HOME/.vim
+    set runtimepath+=$HOME/.vim/after
+endif
 
 if has('vim_starting')
     set runtimepath+=~/.vim/bundle/neobundle.vim/
     call neobundle#rc(expand('~/.vim/bundle/'))
 endif
+
 " let NeoBundle manage NeoBundle
-" required! 
 NeoBundle 'Shougo/neobundle.vim'
 " recommended to install
 NeoBundle 'Shougo/vimproc'
@@ -38,6 +28,7 @@ NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimshell'
 NeoBundle "Shougo/neocomplcache"
 NeoBundle 'Shougo/neocomplcache-snippets-complete'
+NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'Shougo/vimfiler'
 
 NeoBundle 'mattn/zencoding-vim'
@@ -48,13 +39,31 @@ NeoBundle 'tpope/vim-markdown'
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'sudo.vim'
 NeoBundle 'nginx.vim'
-au BufRead,BufNewFile /etc/nginx/* set ft=nginx
-au BufRead,BufNewFile sudo:/etc/nginx/* set ft=nginx
+NeoBundle 'vim-ruby/vim-ruby'
+NeoBundle 'majutsushi/tagbar'
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'TwitVim'
+NeoBundle 'dbext.vim'
+NeoBundle 'kchmck/vim-coffee-script'
+NeoBundle 'Shougo/vinarise'
+
+" NeoBundle 'minibufexpl.vim'
 
 " NeoBundle 'project.vim'
 
 filetype plugin on
 filetype indent on
+
+set expandtab
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+
+" 起動時に引数なしならNERDtree起動
+let file_name = expand("%")
+if has('vim_starting') &&  file_name == ""
+    autocmd VimEnter * NERDTree ./
+endif
 
 
 " Disable AutoComplPop.
@@ -73,14 +82,16 @@ let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
 
 " Define dictionary.
 let g:neocomplcache_dictionary_filetype_lists = {
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
-    \ }
+            \ 'default' : '',
+            \ 'vimshell' : $HOME.'/.vimshell_hist',
+            \ 'scheme' : $HOME.'/.gosh_completions',
+            \ 'php' : $HOME . '/.vim/dict/php.dict',
+            \ 'ctp' : $HOME . '/.vim/dict/php.dict'
+            \ }
 
 " Define keyword.
 if !exists('g:neocomplcache_keyword_patterns')
-  let g:neocomplcache_keyword_patterns = {}
+    let g:neocomplcache_keyword_patterns = {}
 endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 
@@ -125,7 +136,7 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 " Enable heavy omni completion.
 if !exists('g:neocomplcache_omni_patterns')
-  let g:neocomplcache_omni_patterns = {}
+    let g:neocomplcache_omni_patterns = {}
 endif
 let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 "autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
@@ -136,16 +147,96 @@ let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
 " Escで補完を消す
 let &t_ti .= "\e[?7727h"
 let &t_te .= "\e[?7727l"
- 
+
+" Escでポップアップを閉じる
 noremap <special> <Esc>O[ <Esc>
 noremap! <special> <Esc>O[ <Esc>
 inoremap <expr><ESC>0[ pumvisible() ? neocomplcachecomplcache#smart_close_popup() . "\<ESC>" : <ESC>
 inoremap <special> <C-V><Esc>O[ <C-V><Esc>
 
+" Ctrl+HJKLでウインドウ移動
 nmap <C-h> <C-w><C-h>
 nmap <C-j> <C-w><C-j>
 nmap <C-k> <C-w><C-k>
 nmap <C-l> <C-w><C-l>
 
-"set mouse=a
-"set ttymouse=xterm2 
+" マウス操作
+set mouse=a
+set ttymouse=xterm2
+
+set ignorecase " 検索時に大文字小文字を区別しない
+" 大文字小文字の両方が含まれている場合は大文字小文字を区別
+set smartcase
+" 検索時にファイルの最後まで行ったら最初に戻る
+set wrapscan
+" 括弧入力時に対応する括弧を表示
+set showmatch
+" 行番号を表示
+set nonumber
+
+
+function SetScreenTabName(name)
+    let arg = 'k' . a:name . '\\'
+    silent! exe '!echo -n "' . arg . "\""
+endfunction
+
+if &term =~ "screen"
+    autocmd VimLeave * call SetScreenTabName('shell')
+    autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | call SetScreenTabName("%") | endif 
+endif
+
+
+set list
+set lcs=tab:>.,trail:_,extends:¥
+" 全角スペースの位置を表示
+highlight JpSpace cterm=underline ctermfg=Blue guifg=Blue
+au BufRead,BufNew * match JpSpace /　/
+
+nnoremap <C-t>b :<C-u>TagbarToggle<CR>
+
+""" twitvim
+let twitvim_count = 100
+nnoremap <C-t>p :<C-u>PosttoTwitter<CR>
+nnoremap <C-t><C-t><C-t> :<C-u>PosttoTwitter<CR>
+nnoremap <C-t>t :<C-u>FriendsTwitter<CR><C-w>j
+nnoremap <C-t><C-t> :<C-u>FriendsTwitter<CR>
+nnoremap <C-t>u :<C-u>UserTwitter<CR><C-w>j
+nnoremap <C-t>r :<C-u>RepliesTwitter<CR><C-w>j
+nnoremap <C-t>n :<C-u>NextTwitter<CR>
+
+"minibufexpl
+"let g:miniBufExplMapWindowNavVim=1   "hjklで移動
+"let g:miniBufExplSplitBelow=0        " Put new window above
+"let g:miniBufExplMapWindowNavArrows=1
+"let g:miniBufExplMapCTabSwitchBufs=1
+"let g:miniBufExplModSelTarget=1
+"let g:miniBufExplSplitToEdge=1
+
+" バッファを閉じる
+" nnoremap <C-d> :<C-u>bd<CR>
+" 次のバッファ
+" nnoremap <Space> :<C-u>MBEbn<CR>
+" 次のバッファ
+" nnoremap <C-n> :<C-u>MBEbn<CR>
+" 前のバッファ
+" nnoremap <C-p> :<C-u>MBEbp<CR>
+
+
+
+if v:version >= 703
+    NeoBundle 'violetyk/cake.vim'
+    let g:cakephp_enable_auto_mode = 1
+endif
+
+let g:dbext_default_type         = 'MYSQL'
+let g:dbext_default_user         = 'root'
+let g:dbext_default_password     = '@ask'
+let g:dbext_default_host         = 'localhost'
+let g:dbext_default_dbname       = ''
+let g:dbext_default_buffer_lines = '20'
+
+let g:quickrun_config = {}
+let g:quickrun_config['coffee'] = {'command' : 'coffee', 'exec' : ['%c -cbp %s']}
+
+autocmd BufWritePost *.coffee silent CoffeeMake! -cb | cwindow | redraw!
+

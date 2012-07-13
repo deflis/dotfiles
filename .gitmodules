@@ -4,3 +4,6 @@
 [submodule ".vim/bundle/vimproc"]
 	path = .vim/bundle/vimproc
 	url = https://github.com/Shougo/vimproc.git
+[submodule "nvm"]
+	path = nvm
+	url = git://github.com/creationix/nvm.git

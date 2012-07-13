@@ -47,6 +47,9 @@ NeoBundle 'thinca/vim-ref'
 NeoBundle 'tpope/vim-markdown'
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'sudo.vim'
+NeoBundle 'nginx.vim'
+au BufRead,BufNewFile /etc/nginx/* set ft=nginx
+au BufRead,BufNewFile sudo:/etc/nginx/* set ft=nginx
 
 " NeoBundle 'project.vim'
 

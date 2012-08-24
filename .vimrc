@@ -46,6 +46,7 @@ NeoBundle 'TwitVim'
 NeoBundle 'dbext.vim'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'Shougo/vinarise'
+NeoBundle 'kana/vim-fakeclip.git'
 
 " NeoBundle 'minibufexpl.vim'
 

@@ -181,11 +181,18 @@ function SetScreenTabName(name)
     silent! exe '!echo -n "' . arg . "\""
 endfunction
 
-if &term =~ "screen"
+if &term =~ "screen" || (executable('tmux') && $TMUX != '')
     autocmd VimLeave * call SetScreenTabName('shell')
     autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | call SetScreenTabName("%") | endif 
 endif
 
+
+" Use clipboard register.
+if has('unnamedplus')
+    set clipboard& clipboard+=unnamedplus
+else
+    set clipboard& clipboard+=unnamed
+endif
 
 set list
 set lcs=tab:>.,trail:_,extends:¥

@@ -48,6 +48,7 @@ NeoBundle 'dbext.vim'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'Shougo/vinarise'
 NeoBundle 'kana/vim-fakeclip.git'
+NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tyru/open-browser.vim'
 
 " NeoBundle 'minibufexpl.vim'

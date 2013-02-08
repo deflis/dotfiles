@@ -28,7 +28,7 @@ NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimshell'
 NeoBundle "Shougo/neocomplcache"
-NeoBundle 'Shougo/neocomplcache-snippets-complete'
+" NeoBundle 'Shougo/neocomplcache-snippets-complete'
 NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'Shougo/vimfiler'
 

@@ -36,7 +36,7 @@ NeoBundle 'mattn/zencoding-vim'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'thinca/vim-ref'
 
-NeoBundle 'tpope/vim-markdown'
+NeoBundle 'plasticboy/vim-markdown'
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'sudo.vim'
 NeoBundle 'nginx.vim'
@@ -48,6 +48,7 @@ NeoBundle 'dbext.vim'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'Shougo/vinarise'
 NeoBundle 'kana/vim-fakeclip.git'
+NeoBundle 'tyru/open-browser.vim'
 
 " NeoBundle 'minibufexpl.vim'
 
@@ -249,3 +250,7 @@ let g:quickrun_config['coffee'] = {'command' : 'coffee', 'exec' : ['%c -cbp %s']
 
 autocmd BufWritePost *.coffee silent CoffeeMake! -cb | cwindow | redraw!
 
+let g:quickrun_config['markdown'] = {
+\ 'type': 'markdown/kramdown',
+\ 'outputter': 'browser'
+\ }

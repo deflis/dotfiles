@@ -3,6 +3,7 @@ set nocompatible
 if has('gui_running') && !has('unix')
     set encoding=utf-8
 endif
+let plugin_cmdex_disable = 1
 scriptencoding utf-8
 
 filetype off

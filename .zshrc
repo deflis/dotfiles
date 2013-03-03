@@ -80,13 +80,7 @@ setopt nolistbeep
 
 ## Keybind configuration
 #
-# emacs like keybind (e.x. Ctrl-a gets to line head and Ctrl-e gets
-#   to end) and something additions
-#
-#bindkey -e
-#bindkey "^[[1~" beginning-of-line # Home gets to line head
-#bindkey "^[[4~" end-of-line # End gets to line end
-#bindkey "^[[3~" delete-char # Del
+bindkey -v
 
 # historical backward/forward search with linehead string binded to ^P/^N
 #
@@ -229,6 +223,7 @@ isdarwin && export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 
 
 source ${HOME}/dotfiles/sudovim.zsh
+source ${HOME}/dotfiles/vimmode.zsh
 # [ -f ${HOME}/dotfiles/nvm/nvm.sh ] && source ${HOME}/dotfiles/nvm/nvm.sh
 export PATH=$HOME/.nodebrew/current/bin:$PATH
 

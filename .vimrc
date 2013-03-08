@@ -44,7 +44,6 @@ NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'thinca/vim-ref'
 
 NeoBundle 'plasticboy/vim-markdown'
-NeoBundle 'Shougo/vimproc'
 NeoBundle 'sudo.vim'
 NeoBundle 'nginx.vim'
 NeoBundle 'vim-ruby/vim-ruby'

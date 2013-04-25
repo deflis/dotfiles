@@ -2,7 +2,7 @@ alias vi C:\Software\vim\vim.exe
 alias vim C:\Software\vim\vim.exe
 
 set EDITOR=gvim
-set HOME=%USER_PROFILE%
+set HOME=%USERPROFILE%
 
 alias cp copy
 alias mv move
@@ -14,7 +14,7 @@ alias gvim "cmd /c start C:\Software\vim\gvim.exe $*"
 alias clear "cmd /c cls"
 alias cls "cmd /c cls"
 
-source %USER_PROFILE%\dotfiles\_nya_git.lua
+source %USERPROFILE%\dotfiles\_nya_git.lua
 
 pik{
   pik_runner.exe pik.bat %*

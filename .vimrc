@@ -155,8 +155,11 @@ let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
 let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
 
 " Escで補完を消す
-let &t_ti .= "\e[?7727h"
-let &t_te .= "\e[?7727l"
+" 何のために追加しているのか思い出せないがなぜかwin32のvimコンソールだと終了時おかしいのでここを読まないように変更
+if !has('windows') || has('gui_running')
+    let &t_ti .= "\e[?7727h"
+    let &t_te .= "\e[?7727l"
+endif
 
 " Escでポップアップを閉じる
 noremap <special> <Esc>O[ <Esc>

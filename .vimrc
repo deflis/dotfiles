@@ -56,6 +56,9 @@ NeoBundle 'Shougo/vinarise'
 NeoBundle 'kana/vim-fakeclip.git'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tyru/open-browser.vim'
+NeoBundle 'glidenote/octoeditor.vim'
+NeoBundle 'glidenote/memolist.vim'
+
 
 " NeoBundle 'minibufexpl.vim'
 
@@ -264,3 +267,10 @@ let g:quickrun_config['markdown'] = {
 \ 'type': 'markdown/kramdown',
 \ 'outputter': 'browser'
 \ }
+
+" MemoList
+
+map <Leader>mn  :MemoNew<CR>
+map <Leader>ml  :MemoList<CR>
+map <Leader>mg  :MemoGrep<CR>
+

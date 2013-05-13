@@ -258,15 +258,43 @@ let g:dbext_default_host         = 'localhost'
 let g:dbext_default_dbname       = ''
 let g:dbext_default_buffer_lines = '20'
 
-let g:quickrun_config = {}
-let g:quickrun_config['coffee'] = {'command' : 'coffee', 'exec' : ['%c -cbp %s']}
-
-autocmd BufWritePost *.coffee silent CoffeeMake! -cb | cwindow | redraw!
-
-let g:quickrun_config['markdown'] = {
-\ 'type': 'markdown/kramdown',
-\ 'outputter': 'browser'
+" Markdown
+let g:quickrun_config = {
+\    'markdown': {
+\      'outputter': 'browser',
+\      'type':
+\              executable('mdown')            ? 'markdown/mdown':
+\              executable('pandoc')           ? 'markdown/pandoc':
+\              executable('multimarkdown')    ? 'markdown/multimarkdown':
+\              executable('MultiMarkdown.pl') ? 'markdown/MultiMarkdown.pl':
+\              executable('rdiscount')        ? 'markdown/rdiscount':
+\              executable('bluecloth')        ? 'markdown/bluecloth':
+\              executable('markdown')         ? 'markdown/markdown':
+\              executable('Markdown.pl')      ? 'markdown/Markdown.pl':
+\              executable('redcarpet')        ? 'markdown/redcarpet':
+\              executable('kramdown')         ? 'markdown/kramdown':
+\              '',
+\    },
+\    'markdown/mdown': {
+\      'command': 'mdown',
+\      'exec': '%c -i %s',
+\    },
+\    'markdown/multimarkdown': {
+\      'command': 'multimarkdown',
+\    },
+\    'markdown/MultiMarkdown.pl': {
+\      'command': 'MultiMarkdown.pl',
+\    },
+\    'markdown/rdiscount': {
+\      'command': 'rdiscount',
+\    },
+\    'markdown/markdown': {
+\      'command': 'markdown',
+\    },
 \ }
+" CoffeeSctipt
+let g:quickrun_config['coffee'] = {'command' : 'coffee', 'exec' : ['%c -cbp %s']}
+autocmd BufWritePost *.coffee silent CoffeeMake! -cb | cwindow | redraw!
 
 " MemoList
 

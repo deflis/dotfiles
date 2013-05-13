@@ -58,7 +58,7 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'glidenote/octoeditor.vim'
 NeoBundle 'glidenote/memolist.vim'
-
+NeoBundle 'kien/ctrlp.vim'
 
 " NeoBundle 'minibufexpl.vim'
 
@@ -302,3 +302,5 @@ map <Leader>mn  :MemoNew<CR>
 map <Leader>ml  :MemoList<CR>
 map <Leader>mg  :MemoGrep<CR>
 
+" CtrlP
+let g:ctrlp_use_migemo = 1

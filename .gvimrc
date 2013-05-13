@@ -3,4 +3,5 @@ if has('gui_macvim')
     set guifont=Ricty\ Discord\ Regular:h14
     set antialias
 endif
+set guifont=MeiryoKe_Console:h9:cSHIFTJIS
 colorscheme mine

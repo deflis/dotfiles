@@ -232,6 +232,7 @@ if [ -d /Applications/MacVim.app/Contents/MacOS/ ]; then
     alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim -u $HOME/.vimrc "$@"'
     alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
     alias ctags='/Applications/MacVim.app/Contents/MacOS/ctags "$@"'
+    export PATH=/Applications/MacVim.app/Contents/MacOS/:$PATH
 fi;
 alias emacs=vim
 

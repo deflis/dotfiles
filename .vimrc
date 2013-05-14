@@ -24,43 +24,126 @@ endif
 NeoBundle 'Shougo/neobundle.vim'
 " recommended to install
 NeoBundle 'Shougo/vimproc', {
-\ 'build' : {
-\   'windows' : 'echo "Sorry, cannot update vimproc binary file in Windows."',
-\   'cygwin' : 'make -f make_cygwin.mak',
-\   'mac' : 'make -f make_mac.mak',
-\   'unix' : 'make -f make_unix.mak',
+\   'build' : {
+\       'windows' : 'echo "Sorry, cannot update vimproc binary file in Windows."',
+\       'cygwin' : 'make -f make_cygwin.mak',
+\       'mac' : 'make -f make_mac.mak',
+\       'unix' : 'make -f make_unix.mak',
 \   },
-\ }
+\}
 " after install, turn shell ~/.vim/bundle/vimproc, (n,g)make -f your_machines_makefile
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/vimshell'
+NeoBundleLazy 'Shougo/unite.vim', {
+\   'autoload' : {
+\       'commands' : [ "Unite" ]
+\   }
+\}
+NeoBundleLazy 'Shougo/vimshell',{
+\   'depends' : 'Shougo/vimproc',
+\   'autoload' : {
+\       'commands' : [
+\           {
+\               'name' : 'VimShell',
+\               'complete' : 'customlist,vimshell#complete'
+\           },
+\           'VimShellExecute',
+\           'VimShellInteractive',
+\           'VimShellTerminal',
+\           'VimShellPop',
+\        ],
+\       'mappings' : ['<Plug>(vimshell_switch)']
+\ }
+\}
 NeoBundle "Shougo/neocomplcache"
 " NeoBundle 'Shougo/neocomplcache-snippets-complete'
-NeoBundle 'tsukkee/unite-tag'
-NeoBundle 'Shougo/vimfiler'
+NeoBundleLazy 'tsukkee/unite-tag', {
+\   'depends' : ["Shougo/unite.vim"],
+\   'autoload' : {
+\       'unite_sources' : 'tag',
+\   }
+\}
+NeoBundleLazy 'Shougo/vimfiler', {
+\   'depends' : 'Shougo/unite.vim',
+\   'autoload' : {
+\       'commands' : [
+\           {
+\                'name' : 'VimFiler',
+\                'complete' : 'customlist,vimfiler#complete'
+\           },
+\           'VimFilerExplorer',
+\           'Edit',
+\           'Read',
+\           'Source',
+\           'Write'
+\       ],
+\       'mappings' : ['<Plug>(vimfiler_switch)'],
+\   }
+\}
 
-NeoBundle 'mattn/zencoding-vim'
+"NeoBundleLazy 'mattn/zencoding-vim'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'thinca/vim-ref'
 
-NeoBundle 'plasticboy/vim-markdown'
+NeoBundleLazy 'plasticboy/vim-markdown', {
+\   "autoload" : { "filetypes" : ["markdown"] }
+\}
+autocmd BufNewFile,BufRead *.markdown,*.md,*.mdown,*.mkd,*.mkdn
+\   if &ft =~# '^\%(conf\|modula2\)$' |
+\       set ft=markdown |
+\   else |
+\       setf markdown |
+\   endif
 NeoBundle 'sudo.vim'
-NeoBundle 'nginx.vim'
-NeoBundle 'vim-ruby/vim-ruby'
-NeoBundle 'majutsushi/tagbar'
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'TwitVim'
-NeoBundle 'dbext.vim'
-NeoBundle 'kchmck/vim-coffee-script'
-NeoBundle 'Shougo/vinarise'
+NeoBundleLazy 'nginx.vim', {
+\   "autoload" : { 'filetype', ["nginx"] }
+\}
+autocmd BufNewFile,BufRead /etc/nginx/conf.d/* set ft=nginx
+NeoBundleLazy 'vim-ruby/vim-ruby', {
+\   "autoload" : { "filetypes" : ["ruby"] }
+\}
+NeoBundleLazy 'majutsushi/tagbar', {
+\   'autoload' : { 'commands' : [ "TagBarOpen", "TagBarToggle", "TagBarCurrentTag" ] }
+\}
+
+NeoBundleLazy 'scrooloose/nerdtree', {
+\   'autoload' : { 'commands' : [ "NERDTree", "NERDTreeOpen", "NERDTreeToggle" ], 'explorer' : 1 }
+\}
+" Disable netrw.vim
+let g:loaded_netrwPlugin = 1
+"NeoBundleLazy 'TwitVim'
+"NeoBundleLazy 'dbext.vim'
+NeoBundleLazy 'kchmck/vim-coffee-script', {
+\   "autoload" : { 'filetype', ["coffee"] }
+\}
+autocmd BufNewFile,BufRead *.coffee,*Cakefile,*.coffeekup,*.ck,*._coffee set filetype=coffee
+NeoBundleLazy 'Shougo/vinarise', {
+\   'autoload' : { 'commands' : [ "Vinarise" ] }
+\}
 NeoBundle 'kana/vim-fakeclip.git'
 NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'tyru/open-browser.vim'
-NeoBundle 'glidenote/octoeditor.vim'
-NeoBundle 'glidenote/memolist.vim'
+NeoBundleLazy 'tyru/open-browser.vim', {
+\   'autoload' : {
+\       'filetypes' : ["markdown"],
+\       'functions' : "OpenBrowser",
+\       'commands'  : ["OpenBrowser", "OpenBrowserSearch"],
+\       'mappings'  : "<Plug>(openbrowser-smart-search)"
+\   },
+\}
+
+NeoBundle 'glidenote/octoeditor.vim', {
+\   'autoload' : { 'commands' : [ "OctopressList", "OctopressGenerate", "OctopressDeploy", "OctopressGrep","OctopressNew" ], 'function_prefix' : 'octoeditor' }
+\}
+NeoBundleLazy 'glidenote/memolist.vim', {
+\   'autoload' : { 'commands' : [ "MemoNew" , "MemoList", "MemoGrep" ], 'function_prefix' : 'memolist' }
+\}
 NeoBundle 'kien/ctrlp.vim'
-NeoBundle 'Kocha/vim-unite-tig'
-NeoBundle 'thinca/vim-splash'
+NeoBundleLazy 'Kocha/vim-unite-tig', {
+\   'depends' : ["Shougo/unite.vim"],
+\   'autoload' : {
+\       'unite_sources' : 'tig',
+\   }
+\}
+
+" NeoBundle 'thinca/vim-splash'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'airblade/vim-rooter'
 NeoBundle 'thinca/vim-localrc'
@@ -68,6 +151,7 @@ NeoBundle 'thinca/vim-localrc'
 " NeoBundle 'minibufexpl.vim'
 
 " NeoBundle 'project.vim'
+NeoBundleCheck
 
 filetype plugin on
 filetype indent on
@@ -82,10 +166,6 @@ set shiftwidth=4
 " if has('vim_starting') &&  file_name == ""
 "     autocmd VimEnter * NERDTree ./
 " endif
-let file_name = expand("%")
-if has('vim_starting') &&  file_name == ""
-    autocmd VimEnter * Splash
-endif
 
 
 " Disable AutoComplPop.
@@ -227,14 +307,14 @@ au BufRead,BufNew * match JpSpace /　/
 nnoremap <C-t>b :<C-u>TagbarToggle<CR>
 
 """ twitvim
-let twitvim_count = 100
-nnoremap <C-t>p :<C-u>PosttoTwitter<CR>
-nnoremap <C-t><C-t><C-t> :<C-u>PosttoTwitter<CR>
-nnoremap <C-t>t :<C-u>FriendsTwitter<CR><C-w>j
-nnoremap <C-t><C-t> :<C-u>FriendsTwitter<CR>
-nnoremap <C-t>u :<C-u>UserTwitter<CR><C-w>j
-nnoremap <C-t>r :<C-u>RepliesTwitter<CR><C-w>j
-nnoremap <C-t>n :<C-u>NextTwitter<CR>
+"let twitvim_count = 100
+"nnoremap <C-t>p :<C-u>PosttoTwitter<CR>
+"nnoremap <C-t><C-t><C-t> :<C-u>PosttoTwitter<CR>
+"nnoremap <C-t>t :<C-u>FriendsTwitter<CR><C-w>j
+"nnoremap <C-t><C-t> :<C-u>FriendsTwitter<CR>
+"nnoremap <C-t>u :<C-u>UserTwitter<CR><C-w>j
+"nnoremap <C-t>r :<C-u>RepliesTwitter<CR><C-w>j
+"nnoremap <C-t>n :<C-u>NextTwitter<CR>
 
 "minibufexpl
 "let g:miniBufExplMapWindowNavVim=1   "hjklで移動
@@ -301,7 +381,6 @@ let g:quickrun_config = {
 \      'command': 'markdown',
 \    },
 \ }
-let g:quickrun_config['mkd'] = g:quickrun_config['markdown']
 " CoffeeSctipt
 let g:quickrun_config['coffee'] = {'command' : 'coffee', 'exec' : ['%c -cbp %s']}
 autocmd BufWritePost *.coffee silent CoffeeMake! -cb | cwindow | redraw!

@@ -5,3 +5,4 @@ if has('gui_macvim')
 endif
 set guifont=MeiryoKe_Console:h9:cSHIFTJIS
 colorscheme mine
+set lines=90 columns=200

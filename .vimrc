@@ -300,6 +300,7 @@ let g:quickrun_config = {
 \      'command': 'markdown',
 \    },
 \ }
+let g:quickrun_config['mkd'] = g:quickrun_config['markdown']
 " CoffeeSctipt
 let g:quickrun_config['coffee'] = {'command' : 'coffee', 'exec' : ['%c -cbp %s']}
 autocmd BufWritePost *.coffee silent CoffeeMake! -cb | cwindow | redraw!

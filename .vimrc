@@ -304,8 +304,6 @@ set lcs=tab:>.,trail:_,extends:¥
 highlight JpSpace cterm=underline ctermfg=Blue guifg=Blue
 au BufRead,BufNew * match JpSpace /　/
 
-nnoremap <C-t>b :<C-u>TagbarToggle<CR>
-
 """ twitvim
 "let twitvim_count = 100
 "nnoremap <C-t>p :<C-u>PosttoTwitter<CR>
@@ -386,7 +384,7 @@ let g:quickrun_config['coffee'] = {'command' : 'coffee', 'exec' : ['%c -cbp %s']
 autocmd BufWritePost *.coffee silent CoffeeMake! -cb | cwindow | redraw!
 
 " MemoList
-
+map <Leader>mf :exe "CtrlP" g:memolist_path<cr><f5>
 map <Leader>mn  :MemoNew<CR>
 map <Leader>ml  :MemoList<CR>
 map <Leader>mg  :MemoGrep<CR>
@@ -395,5 +393,7 @@ map <Leader>mg  :MemoGrep<CR>
 let g:ctrlp_use_migemo = 1
 
 " NERDTree
-
 map <Leader>nt  :NERDTreeToggle<CR>
+
+" TagBar
+map <Leader>tb  :TagBarToggle<CR>

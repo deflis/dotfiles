@@ -101,7 +101,7 @@ NeoBundleLazy 'vim-ruby/vim-ruby', {
 \   "autoload" : { "filetypes" : ["ruby"] }
 \}
 NeoBundleLazy 'majutsushi/tagbar', {
-\   'autoload' : { 'commands' : [ "TagBarOpen", "TagBarToggle", "TagBarCurrentTag" ] }
+\   'autoload' : { 'commands' : [ "TagbarOpen", "TagbarToggle", "TagbarCurrentTag" ] }
 \}
 
 NeoBundleLazy 'scrooloose/nerdtree', {
@@ -395,5 +395,5 @@ let g:ctrlp_use_migemo = 1
 " NERDTree
 map <Leader>nt  :NERDTreeToggle<CR>
 
-" TagBar
-map <Leader>tb  :TagBarToggle<CR>
+" Tagbar
+map <Leader>tb  :TagbarToggle<CR>

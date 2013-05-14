@@ -61,6 +61,7 @@ NeoBundle 'glidenote/memolist.vim'
 NeoBundle 'kien/ctrlp.vim'
 NeoBundle 'Kocha/vim-unite-tig'
 NeoBundle 'thinca/vim-splash'
+NeoBundle 'scrooloose/syntastic'
 
 " NeoBundle 'minibufexpl.vim'
 

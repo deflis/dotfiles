@@ -59,6 +59,7 @@ NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'glidenote/octoeditor.vim'
 NeoBundle 'glidenote/memolist.vim'
 NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'thinca/vim-splash'
 
 " NeoBundle 'minibufexpl.vim'
 
@@ -77,6 +78,10 @@ set shiftwidth=4
 " if has('vim_starting') &&  file_name == ""
 "     autocmd VimEnter * NERDTree ./
 " endif
+let file_name = expand("%")
+if has('vim_starting') &&  file_name == ""
+    autocmd VimEnter * Splash
+endif
 
 
 " Disable AutoComplPop.

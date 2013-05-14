@@ -105,7 +105,7 @@ NeoBundleLazy 'majutsushi/tagbar', {
 \}
 
 NeoBundleLazy 'scrooloose/nerdtree', {
-\   'autoload' : { 'commands' : [ "NERDTree", "NERDTreeOpen", "NERDTreeToggle" ], 'explorer' : 1 }
+\   'autoload' : { 'commands' : [ "NERDTree", "NERDTreeClose", "NERDTreeToggle" ], 'explorer' : 1 }
 \}
 " Disable netrw.vim
 let g:loaded_netrwPlugin = 1
@@ -166,7 +166,6 @@ set shiftwidth=4
 " if has('vim_starting') &&  file_name == ""
 "     autocmd VimEnter * NERDTree ./
 " endif
-
 
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
@@ -394,6 +393,14 @@ let g:ctrlp_use_migemo = 1
 
 " NERDTree
 map <Leader>nt  :NERDTreeToggle<CR>
+map <Leader>ntt :NERDTreeClose<CR>:NERDTree<CR>
+
+let s:bundle = neobundle#get("nerdtree")
+function! s:bundle.hooks.on_source(bundle)
+    let g:NERDTreeIgnore=['\.clean$', '\.swp$', '\.bak$', '\~$', '^\.git$', '^\.svn$', '^\.idea$', '^\.vagrant$']
+    let g:NERDTreeShowHidden=1
+endfunction
+unlet s:bundle
 
 " Tagbar
 map <Leader>tb  :TagbarToggle<CR>

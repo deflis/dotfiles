@@ -63,6 +63,7 @@ NeoBundle 'Kocha/vim-unite-tig'
 NeoBundle 'thinca/vim-splash'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'airblade/vim-rooter'
+NeoBundle 'thinca/vim-localrc'
 
 " NeoBundle 'minibufexpl.vim'
 

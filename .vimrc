@@ -314,3 +314,7 @@ map <Leader>mg  :MemoGrep<CR>
 
 " CtrlP
 let g:ctrlp_use_migemo = 1
+
+" NERDTree
+
+map <Leader>nt  :NERDTreeToggle<CR>

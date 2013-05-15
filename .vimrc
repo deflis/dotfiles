@@ -94,7 +94,7 @@ autocmd BufNewFile,BufRead *.markdown,*.md,*.mdown,*.mkd,*.mkdn
 \   endif
 NeoBundle 'sudo.vim'
 NeoBundleLazy 'nginx.vim', {
-\   "autoload" : { 'filetype', ["nginx"] }
+\   "autoload" : { 'filetype' : ["nginx"] }
 \}
 autocmd BufNewFile,BufRead /etc/nginx/conf.d/* set ft=nginx
 NeoBundleLazy 'vim-ruby/vim-ruby', {
@@ -112,7 +112,7 @@ let g:loaded_netrwPlugin = 1
 "NeoBundleLazy 'TwitVim'
 "NeoBundleLazy 'dbext.vim'
 NeoBundleLazy 'kchmck/vim-coffee-script', {
-\   "autoload" : { 'filetype', ["coffee"] }
+\   "autoload" : { 'filetype' : ["coffee"] }
 \}
 autocmd BufNewFile,BufRead *.coffee,*Cakefile,*.coffeekup,*.ck,*._coffee set filetype=coffee
 NeoBundleLazy 'Shougo/vinarise', {

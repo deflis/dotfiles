@@ -404,3 +404,6 @@ unlet s:bundle
 
 " Tagbar
 map <Leader>tb  :TagbarToggle<CR>
+if executable('/Applications/MacVim.app/Contents/MacOS/ctags')
+    let g:tagbar_ctags_bin = '/Applications/MacVim.app/Contents/MacOS/ctags'
+endif

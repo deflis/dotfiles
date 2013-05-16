@@ -105,7 +105,7 @@ NeoBundleLazy 'majutsushi/tagbar', {
 \}
 
 NeoBundleLazy 'scrooloose/nerdtree', {
-\   'autoload' : { 'commands' : [ "NERDTree", "NERDTreeClose", "NERDTreeToggle" ], 'explorer' : 1 }
+\   'autoload' : { 'commands' : [ "NERDTree", "NERDTreeClose", "NERDTreeToggle", "NERDTreeFromBookmark" ], 'explorer' : 1 }
 \}
 " Disable netrw.vim
 let g:loaded_netrwPlugin = 1

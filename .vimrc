@@ -152,7 +152,10 @@ NeoBundle 'thinca/vim-localrc'
 
 " NeoBundle 'project.vim'
 
-NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
+NeoBundle 'Lokaltog/powerline', {
+\   'rtp' : 'powerline/bindings/vim',
+\   'base' : expand('$HOME/dotfiles')
+\}
 
 NeoBundleCheck
 

@@ -4,6 +4,8 @@ git submodule update --init
 
 cd ~/dotfiles/.vim/bundle/neobundle.vim
 git checkout master
+cd ~/dotfiles/powerline
+git checkout develop
 cd ~/dotfiles
 
 ln -snf ~/dotfiles/.zsh ~/

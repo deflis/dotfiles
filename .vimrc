@@ -151,6 +151,9 @@ NeoBundle 'thinca/vim-localrc'
 " NeoBundle 'minibufexpl.vim'
 
 " NeoBundle 'project.vim'
+
+NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
+
 NeoBundleCheck
 
 filetype plugin on

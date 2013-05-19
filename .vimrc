@@ -8,7 +8,9 @@ scriptencoding utf-8
 
 filetype off
 filetype plugin indent off     " required!
-
+if filereadable('/usr/local/Frameworks/Python.framework/Versions/2.7/lib/libpython2.7.dylib')
+    let $PYTHON_DLL = '/usr/local/Frameworks/Python.framework/Versions/2.7/lib/libpython2.7.dylib'
+endif
 
 if has('win32')
     set runtimepath^=$HOME/.vim

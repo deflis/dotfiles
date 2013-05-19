@@ -233,11 +233,13 @@ if [ -d /Applications/MacVim.app/Contents/MacOS/ ]; then
     alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim -u $HOME/.vimrc "$@"'
     alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
     alias ctags='/Applications/MacVim.app/Contents/MacOS/ctags "$@"'
-    export PATH=/Applications/MacVim.app/Contents/MacOS/:$PATH
+    export PATH=/Applications/MacVim.app/Contents/MacOS:$PATH
 fi;
 alias emacs=vim
 
-isdarwin && export PYTHONPATH=/opt/local/lib/python2.6/site-packages/
+isdarwin && export PYTHONPATH=/opt/local/lib/python2.6/site-packages:$PYTHONPATH
+isdarwin && export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
+
 [ -d ${HOME}/bin ] && export PATH=${PATH}:${HOME}/bin
 
 ## load user .zshrc configuration file

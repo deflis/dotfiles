@@ -226,7 +226,7 @@ isdarwin && export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 source ${HOME}/dotfiles/sudovim.zsh
 # source ${HOME}/dotfiles/vimmode.zsh
 # [ -f ${HOME}/dotfiles/nvm/nvm.sh ] && source ${HOME}/dotfiles/nvm/nvm.sh
-export PATH=$HOME/.nodebrew/current/bin:$PATH
+[ -d $HOME/.nodebrew ] && export PATH=$HOME/.nodebrew/current/bin:$PATH
 
 [ -d ${HOME}/.rbenv ] && source ${HOME}/dotfiles/rbenv.zsh
 if [ -d /Applications/MacVim.app/Contents/MacOS/ ]; then
@@ -245,3 +245,4 @@ isdarwin && export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
 ## load user .zshrc configuration file
 #
 [ -f ${HOME}/.zshrc.mine ] && source ${HOME}/.zshrc.mine
+

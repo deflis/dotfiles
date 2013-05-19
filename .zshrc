@@ -224,7 +224,7 @@ isdarwin && export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 
 
 source ${HOME}/dotfiles/sudovim.zsh
-source ${HOME}/dotfiles/vimmode.zsh
+# source ${HOME}/dotfiles/vimmode.zsh
 # [ -f ${HOME}/dotfiles/nvm/nvm.sh ] && source ${HOME}/dotfiles/nvm/nvm.sh
 export PATH=$HOME/.nodebrew/current/bin:$PATH
 

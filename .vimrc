@@ -154,6 +154,7 @@ NeoBundle 'Lokaltog/powerline', {
 \   'base' : expand('$HOME/dotfiles')
 \}
 
+NeoBundle 'altercation/vim-colors-solarized'
 NeoBundleCheck
 
 filetype plugin on
@@ -410,3 +411,16 @@ map <Leader>tb  :TagbarToggle<CR>
 if executable('/Applications/MacVim.app/Contents/MacOS/ctags')
     let g:tagbar_ctags_bin = '/Applications/MacVim.app/Contents/MacOS/ctags'
 endif
+
+" Solarized
+
+syntax enable
+set background=dark
+colorscheme solarized
+let g:powerline_config_overrides={
+\   'ext': {
+\       'vim': {
+\           'colorscheme': 'solarized',
+\        },
+\   },
+\ }

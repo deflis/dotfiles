@@ -85,15 +85,10 @@ NeoBundleLazy 'Shougo/vimfiler', {
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'thinca/vim-ref'
 
-NeoBundleLazy 'plasticboy/vim-markdown', {
+NeoBundle 'tpope/vim-markdown'
+NeoBundleLazy 'kannokanno/previm', {
 \   "autoload" : { "filetypes" : ["markdown"] }
 \}
-autocmd BufNewFile,BufRead *.markdown,*.md,*.mdown,*.mkd,*.mkdn
-\   if &ft =~# '^\%(conf\|modula2\)$' |
-\       set ft=markdown |
-\   else |
-\       setf markdown |
-\   endif
 NeoBundle 'sudo.vim'
 NeoBundleLazy 'nginx.vim', {
 \   "autoload" : { 'filetype' : ["nginx"] }

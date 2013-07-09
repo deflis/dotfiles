@@ -155,6 +155,7 @@ NeoBundle 'Lokaltog/powerline', {
 \}
 
 NeoBundle 'altercation/vim-colors-solarized'
+NeoBundle 'elzr/vim-json'
 NeoBundleCheck
 
 filetype plugin on
@@ -381,10 +382,26 @@ let g:quickrun_config = {
 \    'markdown/markdown': {
 \      'command': 'markdown',
 \    },
+\    'json': {
+\      'command': 'jq',
+\      'exec': "%c %a %s",
+\      'args': '.',
+\      'outputter': 'buffer:filetype=json'
+\    },
 \ }
 " CoffeeSctipt
 let g:quickrun_config['coffee'] = {'command' : 'coffee', 'exec' : ['%c -cbp %s']}
 autocmd BufWritePost *.coffee silent CoffeeMake! -cb | cwindow | redraw!
+
+command! -nargs=? Jq call s:Jq(<f-args>)
+function! s:Jq(...)
+    if 0 == a:0
+        let l:arg = "."
+    else
+        let l:arg = a:1
+    endif
+    call quickrun#run({"type":"json" ,"args" : l:arg})
+endfunction
 
 " MemoList
 nnoremap <Leader>mf :exe "CtrlP" g:memolist_path<cr><f5>

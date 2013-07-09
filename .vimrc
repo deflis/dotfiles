@@ -387,17 +387,17 @@ let g:quickrun_config['coffee'] = {'command' : 'coffee', 'exec' : ['%c -cbp %s']
 autocmd BufWritePost *.coffee silent CoffeeMake! -cb | cwindow | redraw!
 
 " MemoList
-map <Leader>mf :exe "CtrlP" g:memolist_path<cr><f5>
-map <Leader>mn  :MemoNew<CR>
-map <Leader>ml  :MemoList<CR>
-map <Leader>mg  :MemoGrep<CR>
+nnoremap <Leader>mf :exe "CtrlP" g:memolist_path<cr><f5>
+nnoremap <Leader>mn  :MemoNew<CR>
+nnoremap <Leader>ml  :MemoList<CR>
+nnoremap <Leader>mg  :MemoGrep<CR>
 
 " CtrlP
 let g:ctrlp_use_migemo = 1
 
 " NERDTree
-map <Leader>nt  :NERDTreeToggle<CR>
-map <Leader>ntt :NERDTreeClose<CR>:NERDTree<CR>
+nnoremap <Leader>nt  :NERDTreeToggle<CR>
+nnoremap <Leader>ntt :NERDTreeClose<CR>:NERDTree<CR>
 
 let s:bundle = neobundle#get("nerdtree")
 function! s:bundle.hooks.on_source(bundle)
@@ -407,7 +407,7 @@ endfunction
 unlet s:bundle
 
 " Tagbar
-map <Leader>tb  :TagbarToggle<CR>
+nnoremap <Leader>tb  :TagbarToggle<CR>
 if executable('/Applications/MacVim.app/Contents/MacOS/ctags')
     let g:tagbar_ctags_bin = '/Applications/MacVim.app/Contents/MacOS/ctags'
 endif

@@ -246,3 +246,4 @@ isdarwin && export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
 #
 [ -f ${HOME}/.zshrc.mine ] && source ${HOME}/.zshrc.mine
 
+function gi() { curl http://gitignore.io/api/$@ ;}

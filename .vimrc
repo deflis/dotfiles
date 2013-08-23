@@ -520,3 +520,12 @@ let g:powerline_config_overrides={
 \        },
 \   },
 \ }
+
+" Undo履歴の保存
+if has('persistent_undo')
+  set undodir=./.vimundo,~/.vimundo
+  augroup vimrc-undofile
+    autocmd!
+    autocmd BufReadPre ~/* setlocal undofile
+  augroup END
+endif

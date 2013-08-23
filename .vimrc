@@ -23,7 +23,7 @@ if has('vim_starting')
 endif
 
 " let NeoBundle manage NeoBundle
-NeoBundle 'Shougo/neobundle.vim'
+NeoBundleFetch 'Shougo/neobundle.vim'
 " recommended to install
 NeoBundle 'Shougo/vimproc', {
 \   'build' : {
@@ -161,6 +161,20 @@ NeoBundle 'Lokaltog/powerline', {
 
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'elzr/vim-json'
+
+NeoBundleLazy 'pasela/unite-fuel', {
+\   'depends' : ["Shougo/unite.vim"],
+\   'autoload' : {
+\       'unite_sources' : 'fuel',
+\   }
+\}
+
+NeoBundleLazy 'Shougo/unite-ssh', {
+\   'depends' : ["Shougo/unite.vim"],
+\   'autoload' : {
+\       'unite_sources' : 'ssh',
+\   }
+\}
 NeoBundleCheck
 
 filetype plugin on
@@ -449,7 +463,7 @@ let g:quickrun_config = {
 \    },
 \    'json': {
 \      'command': 'jq',
-\      'exec': "%c %a %s",
+\      'exec': "%c '%a' %s",
 \      'args': '.',
 \      'outputter': 'buffer:filetype=json'
 \    },

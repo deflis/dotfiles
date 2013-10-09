@@ -110,7 +110,7 @@ NeoBundleLazy 'scrooloose/nerdtree', {
 \   'autoload' : { 'commands' : [ "NERDTree", "NERDTreeClose", "NERDTreeToggle", "NERDTreeFromBookmark" ], 'explorer' : 1 }
 \}
 " Disable netrw.vim
-let g:loaded_netrwPlugin = 1
+"let g:loaded_netrwPlugin = 1
 "NeoBundleLazy 'TwitVim'
 "NeoBundleLazy 'dbext.vim'
 NeoBundleLazy 'kchmck/vim-coffee-script', {

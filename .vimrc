@@ -188,6 +188,9 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 
+set backupdir=~/.vim/tmp/
+set directory=~/.vim/tmp/
+
 " 起動時に引数なしならNERDtree起動
 " let file_name = expand("%")
 " if has('vim_starting') &&  file_name == ""

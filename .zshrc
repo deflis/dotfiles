@@ -249,7 +249,7 @@ if [ -z "$TMUX" -a -z "$STY" -a "$TERM" != "screen" ]; then
         if tmux has-session && tmux list-sessions | /usr/bin/grep -qE '.*]$'; then
             exec tmux attach && echo "tmux attached session"
         else
-            exec tmuxx new-session && echo "tmux created new session"
+            exec tmux new-session && echo "tmux created new session"
         fi
     fi
 fi

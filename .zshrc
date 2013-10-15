@@ -243,16 +243,13 @@ isdarwin && export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
 [ -d ${HOME}/bin ] && export PATH=${PATH}:${HOME}/bin
 
 alias tmuxx='~/dotfiles/tmuxx.sh'
-alias tmux='~/dotfiles/tmuxx.sh'
 
-if [ -z "$TMUX" -a -z "$STY" ]; then
-    if type tmuxx >/dev/null 2>&1; then
-        tmuxx
-    elif type tmux >/dev/null 2>&1; then
+if [ -z "$TMUX" -a -z "$STY" -a "$TERM" != "screen" ]; then
+    if type tmux >/dev/null 2>&1; then
         if tmux has-session && tmux list-sessions | /usr/bin/grep -qE '.*]$'; then
-            tmux attach && echo "tmux attached session "
+            exec tmux attach && echo "tmux attached session"
         else
-            tmux new-session && echo "tmux created new session"
+            exec tmux new-session && echo "tmux created new session"
         fi
     fi
 fi

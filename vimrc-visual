@@ -18,3 +18,5 @@ set lcs=tab:>.,trail:_,extends:¥
 " 全角スペースの位置を表示
 highlight JpSpace cterm=underline ctermfg=Blue guifg=Blue
 au BufRead,BufNew * match JpSpace /　/
+
+set ambiwidth=double

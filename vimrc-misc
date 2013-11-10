@@ -1,0 +1,33 @@
+" マウス操作
+set mouse=a
+set ttymouse=xterm2
+
+" Use clipboard register.
+if has('unnamedplus')
+    set clipboard& clipboard+=unnamedplus
+else
+    set clipboard& clipboard+=unnamed
+endif
+
+if &term =~ "screen" || (executable('tmux') && $TMUX != '')
+    function SetScreenTabName(name)
+        let arg = 'k' . a:name . '\\'
+        silent! exe '!echo -n "' . arg . "\""
+    endfunction
+
+    autocmd VimLeave * call SetScreenTabName('shell')
+    autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | call SetScreenTabName("%") | endif 
+endif
+
+set backupdir=~/.vim/tmp/
+set directory=~/.vim/tmp/
+
+" Undo履歴の保存
+" http://vim-users.jp/2010/07/hack162/ 
+if has('persistent_undo')
+  set undodir=./.vimundo,~/.vimundo
+  augroup vimrc-undofile
+    autocmd!
+    autocmd BufReadPre ~/* setlocal undofile
+  augroup END
+endif

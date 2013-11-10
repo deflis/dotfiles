@@ -1,0 +1,57 @@
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+
+
+" define dictionary.
+let g:neocomplete_dictionary_filetype_lists = {
+            \ 'default' : '',
+            \ 'vimshell' : $home.'/.vimshell_hist',
+            \ 'scheme' : $home.'/.gosh_completions',
+            \ 'php' : $home . '/.vim/dict/php.dict',
+            \ 'ctp' : $home . '/.vim/dict/php.dict'
+            \ }
+
+" define keyword.
+if !exists('g:neocomplete_keyword_patterns')
+    let g:neocomplete_keyword_patterns = {}
+endif
+let g:neocomplete_keyword_patterns['default'] = '\h\w*'
+
+" plugin key-mappings.
+imap <c-k>     <plug>(neocomplete_snippets_expand)
+smap <c-k>     <plug>(neocomplete_snippets_expand)
+inoremap <expr><c-g>     neocomplete#undo_completion()
+inoremap <expr><c-l>     neocomplete#complete_common_string()
+
+" supertab like snippets behavior.
+"imap <expr><tab> neocomplete#sources#snippets_complete#expandable() ? "\<plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<c-n>" : "\<tab>"
+
+" <cr>: close popup.
+inoremap <expr><cr> pumvisible() ? neocomplete#smart_close_popup() : "\<cr>"
+" ctrl+spaceで補完
+inoremap <expr><nul> pumvisible() ? "\<c-n>" : neocomplete#start_manual_complete()
+" recommended key-mappings.
+" <tab>: completion.
+inoremap <expr><tab>  pumvisible() ? "\<c-n>" : "\<tab>"
+" <c-h>, <bs>: close popup and delete backword char.
+inoremap <expr><c-h> neocomplete#smart_close_popup()."\<c-h>"
+inoremap <expr><bs> neocomplete#smart_close_popup()."\<c-h>"
+inoremap <expr><c-y>  neocomplete#close_popup()
+inoremap <expr><c-e>  neocomplete#cancel_popup()
+
+" Enable heavy omni completion.
+if !exists('g:neocomplete_omni_patterns')
+    let g:neocomplete_omni_patterns = {}
+endif
+" let g:neocomplete_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+"autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+let g:neocomplete_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+let g:neocomplete_omni_patterns.c = '\%(\.\|->\)\h\w*'
+let g:neocomplete_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'

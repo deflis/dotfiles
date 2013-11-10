@@ -1,0 +1,40 @@
+" Escで補完を消す
+" 何のために追加しているのか思い出せないがなぜかwin32のvimコンソールだと終了時おかしいのでここを読まないように変更
+if !has('windows') || has('gui_running')
+    let &t_ti .= "\e[?7727h"
+    let &t_te .= "\e[?7727l"
+endif
+
+" Escでポップアップを閉じる
+noremap <special> <Esc>O[ <Esc>
+noremap! <special> <Esc>O[ <Esc>
+inoremap <expr><ESC>0[ pumvisible() ? neocomplcachecomplcache#smart_close_popup() . "\<ESC>" : <ESC>
+inoremap <special> <C-V><Esc>O[ <C-V><Esc>
+
+" Ctrl+HJKLでウインドウ移動
+nmap <C-h> <C-w><C-h>
+nmap <C-j> <C-w><C-j>
+nmap <C-k> <C-w><C-k>
+nmap <C-l> <C-w><C-l>
+
+" MemoList
+nnoremap <Leader>mf :exe "CtrlP" g:memolist_path<cr><f5>
+nnoremap <Leader>mn  :MemoNew<CR>
+nnoremap <Leader>ml  :MemoList<CR>
+nnoremap <Leader>mg  :MemoGrep<CR>
+
+" NERDTree
+nnoremap <Leader>nt  :NERDTreeToggle<CR>
+nnoremap <Leader>ntt :NERDTreeClose<CR>:NERDTree<CR>
+
+" Tagbar
+nnoremap <Leader>tb  :TagbarToggle<CR>
+
+" バッファを閉じる
+" nnoremap <C-d> :<C-u>bd<CR>
+" 次のバッファ
+" nnoremap <Space> :<C-u>MBEbn<CR>
+" 次のバッファ
+" nnoremap <C-n> :<C-u>MBEbn<CR>
+" 前のバッファ
+" nnoremap <C-p> :<C-u>MBEbp<CR>

@@ -1,0 +1,53 @@
+" quickrun
+let g:quickrun_config = {
+\    'markdown': {
+\      'outputter': 'browser',
+\      'type':
+\              executable('mdown')            ? 'markdown/mdown':
+\              executable('pandoc')           ? 'markdown/pandoc':
+\              executable('multimarkdown')    ? 'markdown/multimarkdown':
+\              executable('MultiMarkdown.pl') ? 'markdown/MultiMarkdown.pl':
+\              executable('rdiscount')        ? 'markdown/rdiscount':
+\              executable('bluecloth')        ? 'markdown/bluecloth':
+\              executable('markdown')         ? 'markdown/markdown':
+\              executable('Markdown.pl')      ? 'markdown/Markdown.pl':
+\              executable('redcarpet')        ? 'markdown/redcarpet':
+\              executable('kramdown')         ? 'markdown/kramdown':
+\              '',
+\    },
+\    'markdown/mdown': {
+\      'command': 'mdown',
+\      'exec': '%c -i %s',
+\    },
+\    'markdown/multimarkdown': {
+\      'command': 'multimarkdown',
+\    },
+\    'markdown/MultiMarkdown.pl': {
+\      'command': 'MultiMarkdown.pl',
+\    },
+\    'markdown/rdiscount': {
+\      'command': 'rdiscount',
+\    },
+\    'markdown/markdown': {
+\      'command': 'markdown',
+\    },
+\    'json': {
+\      'command': 'jq',
+\      'exec': "%c '%a' %s",
+\      'args': '.',
+\      'outputter': 'buffer:filetype=json'
+\    },
+\ }
+" CoffeeSctipt
+let g:quickrun_config['coffee'] = {'command' : 'coffee', 'exec' : ['%c -cbp %s']}
+autocmd BufWritePost *.coffee silent CoffeeMake! -cb | cwindow | redraw!
+
+command! -nargs=? Jq call s:Jq(<f-args>)
+function! s:Jq(...)
+    if 0 == a:0
+        let l:arg = "."
+    else
+        let l:arg = a:1
+    endif
+    call quickrun#run({"type":"json" ,"args" : l:arg})
+endfunction

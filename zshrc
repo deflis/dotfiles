@@ -76,3 +76,7 @@ source ${_DOTFILES}/zshrc-misc
 if [ -d "$HOME/.anyenv" ]; then
     source ${_DOTFILES}/zshrc-anyenv
 fi
+
+## original command
+#
+source ${_DOTFILES}/zshrc-commands

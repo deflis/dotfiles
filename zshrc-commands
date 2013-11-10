@@ -1,0 +1,18 @@
+## Original command
+
+local _dev_directory
+_dev_directory=~/Develop
+
+function cddevelop {
+    cd ${_dev_directory}/$1
+}
+
+function _cddevelop {
+    local files
+    if (( CURRENT == 2 ));then
+        compadd `find ${_dev_directory}/* -type d -maxdepth 0 -exec basename '{}' ';'`
+    fi
+    return 1;
+}
+ 
+compdef _cddevelop cddevelop

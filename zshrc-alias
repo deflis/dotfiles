@@ -1,0 +1,31 @@
+## Alias configuration
+#
+# expand aliases before completing
+#
+
+setopt complete_aliases     # aliased ls needs if file/dir completions work
+
+alias where="command -v"
+alias j="jobs -l"
+
+case "${OSTYPE}" in
+freebsd*|darwin*)
+    alias ls="ls -G -w"
+    ;;
+linux*)
+    alias ls="ls --color"
+    ;;
+esac
+
+alias la="ls -a"
+alias lf="ls -F"
+alias ll="ls -l"
+
+alias du="du -h"
+alias df="df -h"
+
+alias su="su -l"
+
+alias emacs=vim
+alias tmuxx='~/dotfiles/tmuxx.sh'
+

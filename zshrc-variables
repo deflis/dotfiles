@@ -1,0 +1,4 @@
+export EDITOR=vim
+export LESS='--tabs=4 --no-init --LONG-PROMPT --ignore-case -R'
+
+[ -d ${HOME}/bin ] && export PATH=${PATH}:${HOME}/bin

@@ -1,0 +1,5 @@
+[ -d /usr/local/Library/Contributions/ ] && fpath=(/usr/local/Library/Contributions/ ${fpath})
+fpath=(${HOME}/.zsh/functions/Completion ${fpath})
+autoload -U compinit
+compinit
+zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' '+m:{A-Z}={a-z}'

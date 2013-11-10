@@ -1,0 +1,24 @@
+export PATH="$HOME/.anyenv/bin:$PATH"
+eval "$(anyenv init -)"
+
+if whence -p rbenv &>/dev/null; then
+    function gem() {
+        command gem $*
+        if [ "$1" = "install" ] || [ "$1" = "i" ] || [ "$1" = "uninstall" ] || [ "$1" = "uni" ]
+        then
+            rbenv rehash
+            rehash
+        fi
+    }
+fi
+
+if whence -p phpenv &>/dev/null; then
+    function pear() {
+        command pear $*
+        if [ "$1" = "install" ] || [ "$1" = "i" ] || [ "$1" = "uninstall" ] || [ "$1" = "uni" ]
+        then
+            phpenv rehash
+            rehash
+        fi
+    }
+fi

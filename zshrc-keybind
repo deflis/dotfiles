@@ -14,4 +14,10 @@ bindkey "\\en" history-beginning-search-forward-end
 #
 bindkey "\e[Z" reverse-menu-complete
 
-
+# HOME/END/DELETEの対策
+bindkey "^[[1~" vi-beginning-of-line   # Home
+bindkey "^[[4~" vi-end-of-line         # End
+bindkey '^[[2~' beep                   # Insert
+bindkey '^[[3~' delete-char            # Del
+bindkey '^[[5~' vi-backward-blank-word # Page Up
+bindkey '^[[6~' vi-forward-blank-word  # Page Down

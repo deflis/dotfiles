@@ -161,3 +161,7 @@ NeoBundleLazy 'leafgarland/typescript-vim', {
 \   "autoload" : { 'filetype' : ["typescript"] }
 \}
 autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
+
+NeoBundleLazy 'tsukkee/lingr-vim', {
+\   'autoload' : { 'commands' : [ "LingrLaunch" ], 'function_prefix' : 'lingr' }
+\}

@@ -165,3 +165,8 @@ autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
 NeoBundleLazy 'tsukkee/lingr-vim', {
 \   'autoload' : { 'commands' : [ "LingrLaunch" ], 'function_prefix' : 'lingr' }
 \}
+
+NeoBundleLazy 'derekwyatt/vim-scala', {
+\   "autoload" : { "filetypes" : ["scala"] }
+\}
+autocmd BufNewFile,BufRead *.scala set filetype=scala

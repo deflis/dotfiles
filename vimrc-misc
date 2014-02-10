@@ -10,13 +10,15 @@ else
 endif
 
 if &term =~ "screen" || (executable('tmux') && $TMUX != '')
-    function SetScreenTabName(name)
+    function! SetScreenTabName(name)
         let arg = 'k' . a:name . '\\'
         silent! exe '!echo -n "' . arg . "\""
     endfunction
 
-    autocmd VimLeave * call SetScreenTabName('shell')
-    autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | call SetScreenTabName("%") | endif 
+    augroup vimrc-screen
+        autocmd VimLeave * call SetScreenTabName('shell')
+        autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | call SetScreenTabName("%") | endif 
+    augroup END
 endif
 
 set backupdir=~/.vim/tmp/

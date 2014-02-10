@@ -72,7 +72,7 @@ NeoBundleLazy 'kannokanno/previm', {
 \}
 NeoBundle 'sudo.vim'
 NeoBundleLazy 'nginx.vim', {
-\   "autoload" : { 'filetype' : ["nginx"] }
+\   "autoload" : { 'filetypes' : ["nginx"] }
 \}
 autocmd BufNewFile,BufRead /etc/nginx/conf.d/* set ft=nginx
 NeoBundleLazy 'vim-ruby/vim-ruby', {
@@ -90,7 +90,7 @@ NeoBundleLazy 'scrooloose/nerdtree', {
 "NeoBundleLazy 'TwitVim'
 "NeoBundleLazy 'dbext.vim'
 NeoBundleLazy 'kchmck/vim-coffee-script', {
-\   "autoload" : { 'filetype' : ["coffee"] }
+\   "autoload" : { 'filetypes' : ["coffee"] }
 \}
 autocmd BufNewFile,BufRead *.coffee,*Cakefile,*.coffeekup,*.ck,*._coffee set filetype=coffee
 NeoBundleLazy 'Shougo/vinarise', {
@@ -158,7 +158,7 @@ NeoBundle 'xolox/vim-session', {
 \}
 
 NeoBundleLazy 'leafgarland/typescript-vim', {
-\   "autoload" : { 'filetype' : ["typescript"] }
+\   "autoload" : { 'filetypes' : ["typescript"] }
 \}
 autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
 

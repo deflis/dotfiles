@@ -7,6 +7,8 @@ if [ -d /Applications/MacVim.app/Contents/MacOS/ ]; then
     export PATH=/Applications/MacVim.app/Contents/MacOS:$PATH
 fi;
 
+export PATH=/usr/local/opt/gnu-tar/libexec/gnubin:$PATH
+
 export PYTHONPATH=/opt/local/lib/python2.6/site-packages:$PYTHONPATH
 export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
 

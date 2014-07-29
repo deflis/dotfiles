@@ -14,6 +14,10 @@ install mobile-shell
 install gnu-sed
 install gnu-tar
 install jq
+install clipper
+install sbt
+install tig
+install tree
 
 tap 'phinze/cask' || true
 install brew-cask

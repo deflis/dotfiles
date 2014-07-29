@@ -1,1 +1,6 @@
 function gi() { curl http://gitignore.io/api/$@ ;}
+
+function ut2date {
+  /bin/date -u -r $1 +"%Y/%m/%d %H:%M:%S UTC"
+  /bin/date -r $1 +"%Y/%m/%d %H:%M:%S"
+}

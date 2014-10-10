@@ -18,22 +18,15 @@ install clipper
 install sbt
 install tig
 install tree
+install reattach-to-user-namespace
 
 tap 'phinze/cask' || true
 install brew-cask
 
-cask install alfred
-cask install firefox
-cask install keyremap4macbook
-cask install limechat
-
 cask install vagrant
 cask install virtualbox
-cask install adobe-air
 cask install grandperspective
 cask install intellij-idea
 cask install mysqlworkbench
 cask install nosleep
-cask install onepassword
 
-cask alfred link

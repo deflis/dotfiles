@@ -69,7 +69,8 @@ NeoBundle 'thinca/vim-ref'
 
 NeoBundle 'tpope/vim-markdown'
 NeoBundleLazy 'kannokanno/previm', {
-\   "autoload" : { "filetypes" : ["markdown"] }
+\   'depends' : ['tyru/open-browser.vim'],
+\   "autoload" : { "filetypes" : ["markdown", "textile"] }
 \}
 NeoBundle 'sudo.vim'
 NeoBundleLazy 'nginx.vim', {
@@ -101,7 +102,6 @@ NeoBundle 'kana/vim-fakeclip.git'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundleLazy 'tyru/open-browser.vim', {
 \   'autoload' : {
-\       'filetypes' : ["markdown"],
 \       'functions' : "OpenBrowser",
 \       'commands'  : ["OpenBrowser", "OpenBrowserSearch"],
 \       'mappings'  : "<Plug>(openbrowser-smart-search)"
@@ -171,3 +171,9 @@ NeoBundleLazy 'derekwyatt/vim-scala', {
 \   "autoload" : { "filetypes" : ["scala"] }
 \}
 autocmd BufNewFile,BufRead *.scala set filetype=scala
+
+NeoBundleLazy 'timcharper/textile.vim', {
+\   "autoload" : { "filetypes" : ["textile"] }
+\}
+autocmd BufNewFile,BufRead *.textile set filetype=textile
+

@@ -16,7 +16,7 @@ NeoBundleLazy 'Shougo/unite.vim', {
 \   }
 \}
 NeoBundleLazy 'Shougo/vimshell',{
-\   'depends' : 'Shougo/vimproc',
+\   'depends' : ['Shougo/vimproc', 'Shougo/neossh.vim'],
 \   'autoload' : {
 \       'commands' : [
 \           {
@@ -31,6 +31,7 @@ NeoBundleLazy 'Shougo/vimshell',{
 \       'mappings' : ['<Plug>(vimshell_switch)']
 \ }
 \}
+
 if has('lua') && ( (v:version == 703 && has('patch885')) || v:version >= 704 )
     NeoBundle "Shougo/neocomplete.vim"
 else
@@ -45,7 +46,7 @@ NeoBundleLazy 'tsukkee/unite-tag', {
 \   }
 \}
 NeoBundleLazy 'Shougo/vimfiler', {
-\   'depends' : 'Shougo/unite.vim',
+\   'depends' : ['Shougo/unite.vim', 'Shougo/neossh.vim'],
 \   'autoload' : {
 \       'commands' : [
 \           {
@@ -147,7 +148,7 @@ NeoBundleLazy 'pasela/unite-fuel', {
 \   }
 \}
 
-NeoBundleLazy 'Shougo/unite-ssh', {
+NeoBundleLazy 'Shougo/neossh.vim', {
 \   'depends' : ["Shougo/unite.vim"],
 \   'autoload' : {
 \       'unite_sources' : 'ssh',

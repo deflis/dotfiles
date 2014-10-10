@@ -40,8 +40,10 @@ source ~/dotfiles/vimrc-keybind
 source ~/dotfiles/vimrc-colorscheme
 source ~/dotfiles/vimrc-visual
 
+source ~/dotfiles/vimrc-vimshell
 source ~/dotfiles/vimrc-quickrun
 source ~/dotfiles/vimrc-plugin-config
+
 
 source ~/dotfiles/vimrc-misc
 

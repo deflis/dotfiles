@@ -33,3 +33,24 @@ if has('persistent_undo')
     autocmd BufReadPre ~/* setlocal undofile
   augroup END
 endif
+
+function! ToCamelCase()
+    let snake_case = expand('<cword>')
+
+    if !strlen(snake_case)
+        return
+    endif
+
+    let word_list = split(snake_case, '_')
+    let camel_case = word_list[0]
+
+    for word in word_list[1:]
+        let camel_case = camel_case . toupper(word[0]) . word[1:]
+    endfor
+
+    call setline(getpos(".")[1], substitute(getline("."), snake_case, camel_case, ""))
+endfunction
+
+command! ToCamelCase :call ToCamelCase()
+nnoremap <silent><C-k>   :<C-u>ToCamelCase<CR>
+inoremap <silent><C-k> <Esc>:<C-u>ToCamelCase<CR><Insert>

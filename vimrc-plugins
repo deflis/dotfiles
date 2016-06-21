@@ -62,6 +62,7 @@ NeoBundleLazy 'Shougo/vimfiler', {
 \       'mappings' : ['<Plug>(vimfiler_switch)'],
 \   }
 \}
+let g:vimfiler_as_default_explorer = 1
 
 "NeoBundleLazy 'mattn/zencoding-vim'
 NeoBundle 'thinca/vim-quickrun'
@@ -84,9 +85,9 @@ NeoBundleLazy 'majutsushi/tagbar', {
 \   'autoload' : { 'commands' : [ "TagbarOpen", "TagbarToggle", "TagbarCurrentTag" ] }
 \}
 
-NeoBundleLazy 'scrooloose/nerdtree', {
-\   'autoload' : { 'commands' : [ "NERDTree", "NERDTreeClose", "NERDTreeToggle", "NERDTreeFromBookmark" ], 'explorer' : 1 }
-\}
+" NeoBundleLazy 'scrooloose/nerdtree', {
+" \   'autoload' : { 'commands' : [ "NERDTree", "NERDTreeClose", "NERDTreeToggle", "NERDTreeFromBookmark" ], 'explorer' : 1 }
+" \}
 " Disable netrw.vim
 "let g:loaded_netrwPlugin = 1
 "NeoBundleLazy 'TwitVim'
@@ -136,7 +137,7 @@ NeoBundle 'thinca/vim-localrc'
 "\   'base' : expand('$HOME/dotfiles')
 "\}
 
-NeoBundle 'bling/vim-airline'
+NeoBundle 'itchyny/lightline.vim'
 
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'elzr/vim-json'
@@ -177,3 +178,11 @@ NeoBundleLazy 'timcharper/textile.vim', {
 \}
 autocmd BufNewFile,BufRead *.textile set filetype=textile
 
+NeoBundleLazy 'aklt/plantuml-syntax', {
+\   "autoload" : { "filetypes" : ["plantuml"] }
+\}
+autocmd BufRead,BufNewFile *.pu,*.uml,*.plantuml set filetype=plantuml
+
+NeoBundle 'tmux-plugins/vim-tmux'
+
+NeoBundle 'Align'

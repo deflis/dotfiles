@@ -3,12 +3,14 @@
 let g:ctrlp_use_migemo = 1
 
 " NERDTree
-let s:bundle = neobundle#get("nerdtree")
-function! s:bundle.hooks.on_source(bundle)
-    let g:NERDTreeIgnore=['\.clean$', '\.swp$', '\.bak$', '\~$', '^\.git$', '^\.svn$', '^\.idea$', '^\.vagrant$']
-    let g:NERDTreeShowHidden=1
-endfunction
-unlet s:bundle
+"let s:bundle = neobundle#get("nerdtree")
+
+"function! s:bundle.hooks.on_source(bundle)
+"    let g:NERDTreeIgnore=['\.clean$', '\.swp$', '\.bak$', '\~$', '^\.git$', '^\.svn$', '^\.idea$', '^\.vagrant$']
+"    let g:NERDTreeShowHidden=1
+"endfunction
+
+"unlet s:bundle
 
 " Tagbar
 if executable('/Applications/MacVim.app/Contents/MacOS/ctags')

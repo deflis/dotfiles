@@ -29,3 +29,12 @@ alias su="su -l"
 alias emacs=vim
 alias tmuxx='~/dotfiles/tmuxx.sh'
 
+if which mvim >& /dev/null; then
+    alias gvim=mvim
+elif which gvim >& /dev/null; then
+    alias mvim=gvim
+else
+    alias gvim=vim
+    alias mvim=vim
+fi;
+

@@ -65,3 +65,11 @@ function _zshrc {
 }
  
 compdef _zshrc zshrc
+
+#
+# cd ghq repo using peco
+#
+change-repo() {
+ cd $(ghq list -p | peco)
+}
+alias cr=change-repo

@@ -186,3 +186,4 @@ autocmd BufRead,BufNewFile *.pu,*.uml,*.plantuml set filetype=plantuml
 NeoBundle 'tmux-plugins/vim-tmux'
 
 NeoBundle 'Align'
+NeoBundle 'osyo-manga/vim-over'

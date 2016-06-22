@@ -1,6 +1,7 @@
 # users generic .zshrc file for zsh(1)
 _DOTFILES=${HOME}/dotfiles
 
+export XDG_CONFIG_HOME=${_DOTFILES}
 ## Environment variable configuration
 #
 # LANG

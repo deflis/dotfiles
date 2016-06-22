@@ -187,3 +187,6 @@ NeoBundle 'tmux-plugins/vim-tmux'
 
 NeoBundle 'Align'
 NeoBundle 'osyo-manga/vim-over'
+NeoBundle 'Shougo/context_filetype.vim'
+NeoBundle 'osyo-manga/vim-precious'
+NeoBundle 'cespare/vim-toml'

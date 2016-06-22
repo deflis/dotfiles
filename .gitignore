@@ -1,2 +1,3 @@
 .vim/sessions/
 .vim/tmp/
+.tmux/resurrect

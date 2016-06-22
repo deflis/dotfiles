@@ -1,4 +1,7 @@
-set nocompatible
+if !&compatible
+  set nocompatible
+endif
+
 " set tags=~/.tags
 if has('gui_running') && !has('unix')
     set encoding=utf-8
@@ -17,25 +20,42 @@ if has('win32')
     set runtimepath+=$HOME/.vim/after
 endif
 
-if has('vim_starting')
-    set runtimepath+=~/.vim/bundle/neobundle.vim/
+" reset augroup
+augroup MyAutoCmd
+  autocmd!
+augroup END
+
+let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.cache') : $XDG_CACHE_HOME
+let s:dein_dir = s:cache_home . '/dein'
+let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
+
+if !isdirectory(s:dein_repo_dir)
+  call system('git clone https://github.com/Shougo/dein.vim ' . shellescape(s:dein_repo_dir))
 endif
 
-call neobundle#begin(expand('~/.vim/bundle/'))
-source ~/dotfiles/vimrc-plugins
+let &runtimepath = s:dein_repo_dir .",". &runtimepath
+let s:toml_file = '~/dotfiles/dein.toml'
+let s:toml_file_lazy = '~/dotfiles/dein.lazy.toml'
+if dein#load_state(s:dein_dir)
+  call dein#begin(s:dein_dir, [$MYVIMRC, expand('<sfile>'), s:toml_file, s:toml_file_lazy])
+  call dein#load_toml(s:toml_file, {"lazy": 0})
+  call dein#load_toml(s:toml_file_lazy, {"lazy" : 1})
+  call dein#end()
+  call dein#save_state()
+endif
 
-call neobundle#end()
-
-NeoBundleCheck
+if has('vim_starting') && dein#check_install()
+  call dein#install()
+endif
 
 filetype plugin on
 filetype indent on
 
-if has('lua') && ( (v:version == 703 && has('patch885')) || v:version >= 704 )
-    source ~/dotfiles/vimrc-neocomplete
-else
-    source ~/dotfiles/vimrc-neocomplcache
-endif
+"if has('lua') && ( (v:version == 703 && has('patch885')) || v:version >= 704 )
+"    source ~/dotfiles/vimrc-neocomplete
+"else
+"    source ~/dotfiles/vimrc-neocomplcache
+"endif
 source ~/dotfiles/vimrc-omnicomplete
 
 source ~/dotfiles/vimrc-keybind

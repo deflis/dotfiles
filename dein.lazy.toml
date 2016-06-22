@@ -1,0 +1,37 @@
+[[plugins]]
+repo = 'Shougo/neocomplete'
+if = 'has("lua") && ( (v:version == 703 && has("patch885")) || v:version >= 704 )  && !has("nvim")'
+on_i = 1
+hook_add = """
+  source ~/dotfiles/vimrc-neocomplete
+"""
+
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+if = 'has("nvim")'
+on_i = 1
+hook_add = """
+  source ~/dotfiles/vimrc-deoplete
+"""
+
+[[plugins]]
+repo = 'Shougo/neocomplcache.vim'
+if = '!( has("lua") && ( (v:version == 703 && has("patch885")) || v:version >= 704 ) ) && !has("nvim")'
+on_i = 1
+hook_add = """
+  source ~/dotfiles/vimrc-neocomplcache
+"""
+
+[[plugins]]
+repo = 'Shougo/unite.vim'
+depends = 'neomru.vim'
+
+[[plugins]]
+repo = 'kannokanno/previm'
+depends = ['tyru/open-browser.vim']
+on_ft = ['markdown', 'textile']
+
+[[plugins]]
+repo = 'tyru/open-browser.vim'
+on_func = "OpenBrowser"
+on_cmd = ["OpenBrowser", "OpenBrowserSearch"]

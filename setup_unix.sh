@@ -1,11 +1,10 @@
 #!/bin/bash
 
 git submodule update --init
+git submodule update
 
 cd ~/dotfiles/.vim/bundle/neobundle.vim
 git checkout master
-cd ~/dotfiles/powerline
-git checkout develop
 cd ~/dotfiles
 
 ln -snf ~/dotfiles/.zsh ~/

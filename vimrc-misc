@@ -1,8 +1,16 @@
 " マウス操作
-set mouse=a
 
-if !has('nvim')
-    set ttymouse=xterm2
+if has('mouse')
+    set mouse=a
+    if !has('nvim')
+        if has('mouse_sgr')
+            set ttymouse=sgr
+        elseif v:version > 703 || v:version is 703 && has('patch632') " I couldn't use has('mouse_sgr') :-(
+            set ttymouse=sgr
+        else
+            set ttymouse=xterm2
+        endif
+    endif
 endif
 
 " Use clipboard register.

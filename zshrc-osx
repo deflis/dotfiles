@@ -9,8 +9,8 @@ fi;
 
 
 
-export PYTHONPATH=/opt/local/lib/python2.6/site-packages:$PYTHONPATH
-export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
+#export PYTHONPATH=/opt/local/lib/python2.6/site-packages:$PYTHONPATH
+#export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
 
 () {
 

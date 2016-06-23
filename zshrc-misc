@@ -44,3 +44,6 @@ if which dircolors >& /dev/null; then
     eval `dircolors ~/dotfiles/utils/dircolors-solarized/dircolors.256dark`
 fi
 
+if [ -n "$LS_COLORS" ]; then
+    zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+fi

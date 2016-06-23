@@ -72,6 +72,10 @@ hook_add = '''
 
 [[plugins]]
 repo = 'itchyny/lightline.vim'
+hook_add = '''
+  source ~/dotfiles/vimrc-lightline
+'''
+depends = ['altercation/vim-colors-solarized']
 
 # Syntax highlight
 [[plugins]]

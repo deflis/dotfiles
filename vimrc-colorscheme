@@ -3,4 +3,4 @@ syntax enable
 set background=dark
 colorscheme solarized
 
-source ~/dotfiles/vimrc-lightline
+"source ~/dotfiles/vimrc-lightline

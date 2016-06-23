@@ -10,7 +10,11 @@ alias j="jobs -l"
 
 case "${OSTYPE}" in
 freebsd*|darwin*)
-    alias ls="ls -G -w"
+    if which gls >& /dev/null; then
+        alias ls="gls --color"
+    else
+        alias ls="ls -G -w"
+    fi
     ;;
 linux*)
     alias ls="ls --color"

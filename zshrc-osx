@@ -7,8 +7,22 @@ if [ -d /Applications/MacVim.app/Contents/MacOS/ ]; then
     export PATH=/Applications/MacVim.app/Contents/MacOS:$PATH
 fi;
 
-export PATH=/usr/local/opt/gnu-tar/libexec/gnubin:$PATH
+
 
 export PYTHONPATH=/opt/local/lib/python2.6/site-packages:$PYTHONPATH
 export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
 
+() {
+
+    __brew_gnubin() {
+        if brew --prefix $1 >& /dev/null; then
+            export PATH="$(brew --prefix $1)/libexec/gnubin:$PATH"
+        fi;
+    }
+
+    if which brew >& /dev/null ; then
+        __brew_gnubin gnu-tar
+        __brew_gnubin coreutils
+    fi;
+
+}

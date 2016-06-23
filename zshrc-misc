@@ -39,3 +39,8 @@ if (( $+commands[ip] )); then
         echo 'Use `ip r`'
     }
 fi
+
+if which dircolors >& /dev/null; then
+    eval `dircolors ~/dotfiles/utils/dircolors-solarized/dircolors.256dark`
+fi
+

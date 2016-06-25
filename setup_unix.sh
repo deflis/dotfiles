@@ -3,10 +3,6 @@
 git submodule update --init
 git submodule update
 
-cd ~/dotfiles/.vim/bundle/neobundle.vim
-git checkout master
-cd ~/dotfiles
-
 ln -snf ~/dotfiles/.zsh ~/
 ln -snf ~/dotfiles/.zshrc ~/
 ln -snf ~/dotfiles/.vim ~/

@@ -1,5 +1,5 @@
 [submodule ".tmux/plugins/tpm"]
-	path = .tmux/plugins/tpm
+	path = tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
 [submodule "utils/dircolors-solarized"]
 	path = utils/dircolors-solarized

@@ -74,9 +74,7 @@ source ${_DOTFILES}/zshrc-misc
 
 ## anyenv configuration
 #
-if [ -d "$HOME/.anyenv" ]; then
-    source ${_DOTFILES}/zshrc-anyenv
-fi
+source ${_DOTFILES}/zshrc-anyenv
 
 ## original command
 #

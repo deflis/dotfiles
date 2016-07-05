@@ -1,3 +1,21 @@
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
+deoplete#enable()
+" Use smartcase.
+let g:deoplate#enable_smart_case = 1
+
+" <cr>: close popup.
+inoremap <expr><cr> pumvisible() ? deoplate#mappings#smart_close_popup() : "\<cr>"
+" ctrl+spaceで補完
+inoremap <expr> <C-Space> pumvisible() ? "\<c-n>" : deoplate#mappings#manual_complete()
+inoremap <expr> <C-@> pumvisible() ? "\<c-n>" : deoplate#mappings#manual_complete()
+inoremap <expr> <Nul> pumvisible() ? "\<c-n>" : deoplate#mappings#manual_complete()
+" recommended key-mappings.
+" <tab>: completion.
+inoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : deoplete#mappings#manual_complete()
+" <c-h>, <bs>: close popup and delete backword char.
+inoremap <expr><C-h> deoplete#mappings#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
+inoremap <expr><c-y>  deoplate#mappings#close_popup()
+inoremap <expr><c-e>  deoplate#mappings#cancel_popup()
 

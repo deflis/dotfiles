@@ -72,6 +72,10 @@ source ${_DOTFILES}/zshrc-sudovim
 #
 source ${_DOTFILES}/zshrc-misc
 
+## zplug configuration
+#
+source ${_DOTFILES}/zshrc-zplug
+
 ## anyenv configuration
 #
 source ${_DOTFILES}/zshrc-anyenv

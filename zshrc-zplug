@@ -1,0 +1,24 @@
+if [ -d /usr/local/opt/zplug ] ; then
+    export ZPLUG_HOME=/usr/local/opt/zplug
+fi
+
+if [ -n $ZPLUG_HOME ]; then
+    source $ZPLUG_HOME/init.zsh
+    zplug "b4b4r07/enhancd", use:init.sh
+    zplug "b4b4r07/zsh-vimode-visual", use:"*.sh"
+    zplug "zsh-users/zsh-autosuggestions", use:"*.zsh", hook-load:"ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=fg=27"
+
+
+    if ! zplug check --verbose; then
+        printf "Install? [y/N]: "
+        if read -q; then
+            echo; zplug install
+        fi
+    fi
+
+    ZPLUG_LOADFILE=$_DOTFILES/packages.zsh
+
+    # プラグインを読み込み、コマンドにパスを通す
+    zplug load
+fi
+

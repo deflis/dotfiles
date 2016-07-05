@@ -15,6 +15,12 @@ if filereadable('/usr/local/Frameworks/Python.framework/Versions/2.7/lib/libpyth
     let $PYTHON_DLL = '/usr/local/Frameworks/Python.framework/Versions/2.7/lib/libpython2.7.dylib'
 endif
 
+if has('nvim')
+    if executable('~/.pyenv/versions/3.5.1/bin/python')
+        let g:python3_host_prog = '~/.pyenv/versions/3.5.1/bin/python'
+    endif
+endif
+
 if has('win32')
     set runtimepath^=$HOME/.vim
     set runtimepath+=$HOME/.vim/after

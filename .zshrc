@@ -13,7 +13,7 @@ if [ -f ${HOME}/.zshrc.mine ]; then
     source ${HOME}/.zshrc.mine
 fi
 
-typeset -U path PATH
+typeset -U path cdpath fpath manpath ld_library_path include
 
 if (( $+__ZPROF )); then
     if (which zprof > /dev/null) ;then

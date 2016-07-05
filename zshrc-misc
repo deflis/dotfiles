@@ -5,7 +5,7 @@ function ut2date {
   /bin/date -r $1 +"%Y/%m/%d %H:%M:%S"
 }
 
-if (( $+commands[ip] )); then
+if (( $+commands[ip] )) ; then
     ls_deprecated_message () {
         echo -n 'net-tools コマンドはもう非推奨ですよ？おじさんなんじゃないですか？ '
     }
@@ -40,7 +40,7 @@ if (( $+commands[ip] )); then
     }
 fi
 
-if which dircolors >& /dev/null; then
+if (( $+commands[dircolors] )) ; then
     eval `dircolors ~/dotfiles/utils/dircolors-solarized/dircolors.256dark`
 fi
 

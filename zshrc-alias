@@ -10,7 +10,7 @@ alias j="jobs -l"
 
 case "${OSTYPE}" in
 freebsd*|darwin*)
-    if which gls >& /dev/null; then
+    if (( $+commands[gls] )) ; then
         alias ls="gls --color"
     else
         alias ls="ls -G -w"
@@ -32,10 +32,11 @@ alias su="su -l"
 
 alias emacs=vim
 alias tmuxx='~/dotfiles/tmuxx.sh'
+alias tailf="tail -f"
 
-if which mvim >& /dev/null; then
+if [ -n `whence mvim` ] ; then
     alias gvim=mvim
-elif which gvim >& /dev/null; then
+elif [ -n `whence gvim` ] ; then
     alias mvim=gvim
 else
     alias gvim=vim

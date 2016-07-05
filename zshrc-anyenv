@@ -3,11 +3,11 @@ if [ -d "$HOME/.anyenv" ]; then
     eval "$(anyenv init -)"
 
 else 
-    if which rbenv &>/dev/null; then
+    if (( $+commands[rbenv] )) ; then
         eval "$(rbenv init -)"
     fi
 
-    if which pyenv &>/dev/null; then
+    if (( $+commands[pyenv] )) ; then
         # Python version management: pyenv.
         export PYENV_ROOT="$HOME/.pyenv"
         export PATH="$PYENV_ROOT/bin:$PATH"
@@ -16,7 +16,7 @@ else
 fi
 
 
-if whence -p rbenv &>/dev/null; then
+if (( $+commands[rbenv] )) ; then
     function gem() {
         `rbenv which gem` $*
         if [ "$1" = "install" ] || [ "$1" = "i" ] || [ "$1" = "uninstall" ] || [ "$1" = "uni" ]
@@ -27,7 +27,7 @@ if whence -p rbenv &>/dev/null; then
     }
 fi
 
-if whence -p phpenv &>/dev/null; then
+if (( $+commands[phpenv] )) ; then
     function pear() {
         command pear $*
         if [ "$1" = "install" ] || [ "$1" = "i" ] || [ "$1" = "uninstall" ] || [ "$1" = "uni" ]

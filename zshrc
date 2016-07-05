@@ -13,9 +13,16 @@ case ${UID} in
     ;;
 esac
 
+## zplug configuration
+#
+source ${_DOTFILES}/zshrc-zplug
+
 # 関数をフック
 autoload -Uz add-zsh-hook
 
+## Completion configuration
+#
+source ${_DOTFILES}/zshrc-completion
 
 ## Prompt configuration
 #
@@ -38,10 +45,6 @@ SAVEHIST=50000
 setopt hist_ignore_space    # ignore 
 setopt hist_ignore_dups     # ignore duplication command history list
 setopt share_history        # share command history data
-
-## Completion configuration
-#
-source ${_DOTFILES}/zshrc-completion
 
 ## Alias configuration
 #
@@ -71,10 +74,6 @@ source ${_DOTFILES}/zshrc-sudovim
 ## misc configuration
 #
 source ${_DOTFILES}/zshrc-misc
-
-## zplug configuration
-#
-source ${_DOTFILES}/zshrc-zplug
 
 ## anyenv configuration
 #

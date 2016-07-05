@@ -16,7 +16,8 @@ _vcs_precmd () {
     LANG=en_US.UTF-8 vcs_info
 }
 
-local _PROMPT_YAYOI="%F{214}ζ*＇ヮ')ζ < %f"
+local _PROMPT_YAYOI="%F{214}ζ*＇ヮ')ζ <%f"
+local _PROMPT_YAYOI_ERROR="%F{red}のヮの <%f"
 local _PROMPT_DIR="%F{110}%~/%f"
 local _PROMPT_TIME="%F{032}[%*]%f"
 local _PROMPT_RETURN="
@@ -28,7 +29,7 @@ case ${UID} in
         SPROMPT="%B%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%}%b "
         ;;
     *)
-        PROMPT="$_PROMPT_DIR $_PROMPT_YAYOI "'${vcs_info_msg_0_} $_PROMPT_MODE'"$_PROMPT_RETURN$_PROMPT_TIME %F{red}$%f "
+        PROMPT="$_PROMPT_DIR %(?.$_PROMPT_YAYOI.$_PROMPT_YAYOI_ERROR) "'${vcs_info_msg_0_} $_PROMPT_MODE'"$_PROMPT_RETURN$_PROMPT_TIME %F{red}$%f "
         PROMPT2="%{${fg[red]}%}%_%%%{${reset_color}%} "
         SPROMPT="%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%} "
         [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && 
@@ -40,13 +41,13 @@ function zle-keymap-select zle-line-init zle-line-finish
 {
     case $KEYMAP in
         main|viins)
-            _PROMPT_MODE="$fg[blue] INSERT $reset_color"
+            _PROMPT_MODE="$fg[blue]INSERT$reset_color"
             ;;
         vicmd)
-            _PROMPT_MODE="$fg[green] NORMAL $reset_color"
+            _PROMPT_MODE="$fg[green]NORMAL$reset_color"
             ;;
         vivis|vivli)
-            _PROMPT_MODE="$fg[magenta] VISUAL $reset_color"
+            _PROMPT_MODE="$fg[magenta]VISUAL$reset_color"
             ;;
     esac
     zle reset-prompt

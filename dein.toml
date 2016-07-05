@@ -66,7 +66,7 @@ depends = ['context_filetype.vim']
 # colorscheme
 [[plugins]]
 repo = 'altercation/vim-colors-solarized'
-hook_add = '''
+hook_post_source = '''
   source ~/dotfiles/vimrc-solarized
 '''
 
@@ -75,7 +75,6 @@ repo = 'itchyny/lightline.vim'
 hook_add = '''
   source ~/dotfiles/vimrc-lightline
 '''
-depends = ['altercation/vim-colors-solarized']
 
 # Syntax highlight
 [[plugins]]

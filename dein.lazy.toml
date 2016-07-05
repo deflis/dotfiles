@@ -2,7 +2,7 @@
 repo = 'Shougo/neocomplete'
 if = 'has("lua") && ( (v:version == 703 && has("patch885")) || v:version >= 704 )  && !has("nvim")'
 on_i = 1
-hook_add = """
+hook_post_source = """
   source ~/dotfiles/vimrc-neocomplete
 """
 
@@ -10,15 +10,17 @@ hook_add = """
 repo = 'Shougo/deoplete.nvim'
 if = 'has("nvim")'
 on_i = 1
-hook_add = """
-  source ~/dotfiles/vimrc-deoplete
+hook_post_source = """
+  if has("python3")
+    source ~/dotfiles/vimrc-deoplete
+  fi--
 """
 
 [[plugins]]
 repo = 'Shougo/neocomplcache.vim'
 if = '!( has("lua") && ( (v:version == 703 && has("patch885")) || v:version >= 704 ) ) && !has("nvim")'
 on_i = 1
-hook_add = """
+hook_post_source = """
   source ~/dotfiles/vimrc-neocomplcache
 """
 
@@ -35,3 +37,8 @@ on_ft = ['markdown', 'textile']
 repo = 'tyru/open-browser.vim'
 on_func = "OpenBrowser"
 on_cmd = ["OpenBrowser", "OpenBrowserSearch"]
+
+[[plugins]]
+repo = 'marijnh/tern_for_vim'
+on_ft = ['javascript']
+build = 'npm install'

@@ -4,3 +4,6 @@
 [submodule "utils/dircolors-solarized"]
 	path = utils/dircolors-solarized
 	url = https://github.com/seebi/dircolors-solarized.git
+[submodule "zplug"]
+	path = utils/zplug
+	url = https://github.com/zplug/zplug.git

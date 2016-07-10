@@ -2,7 +2,11 @@ if [ -d  ~/src/github.com/zplug/zplug/ ] ; then
     source ~/src/github.com/zplug/zplug/init.zsh
 fi
 
-if  [ -n `whence zplug` ] ; then
+if [ -d  ~/dotfiles/utils/zplug ] ; then
+    source ~/dotfiles/utils/zplug/init.zsh
+fi
+
+if  [[ -n `whence zplug` ]] ; then
     zplug "b4b4r07/enhancd", use:init.sh
     zplug "b4b4r07/zsh-vimode-visual", use:"*.sh"
     zplug "zsh-users/zsh-autosuggestions", use:"*.zsh", hook-load:"ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=fg=27"

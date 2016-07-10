@@ -22,20 +22,20 @@ autoload -Uz add-zsh-hook
 
 ## Completion configuration
 #
-source ${_DOTFILES}/zshrc-completion
+#source ${_DOTFILES}/zshrc-completion
 
 ## Prompt configuration
 #
-source ${_DOTFILES}/zshrc-prompt
+#source ${_DOTFILES}/zshrc-prompt
 
 ## Default shell configuration
 #
-source ${_DOTFILES}/zshrc-shell
+#source ${_DOTFILES}/zshrc-shell
 
 
 ## Keybind configuration
 #
-source ${_DOTFILES}/zshrc-keybind
+#source ${_DOTFILES}/zshrc-keybind
 
 ## Command history configuration
 #
@@ -50,15 +50,15 @@ setopt share_history        # share command history data
 #
 # expand aliases before completing
 #
-source ${_DOTFILES}/zshrc-alias
+#source ${_DOTFILES}/zshrc-alias
 
 ## terminal configuration
 #
-source ${_DOTFILES}/zshrc-terminal
+#source ${_DOTFILES}/zshrc-terminal
 
 ## variable configuration
 #
-source ${_DOTFILES}/zshrc-variables
+#source ${_DOTFILES}/zshrc-variables
 
 ## osx only configuration
 #
@@ -68,17 +68,17 @@ fi
 
 ## sudo.vim configuration
 #
-source ${_DOTFILES}/zshrc-sudovim
+#source ${_DOTFILES}/zshrc-sudovim
 
 
 ## misc configuration
 #
-source ${_DOTFILES}/zshrc-misc
+#source ${_DOTFILES}/zshrc-misc
 
 ## anyenv configuration
 #
-source ${_DOTFILES}/zshrc-anyenv
+#source ${_DOTFILES}/zshrc-anyenv
 
 ## original command
 #
-source ${_DOTFILES}/zshrc-commands
+#source ${_DOTFILES}/zshrc-commands

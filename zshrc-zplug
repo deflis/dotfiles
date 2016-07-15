@@ -11,6 +11,8 @@ if  [[ -n `whence zplug` ]] ; then
     zplug "b4b4r07/enhancd", use:"init.sh"
     zplug "b4b4r07/zsh-vimode-visual", use:"*.sh"
     zplug "zsh-users/zsh-autosuggestions", use:"*.zsh", hook-load:"ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=fg=27"
+    zplug "${_DOTFILES}/zsh/anyframe", use:"init.zsh", from:"local", nice:0
+    zplug "mollifier/anyframe", nice:1
 
     if ! zplug check --verbose; then
         printf "Install? [y/N]: "

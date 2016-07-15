@@ -70,13 +70,3 @@ function _zshrc {
  
 compdef _zshrc zshrc
 
-#
-# cd ghq repo using peco
-#
-change-repo() {
-    local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
-    if [ -n "$selected_dir" ]; then
-        cd ${selected_dir}
-    fi
-}
-alias cr=change-repo

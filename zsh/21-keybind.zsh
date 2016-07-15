@@ -21,3 +21,6 @@ bindkey '^[[2~' beep                   # Insert
 bindkey '^[[3~' delete-char            # Del
 bindkey '^[[5~' vi-backward-blank-word # Page Up
 bindkey '^[[6~' vi-forward-blank-word  # Page Down
+
+bindkey "^r" anyframe-widget-execute-history
+bindkey "^f" anyframe-widget-insert-filename

@@ -43,3 +43,5 @@ else
     alias mvim=vim
 fi;
 
+alias cr=anyframe-widget-cd-ghq-repository-custom
+

@@ -13,7 +13,7 @@ export path=(
     ${HOME}/go/bin(N-/)
     ${HOME}/bin(N-/)
     ${HOME}/.cabal/bin(N-/)
-    $pathh
+    $path
 )
 
 typeset -U path cdpath fpath manpath ld_library_path include

@@ -1,0 +1,30 @@
+# anyframe-source-list-file
+# or
+# anyframe-source-list-file "$BUFFER"
+
+local buffer="$1"
+local dir="$PWD"
+
+if [[ -n "$buffer" ]]; then
+  if [[ "$buffer" == *\  ]]; then
+    # buffer ends with space
+    :
+  else
+    local trim_buffer="$(echo $buffer | sed 's/^  *//' | sed 's/  *$//')"
+    local last_argument="${trim_buffer##* }"
+
+    if [[ -d "${last_argument}" ]] then;
+        dir="${last_argument}"
+    else
+        # get dirname
+        dir="${last_argument%/*}"
+    fi
+  fi
+fi
+
+find ${dir}/* -type d -maxdepth 0 -exec basename '{}' ';'
+
+# Local Variables:
+# mode: Shell-Script
+# End:
+# vim: ft=zsh

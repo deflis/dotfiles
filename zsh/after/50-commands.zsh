@@ -1,13 +1,18 @@
 ## Original command
 
-local _dev_directory
-_dev_directory=${HOME}/Develop
 
 function cddevelop {
-    cd ${_dev_directory}/$1
+    local _dev_directory=${HOME}/Develop
+    if [[ -n "$1" ]] && [[ -d "${_dev_directory}/$1" ]]; then
+        cd ${_dev_directory}/$1
+    else
+        anyframe-widget-cd-dir ${_dev_directory}
+    fi
+
 }
 
 function _cddevelop {
+    local _dev_directory=${HOME}/Develop
     if (( CURRENT == 2 ));then
         compadd `find ${_dev_directory}/* -type d -maxdepth 0 -exec basename '{}' ';'`
     fi

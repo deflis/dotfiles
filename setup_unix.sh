@@ -5,6 +5,7 @@ git submodule update
 
 ln -snf ~/dotfiles/zsh ~/.zsh
 ln -snf ~/dotfiles/.zshrc ~/
+ln -snf ~/dotfiles/zshenv ~/.zshenv
 ln -snf ~/dotfiles/nvim ~/.vim
 ln -snf ~/dotfiles/.vimrc ~/
 ln -snf ~/dotfiles/.gvimrc ~/

@@ -43,7 +43,7 @@ function zshrc {
         ;;
     edit)
         if [ -z $2 ]; then
-            $EDITOR ${_zshrc}
+            _$EDITOR ${_zshrc}
         else
             $EDITOR ${_zshrc}-$2
         fi
@@ -54,8 +54,19 @@ function zshrc {
     prompt)
         PROMPT="$ "
         ;;
+    zcompile)
+        zcompile ${_DOTFILES}/.zshrc
+        zcompile ${_DOTFILES}/zshrc
+        for file in ${_DOTFILES}/zshrc-* ${_DOTFILES}/zsh/**/*.zsh ; do
+            zcompile $file
+        done
+        ;;
+    zcompile-clear)
+        rm ${_DOTFILES}/*.zwc
+        rm ${_DOTFILES}/**/*.zwc
+        ;;
     esac
-}
+} 
 
 function _zshrc {
     local _zshrc

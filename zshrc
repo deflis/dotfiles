@@ -15,10 +15,13 @@ esac
 
 ## zplug configuration
 #
-source ${_DOTFILES}/zshrc-zplug
+#source ${_DOTFILES}/zshrc-zplug
 
 # 関数をフック
 autoload -Uz add-zsh-hook
+
+source ${_DOTFILES}/zshrc-zload
+source ${_DOTFILES}/zshrc-zload-after
 
 ## Completion configuration
 #

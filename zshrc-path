@@ -1,0 +1,10 @@
+export path=(
+    /usr/local/bin(N-/)
+    /usr/local/sbin(N-/)
+    /Applications/MacVim.app/Contents/MacOS(N-/)
+    $path
+)
+
+alias vi='env LANG=ja_JP.UTF-8 vi'
+alias vim='env LANG=ja_JP.UTF-8 vim'
+alias ctags='/Applications/MacVim.app/Contents/MacOS/ctags "$@"'

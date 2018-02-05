@@ -99,7 +99,7 @@ repo = 'tmux-plugins/vim-tmux'
 repo = 'cespare/vim-toml'
 
 [[plugins]]
-repo = 'tpope/vim-markdown'
+repo = 'plasticboy/vim-markdown'
 
 [[plugins]]
 repo = 'kchmck/vim-coffee-script'

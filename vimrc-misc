@@ -65,3 +65,5 @@ endfunction
 command! ToCamelCase :call ToCamelCase()
 nnoremap <silent><C-k>   :<C-u>ToCamelCase<CR>
 inoremap <silent><C-k> <Esc>:<C-u>ToCamelCase<CR><Insert>
+
+set wildmode=longest:full,full

@@ -8,6 +8,8 @@
 # https://gist.github.com/1462391
 # https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
 
+export SHELL=`which zsh`
+
 if ! type tmux >/dev/null 2>&1; then
     echo 'Error: tmux command not found' 2>&1
     exit 1
@@ -18,9 +20,4 @@ if [ -n "$TMUX" ]; then
     exit 1
 fi
 
-if tmux has-session >/dev/null 2>&1 && tmux list-sessions | grep -qE '.*]$'; then
-    # detached session exists
-    tmux attach && echo "tmux attached session "
-else
-    tmux new-session && echo "tmux created new session"
-fi
+tmux new-session -A -s WORK

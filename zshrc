@@ -13,6 +13,8 @@ case ${UID} in
     ;;
 esac
 
+source ${_DOTFILES}/zshrc-path
+
 ## zplug configuration
 #
 source ${_DOTFILES}/zshrc-zplug

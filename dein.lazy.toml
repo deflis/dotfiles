@@ -30,7 +30,7 @@ depends = 'neomru.vim'
 
 [[plugins]]
 repo = 'kannokanno/previm'
-depends = ['tyru/open-browser.vim']
+on_source = ['tyru/open-browser.vim']
 on_ft = ['markdown', 'textile']
 
 [[plugins]]

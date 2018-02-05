@@ -1,0 +1,13 @@
+local vim_argument="$(pt $@ \
+  | anyframe-selector-auto \
+  | awk -F : '{print "-c " $2 " " $1}' \
+)"
+
+if [[ -n $vim_argument ]]; then
+    local executor="vim $vim_argument"
+    $executor
+fi
+# Local Variables:
+# mode: Shell-Script
+# End:
+# vim: ft=zsh

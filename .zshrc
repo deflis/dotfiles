@@ -20,3 +20,4 @@ if (( $+__ZPROF )); then
         zprof | less
     fi
 fi
+

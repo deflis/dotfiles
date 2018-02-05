@@ -5,14 +5,13 @@ else
 fi
 
 if  [[ -n `whence zplug` ]] ; then
-    zplug "zplug/zplug"
     zplug "${_DOTFILES}/zsh", use:"*.zsh", from:"local"
-    zplug "${_DOTFILES}/zsh/after", use:"*.zsh", from:"local", nice:11
+    zplug "${_DOTFILES}/zsh/after", use:"*.zsh", from:"local", defer:3
     zplug "b4b4r07/enhancd", use:"init.sh"
     zplug "b4b4r07/zsh-vimode-visual", use:"*.sh"
-    zplug "zsh-users/zsh-autosuggestions", use:"*.zsh", hook-load:"ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=fg=27"
-    zplug "${_DOTFILES}/zsh/anyframe", use:"init.zsh", from:"local", nice:0
-    zplug "mollifier/anyframe", nice:1
+    zplug "zsh-users/zsh-autosuggestions", use:"*.zsh", hook-load:"export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=fg=27"
+    zplug "${_DOTFILES}/zsh/anyframe", use:"init.zsh", from:"local", defer:0
+    zplug "mollifier/anyframe", defer:1
 
     if ! zplug check --verbose; then
         printf "Install? [y/N]: "

@@ -1,0 +1,4 @@
+
+for file in ${_DOTFILES}/zsh/after/*.zsh; do
+    source $file
+done

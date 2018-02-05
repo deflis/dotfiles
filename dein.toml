@@ -23,7 +23,7 @@ repo = 'thinca/vim-quickrun'
 repo = 'thinca/vim-ref'
 
 [[plugins]]
-repo = 'sudo.vim'
+repo = 'vim-scripts/sudo.vim'
 
 [[plugins]]
 repo = 'kana/vim-fakeclip.git'
@@ -51,7 +51,7 @@ depends = ['xolox/vim-misc']
 repo = 'xolox/vim-misc'
 
 [[plugins]]
-repo = 'Align'
+repo = 'vim-scripts/Align'
 
 [[plugins]]
 repo = 'osyo-manga/vim-over'

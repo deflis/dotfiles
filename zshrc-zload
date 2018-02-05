@@ -1,0 +1,6 @@
+autoload -Uz add-zsh-hook
+
+
+for file in ${_DOTFILES}/zsh/*.zsh; do
+    source $file
+done

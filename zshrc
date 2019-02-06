@@ -15,32 +15,18 @@ esac
 
 source ${_DOTFILES}/zshrc-path
 
-## zplug configuration
-#
-#source ${_DOTFILES}/zshrc-zplug
-
 # 関数をフック
 autoload -Uz add-zsh-hook
 
+### Added by Zplugin's installer
+source ${_DOTFILES}/.zplugin/bin/zplugin.zsh
+autoload -Uz _zplugin
+(( ${+_comps} )) && _comps[zplugin]=_zplugin
+### End of Zplugin's installer chunk
+
 source ${_DOTFILES}/zshrc-zload
+source ${_DOTFILES}/zshrc-zplugin
 source ${_DOTFILES}/zshrc-zload-after
-
-## Completion configuration
-#
-#source ${_DOTFILES}/zshrc-completion
-
-## Prompt configuration
-#
-#source ${_DOTFILES}/zshrc-prompt
-
-## Default shell configuration
-#
-#source ${_DOTFILES}/zshrc-shell
-
-
-## Keybind configuration
-#
-#source ${_DOTFILES}/zshrc-keybind
 
 ## Command history configuration
 #
@@ -51,39 +37,8 @@ setopt hist_ignore_space    # ignore
 setopt hist_ignore_dups     # ignore duplication command history list
 setopt share_history        # share command history data
 
-## Alias configuration
-#
-# expand aliases before completing
-#
-#source ${_DOTFILES}/zshrc-alias
-
-## terminal configuration
-#
-#source ${_DOTFILES}/zshrc-terminal
-
-## variable configuration
-#
-#source ${_DOTFILES}/zshrc-variables
-
 ## osx only configuration
 #
 if [[ $OSTYPE == darwin* ]]; then
     source ${_DOTFILES}/zshrc-osx
 fi
-
-## sudo.vim configuration
-#
-#source ${_DOTFILES}/zshrc-sudovim
-
-
-## misc configuration
-#
-#source ${_DOTFILES}/zshrc-misc
-
-## anyenv configuration
-#
-#source ${_DOTFILES}/zshrc-anyenv
-
-## original command
-#
-#source ${_DOTFILES}/zshrc-commands

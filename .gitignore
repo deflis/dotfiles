@@ -1,4 +1,8 @@
 *.zwc
 .zcompdump
 .zshdb_hist
-
+composer
+.zplugin
+configstore
+tmux
+vue

@@ -1,14 +1,23 @@
+## Common Environment variable configuration
+export LANG=en_US.UTF-8
+case ${UID} in
+0)
+    LANG=C
+    ;;
+esac
+
+## linuxbrew and oh-my-posh
 eval $($(brew --prefix)/bin/brew shellenv)
 eval "$(oh-my-posh --init --shell zsh --config ~/.config/powershell/theme.json)"
 
-
+## Environment variable configuration
 if type code >/dev/null 2>&1; then
   export EDITOR="code --wait"
 elif type vim >/dev/null 2>&1; then
   export EDITOR=vim
-else
-  export LESS='--tabs=4 --no-init --LONG-PROMPT --ignore-case -R'
 fi
+
+export LESS='--tabs=4 --no-init --LONG-PROMPT --ignore-case -R'
 
 [ -d ${HOME}/bin ] && export PATH=${PATH}:${HOME}/bin
 [ -d ${HOME}/.cabal/bin ] && export PATH=${PATH}:${HOME}/.cabal/bin
@@ -16,10 +25,6 @@ export GOPATH=~/go
 export path=(~/go/bin $path)
 
 ## Alias configuration
-#
-# expand aliases before completing
-#
-
 setopt complete_aliases     # aliased ls needs if file/dir completions work
 
 alias where="command -v"
@@ -46,3 +51,9 @@ alias du="du -h"
 alias df="df -h"
 
 alias su="su -l"
+
+## load user .zshrc configuration file
+#
+if [ -f ${HOME}/.zshrc.mine ]; then
+    source ${HOME}/.zshrc.mine
+fi

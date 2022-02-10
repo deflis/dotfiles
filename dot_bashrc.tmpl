@@ -135,3 +135,9 @@ fi
 {{ end -}}
 
 eval "$(oh-my-posh --init --shell bash --config ~/.config/powershell/theme.json)"
+
+## load user .zshrc configuration file
+#
+if [ -f ${HOME}/.bashrc.mine ]; then
+    source ${HOME}/.bashrc.mine
+fi

@@ -1,0 +1,5 @@
+{
+  "files.associations": {
+    "*.ps1.cmd": "powershell"
+  }
+}

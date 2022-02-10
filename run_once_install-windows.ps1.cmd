@@ -20,7 +20,7 @@ If(!(Test-CommandExists scoop)) {
 }
 
 If(!(Test-CommandExists oh-my-posh)) {
-  scoop install oh-my-posh
+  scoop install https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/oh-my-posh.json
 }
 If(!(Test-CommandExists ghq)) {
   scoop install ghq

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://aka.ms/terminal-profiles-schema",
+  "profiles": {
+    "defaults": {
+      "acrylicOpacity": 0.9,
+      "antialiasingMode": "cleartype",
+      "colorScheme": "One Half Dark",
+      "font": {
+        "face": "HackGen35Nerd Console"
+      },
+      "useAcrylic": true
+    }
+  }
+}

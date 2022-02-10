@@ -12,7 +12,7 @@
 
 ```shell
 which zsh | sudo tee -a /etc/shells
-chsh -s /home/linuxbrew/.linuxbrew/bin/zsh
+chsh -s `which zsh`
 ```
 
 ## なんとかしたいやつ

@@ -1,3 +1,6 @@
 README.md
 .vscode
 .config/windows_terminal
+Brewfile
+Brewfile.lock.json
+boostrap.sh

@@ -4,23 +4,6 @@
 #!/usr/bin/env bash
 
 {{ if (eq .chezmoi.os "linux") }}
-# install linuxbrew
-if !(type "brew" > /dev/null 2>&1) ; then
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-fi
-
-if !(type "oh-my-posh" > /dev/null 2>&1) ; then
-  brew tap jandedobbeleer/oh-my-posh
-  brew install oh-my-posh
-fi
-if !(type "ghq" > /dev/null 2>&1) ; then
-  brew install ghq
-fi
-if !(type "zsh" > /dev/null 2>&1) ; then
-  brew install zsh
-fi
-
-
 {{    if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
 {{      if (.chezmoi.kernel.osrelease | lower | contains "wsl2") }}
 windows_destination="/mnt/c/usr/ssh-agent/wsl2-ssh-pageant.exe"

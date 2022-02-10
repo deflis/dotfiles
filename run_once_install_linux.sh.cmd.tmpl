@@ -1,3 +1,6 @@
+{{ if eq .chezmoi.os "windows" -}}
+@exit
+{{ end -}}
 #!/usr/bin/env bash
 
 {{ if (eq .chezmoi.os "linux") }}

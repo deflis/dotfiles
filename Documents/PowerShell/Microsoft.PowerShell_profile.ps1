@@ -12,9 +12,3 @@ $env:EDITOR = "code --wait"
 # https://qiita.com/mu_sette/items/3954759daee8ae9ad26f
 function CustomListChildItems { Get-ChildItem $args[0] -force | Sort-Object -Property @{ Expression = 'LastWriteTime'; Descending = $true }, @{ Expression = 'Name'; Ascending = $true } | Format-Table -AutoSize -Property Mode, Length, LastWriteTime, Name }
 Set-Alias ll CustomListChildItems
-function CustomSudo { Start-Process powershell.exe -Verb runas }
-Set-Alias sudo CustomSudo
-function CustomHosts { code C:\Windows\System32\drivers\etc\hosts }
-Set-Alias hosts CustomHosts
-function CustomUpdate { explorer ms-settings:windowsupdate }
-Set-Alias update CustomUpdate

@@ -1,5 +1,8 @@
 {
   "files.associations": {
-    "*.ps1.cmd": "powershell"
+    "*.ps1.cmd": "powershell",
+    "*.ps1.cmd.tmpl": "powershell",
+    "*.sh.tmpl": "shellscript",
+    "dot_bashrc.tmpl": "shellscript"
   }
 }

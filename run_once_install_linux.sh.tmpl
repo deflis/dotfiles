@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+{{ if (eq .chezmoi.os "linux") }}
+# install linuxbrew
+if !(type "brew" > /dev/null 2>&1) ; then
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+
+if !(type "oh-my-posh" > /dev/null 2>&1) ; then
+  brew tap jandedobbeleer/oh-my-posh
+  brew install oh-my-posh
+fi
+if !(type "ghq" > /dev/null 2>&1) ; then
+  brew install ghq
+fi
+if !(type "zsh" > /dev/null 2>&1) ; then
+  brew install zsh
+fi
+
+
+{{    if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
+{{      if (.chezmoi.kernel.osrelease | lower | contains "wsl2") }}
+windows_destination="/mnt/c/usr/ssh-agent/wsl2-ssh-pageant.exe"
+linux_destination="$HOME/.ssh/wsl2-ssh-pageant.exe"
+if [ ! -e $linux_destination ]; then
+  mkdir -pv $(dirname $windows_destination)
+  wget -O "$windows_destination" "https://github.com/BlackReloaded/wsl2-ssh-pageant/releases/latest/download/wsl2-ssh-pageant.exe"
+  # Set the executable bit.
+  chmod +x "$windows_destination"
+  # Symlink to linux for ease of use later
+  ln -sf $windows_destination $linux_destination
+fi
+{{      end }}
+{{    end }}
+{{  end }}

@@ -5,6 +5,7 @@
 ## 自動インストールできないもの
 
 - フォント
+  - [Hasklig](https://github.com/i-tu/Hasklig)
   - [HackGen](https://github.com/yuru7/HackGen)
 - Windows Terminal の設定
 

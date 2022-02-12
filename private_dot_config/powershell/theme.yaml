@@ -1,3 +1,4 @@
+# oh-my-posh --config private_dot_config\powershell\theme.yaml --debug --shell uni
 $schema: https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
 blocks:
   - alignment: left
@@ -87,29 +88,31 @@ blocks:
         properties:
           fetch_package_manager: true
           npm_icon: " <#cc3a3a></> "
-          template:  {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{
+          template:
+             {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{
             .Full }}
           yarn_icon: " <#348cba></>"
         style: diamond
         trailing_diamond: <transparent,#303030></>
         type: node
-      - background: "#306998"
-        foreground: "#FFE873"
-        leading_diamond: 
-        properties:
-          template:  {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{
-            end }}{{ .Full }}{{ end }}
-        style: diamond
-        trailing_diamond: <transparent,#306998></>
-        type: python
-      - background: "#ffffff"
-        foreground: "#ec2729"
-        leading_diamond: 
-        properties:
-          template:  {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}
-        style: diamond
-        trailing_diamond: <transparent,#ffffff></>
-        type: java
+      #- background: "#306998"
+      #  foreground: "#FFE873"
+      #  leading_diamond: 
+      #  properties:
+      #    template:
+      #       {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{
+      #      end }}{{ .Full }}{{ end }}
+      #  style: diamond
+      #  trailing_diamond: <transparent,#306998></>
+      #  type: python
+      #- background: "#ffffff"
+      #  foreground: "#ec2729"
+      #  leading_diamond: 
+      #  properties:
+      #    template:  {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}
+      #  style: diamond
+      #  trailing_diamond: <transparent,#ffffff></>
+      #  type: java
       - background: "#787CB5"
         foreground: "#000000"
         leading_diamond: 
@@ -134,39 +137,6 @@ blocks:
         style: diamond
         trailing_diamond: <transparent,#ffffff></>
         type: go
-      - background: "#f3f0ec"
-        foreground: "#925837"
-        leading_diamond: 
-        properties:
-          template: "  {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} "
-        style: diamond
-        trailing_diamond: <transparent,#f3f0ec></>
-        type: rust
-      - background: "#e1e8e9"
-        foreground: "#055b9c"
-        leading_diamond: 
-        properties:
-          template: "  {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} "
-        style: diamond
-        trailing_diamond: <transparent,#e1e8e9></>
-        type: dart
-      - background: "#ffffff"
-        foreground: "#ce092f"
-        leading_diamond: 
-        properties:
-          template: "  {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} "
-        style: diamond
-        trailing_diamond: <transparent,#ffffff></>
-        type: angular
-      - background: "#945bb3"
-        foreground: "#359a25"
-        leading_diamond: 
-        properties:
-          template: " <#ca3c34></> {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end
-            }} "
-        style: diamond
-        trailing_diamond: <transparent,#945bb3></>
-        type: julia
       - background: "#ffffff"
         foreground: "#9c1006"
         leading_diamond: 
@@ -175,39 +145,22 @@ blocks:
         style: diamond
         trailing_diamond: <transparent,#ffffff></>
         type: ruby
-      - background: "#ffffff"
-        foreground: "#5398c2"
-        leading_diamond: 
-        properties:
-          template: " <#f5bf45></> {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{
-            end }} "
-        style: diamond
-        trailing_diamond: <transparent,#ffffff></>
-        type: azfunc
-      - background: "#565656"
-        foreground: "#faa029"
-        leading_diamond: 
-        properties:
-          template: "  {{.Profile}}{{if .Region}}@{{.Region}}{{end}} "
-        style: diamond
-        trailing_diamond: <transparent,#565656></>
-        type: aws
-      - background: "#316ce4"
-        foreground: "#ffffff"
-        leading_diamond: 
-        properties:
-          template: " ﴱ {{.Context}}{{if .Namespace}} :: {{.Namespace}}{{end}} "
-        style: diamond
-        trailing_diamond: <transparent,#316ce4></>
-        type: kubectl
+      #- background: "#565656"
+      #  foreground: "#faa029"
+      #  leading_diamond: 
+      #  properties:
+      #    template: "  {{.Profile}}{{if .Region}}@{{.Region}}{{end}} "
+      #  style: diamond
+      #  trailing_diamond: <transparent,#565656></>
+      #  type: aws
       - background: "#234d70"
         foreground: "#d6deeb"
         leading_diamond: 
         properties:
-          template: "  {{ .CurrentDate | date .Format }} "
+          template: '  {{ .CurrentDate | date "15:04:05" }} '
           time_format: 15:04:05
         style: diamond
-        trailing_diamond: 
+        trailing_diamond: ""
         type: time
     type: prompt
   - alignment: left
@@ -215,7 +168,7 @@ blocks:
     segments:
       - foreground: "#21c7a8"
         properties:
-          template: ╰─
+          template: "╰─"
         style: plain
         type: text
       - foreground: "#22da6e"
@@ -229,10 +182,10 @@ blocks:
     type: prompt
 console_title: true
 console_title_style: template
-console_title_template: "{{ .Folder }}"
+console_title_template: "[{{.UserName}}@{{.HostName}} {{.PWD}}] {{ if .Root }}#{{ else }}${{ end }} {{.Shell}}"
 osc99: true
 transient_prompt:
   background: transparent
   foreground: "#d6deeb"
-  template: " "
+  template: "[{{.UserName}}@{{.HostName}} {{.PWD}}] {{ if .Root }}#{{ else }}${{ end }} "
 version: 1

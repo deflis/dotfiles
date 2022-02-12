@@ -9,6 +9,7 @@ esac
 ## linuxbrew and oh-my-posh
 eval $($(brew --prefix)/bin/brew shellenv)
 eval "$(oh-my-posh --init --shell zsh --config ~/.config/powershell/theme.yaml)"
+enable_poshtransientprompt
 
 ## Environment variable configuration
 if type code >/dev/null 2>&1; then

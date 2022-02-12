@@ -4,3 +4,6 @@ README.md
 Brewfile
 Brewfile.lock.json
 boostrap.sh
+{{ if ne .chezmoi.os "windows" }}
+Documents/PowerShell/
+{{ end }}

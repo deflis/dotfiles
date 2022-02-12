@@ -7,3 +7,7 @@ boostrap.sh
 {{ if ne .chezmoi.os "windows" }}
 Documents/PowerShell/
 {{ end }}
+{{ if eq .chezmoi.os "windows" }}
+.bashrc
+.zshrc
+{{ end }}

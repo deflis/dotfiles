@@ -116,6 +116,12 @@ if ! shopt -oq posix; then
   fi
 fi
 
+if type code >/dev/null 2>&1; then
+  export EDITOR="code --wait"
+elif type vim >/dev/null 2>&1; then
+  export EDITOR=vim
+fi
+
 {{ if (eq .chezmoi.os "linux") -}}
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 {{   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
@@ -141,4 +147,3 @@ eval "$(oh-my-posh --init --shell bash --config ~/.config/powershell/theme.yaml)
 if [ -f ${HOME}/.bashrc.mine ]; then
     source ${HOME}/.bashrc.mine
 fi
-

@@ -1,5 +1,5 @@
 # oh-my-posh --init --shell pwsh --config "$(scoop prefix oh-my-posh)/themes/night-owl.omp.json" | Invoke-Expression
-oh-my-posh --init --shell pwsh --config "~/.config/powershell/theme.json" | Invoke-Expression
+oh-my-posh --init --shell pwsh --config "~/.config/powershell/theme.yaml" | Invoke-Expression
 Import-Module posh-git
 $env:POSH_GIT_ENABLED = $true
 

@@ -54,7 +54,7 @@ blocks:
         foreground: "p:dark-blue"
         properties:
           folder_separator_icon: "<p:blue>  </>"
-          home_icon: "~"
+          home_icon: " ~"
           style: agnoster_full
           template: "{{ .Path }}"
         style: powerline
@@ -197,9 +197,9 @@ blocks:
         foreground_templates:
           - "{{ if .Root }}p:light-red{{ end }}"
         properties:
-          template: "{{ if .Root }}#{{ else }}${{ end }}"
+          template: "{{ if .Root }}#{{ else }}${{ end }} "
           prefix: ""
-          postfix: " "
+          postfix: ""
         style: plain
 console_title: true
 console_title_style: template

@@ -40,7 +40,7 @@ blocks:
         background: "p:blue"
         foreground: "p:white"
         properties:
-          template: "{{ .Icon }} {{ if .WSL }}{{ end }}"
+          template: "{{ .Icon }} {{ if .WSL }} {{ end }}"
           windows: ""
         style: plain
       - type: text
@@ -97,7 +97,7 @@ blocks:
         background: "#d6deeb"
         foreground: "#011627"
         properties:
-          template: "{{ .Name }}"
+          template: " {{ .Name }}"
         style: powerline
         powerline_symbol: 
         invert_powerline: true

@@ -117,7 +117,7 @@ if ! shopt -oq posix; then
 fi
 
 {{ if (eq .chezmoi.os "linux") -}}
-eval $($(brew --prefix)/bin/brew shellenv)
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 {{   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
 # WSL-specific code
 export SSH_AUTH_SOCK="$HOME/.ssh/agent.sock"

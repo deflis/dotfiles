@@ -6,10 +6,6 @@ case ${UID} in
     ;;
 esac
 
-## oh-my-posh
-eval "$(oh-my-posh --init --shell zsh --config ~/.config/powershell/theme.yaml)"
-enable_poshtransientprompt
-
 {{ if (eq .chezmoi.os "linux") -}}
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 {{   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
@@ -27,6 +23,10 @@ if ! ss -a | grep -q "$SSH_AUTH_SOCK"; then
 fi
 {{   end -}}
 {{ end -}}
+
+## oh-my-posh
+eval "$(oh-my-posh --init --shell zsh --config ~/.config/powershell/theme.yaml)"
+enable_poshtransientprompt
 
 ## Environment variable configuration
 if type code >/dev/null 2>&1; then

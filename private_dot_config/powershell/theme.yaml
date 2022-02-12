@@ -24,10 +24,9 @@ blocks:
         foreground: "#011627"
         leading_diamond: <transparent,#82AAFF></>
         properties:
-          folder_icon: " "
-          folder_separator_icon: " <#011627></> "
-          home_icon: " "
-          style: agnoster
+          folder_separator_icon: "<#011627>  </>"
+          home_icon: "~"
+          style: agnoster_full
           template: " {{ .Path }} "
         style: diamond
         trailing_diamond: 
@@ -78,10 +77,13 @@ blocks:
         foreground: "#ffffff"
         leading_diamond: 
         properties:
-          template: "  {{ round .PhysicalPercentUsed .Precision }}% "
+          discharging_icon: ""
+          charging_icon: ""
+          charged_icon: ""
+          template: "{{ if not .Error }} {{ .Icon }} {{ .Percentage }}\uF295 {{ end }}"
         style: diamond
         trailing_diamond: <transparent,#8f43f3></>
-        type: sysinfo
+        type: battery
       - background: "#303030"
         foreground: "#3C873A"
         leading_diamond: 

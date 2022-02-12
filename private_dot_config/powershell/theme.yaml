@@ -40,7 +40,7 @@ blocks:
         background: "p:blue"
         foreground: "p:white"
         properties:
-          template: "{{ .Icon }}{{ if .WSL }}{{ end }}"
+          template: "{{ .Icon }} {{ if .WSL }}{{ end }}"
           windows: ""
         style: plain
       - type: text
@@ -105,9 +105,9 @@ blocks:
         background: "#8f43f3"
         foreground: "#ffffff"
         properties:
-          discharging_icon: ""
-          charging_icon: ""
-          charged_icon: ""
+          discharging_icon: " "
+          charging_icon: " "
+          charged_icon: " "
           template: "{{ if not .Error }} {{ .Icon }} {{ .Percentage }}\uF295 {{ end }}"
         style: powerline
         powerline_symbol: 
@@ -164,7 +164,7 @@ blocks:
         trailing_diamond: <transparent,p:dark-blue></>
         properties:
           style: roundrock
-          template: " {{ .FormattedMs }} "
+          template: "{{ .FormattedMs }}"
           threshold: 0
         style: powerline
         powerline_symbol: 

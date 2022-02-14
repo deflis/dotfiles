@@ -40,13 +40,12 @@ blocks:
       - type: os
         background: "p:blue"
         background_templates:
-          - "{{ if or (.Working.Changed) (.Staging.Changed) }}p:lime{{ end }}"
-          - "{{ if and (gt .Ahead 0) (gt .Behind 0) }}p:magenta{{ end }}"
-          - "{{ if gt .Ahead 0 }}p:cian{{ end }}"
-          - "{{ if gt .Behind 0 }}p:yelloworange{{ end }}"
+          - '{{ if .OS eq "ubuntu" }}p:orange{{ end }}'
+          - '{{ if .OS eq "centos" }}p:yelloworange{{ end }}'
+          - '{{ if .OS eq "linux" }}p:dark-yelloworange{{ end }}'
         foreground: "p:white"
         properties:
-          template: "{{ .Icon }} {{ if .WSL }} {{ end }}{{ .HostName }}"
+          template: '{{ if eq .OS "windows" }}{{ else }}{{ .Icon }}{{ end }} {{ if .WSL }} {{ end }}{{ .HostName }}'
         style: powerline
       - type: path
         background: "p:light-blue"

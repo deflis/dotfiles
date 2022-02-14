@@ -72,7 +72,7 @@ blocks:
         foreground_templates:
           - "{{ if or (.Working.Changed) (.Staging.Changed) }}p:black{{ end }}"
           - "{{ if and (gt .Ahead 0) (gt .Behind 0) }}p:white{{  }}"
-          - "{{ if gt .Ahead 0 }}p:black{{ end }}"
+          - "{{ if gt .Ahead 0 }}p:white{{ end }}"
           - "{{ if gt .Behind 0 }}p:black{{ end }}"
         properties:
           branch_icon: " "

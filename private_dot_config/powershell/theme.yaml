@@ -47,12 +47,6 @@ blocks:
         properties:
           template: '{{ if eq .OS "windows" }}{{ else }}{{ .Icon }}{{ end }} {{ if .WSL }} {{ end }}{{ .HostName }}'
         style: powerline
-      - type: os
-        background: "p:blue"
-        foreground: "p:white"
-        properties:
-          template: "{{.OS}}"
-        style: powerline
       - type: path
         background: "p:light-blue"
         foreground: "p:dark-blue"

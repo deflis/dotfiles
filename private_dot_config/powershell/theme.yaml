@@ -40,9 +40,9 @@ blocks:
       - type: os
         background: "p:blue"
         background_templates:
-          - '{{ if .OS eq "ubuntu" }}p:orange{{ end }}'
-          - '{{ if .OS eq "centos" }}p:yelloworange{{ end }}'
-          - '{{ if .OS eq "linux" }}p:dark-yelloworange{{ end }}'
+          - '{{ if eq .OS "ubuntu" }}p:orange{{ end }}'
+          - '{{ if eq .OS "centos" }}p:yelloworange{{ end }}'
+          - '{{ if eq .OS "linux" }}p:dark-yelloworange{{ end }}'
         foreground: "p:white"
         properties:
           template: '{{ if eq .OS "windows" }}{{ else }}{{ .Icon }}{{ end }} {{ if .WSL }} {{ end }}{{ .HostName }}'

@@ -43,8 +43,11 @@ blocks:
           - '{{ if eq .OS "windows" }}p:blue{{ end }}'
           - '{{ if eq .OS "ubuntu" }}p:orange{{ end }}'
           - '{{ if eq .OS "centos" }}p:yelloworange{{ end }}'
-          - '{{ if eq .OS "linux" }}p:dark-yelloworange{{ end }}'
         foreground: "p:white"
+        foreground_templates:
+          - '{{ if eq .OS "windows" }}p:white{{ end }}'
+          - '{{ if eq .OS "ubuntu" }}p:white{{ end }}'
+          - '{{ if eq .OS "centos" }}p:black{{ end }}'
         properties:
           template: '{{ if eq .OS "windows" }}{{ else }}{{ .Icon }}{{ end }} {{ if .WSL }} {{ end }}'
         style: powerline
@@ -54,8 +57,11 @@ blocks:
           - '{{ if eq .OS "windows" }}p:blue{{ end }}'
           - '{{ if eq .OS "ubuntu" }}p:orange{{ end }}'
           - '{{ if eq .OS "centos" }}p:yelloworange{{ end }}'
-          - '{{ if eq .OS "linux" }}p:dark-yelloworange{{ end }}'
         foreground: "p:white"
+        foreground_templates:
+          - '{{ if eq .OS "windows" }}p:white{{ end }}'
+          - '{{ if eq .OS "ubuntu" }}p:white{{ end }}'
+          - '{{ if eq .OS "centos" }}p:black{{ end }}'
         properties:
           template: '{{ if .SSHSession }}\uf817 {{ .HostName }}{{ end }}'
         style: powerline

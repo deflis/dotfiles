@@ -57,7 +57,7 @@ blocks:
           - '{{ if eq .OS "linux" }}p:dark-yelloworange{{ end }}'
         foreground: "p:white"
         properties:
-          template: '{{ if .SSHSession }}\uf817 {{ end }}{{ .UserName }}@{{ .HostName }}'
+          template: '{{ if .SSHSession }}\uf817 {{ .HostName }}{{ end }}'
         style: powerline
       - type: path
         background: "p:light-blue"

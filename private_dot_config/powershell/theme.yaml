@@ -107,11 +107,11 @@ blocks:
         foreground: "#3C873A"
         properties:
           fetch_package_manager: true
-          npm_icon: " <#cc3a3a></> "
-          template:
-             {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{
-            .Full }}
-          yarn_icon: " <#348cba></>"
+          npm_icon: "<#cc3a3a></>"
+          template: "\
+             {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }}\
+            "
+          yarn_icon: "<#348cba></>"
         style: powerline
         powerline_symbol: 
         invert_powerline: true

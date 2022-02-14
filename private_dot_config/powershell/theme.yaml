@@ -63,7 +63,7 @@ blocks:
           - '{{ if eq .OS "ubuntu" }}p:white{{ end }}'
           - '{{ if eq .OS "centos" }}p:black{{ end }}'
         properties:
-          template: '{{ if .SSHSession }}\uf817 {{ .HostName }}{{ end }}'
+          template: "{{ if .SSHSession }}{{ .HostName }}{{ end }}"
         style: powerline
       - type: path
         background: "p:light-blue"

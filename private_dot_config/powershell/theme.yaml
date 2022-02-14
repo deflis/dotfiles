@@ -1,5 +1,6 @@
 # oh-my-posh --config private_dot_config\powershell\theme.yaml --debug --shell uni
 # night-owlベースだけど、もう跡形もない
+# https://ohmyposh.dev/docs/config-overview
 $schema: https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
 palette:
   # [Hue 360](https://hue360.herokuapp.com/) で作成
@@ -38,27 +39,25 @@ blocks:
     segments:
       - type: os
         background: "p:blue"
+        background_templates:
+          - "{{ if or (.Working.Changed) (.Staging.Changed) }}p:lime{{ end }}"
+          - "{{ if and (gt .Ahead 0) (gt .Behind 0) }}p:magenta{{ end }}"
+          - "{{ if gt .Ahead 0 }}p:cian{{ end }}"
+          - "{{ if gt .Behind 0 }}p:yelloworange{{ end }}"
         foreground: "p:white"
         properties:
-          template: "{{ .Icon }} {{ if .WSL }} {{ end }}"
-          windows: ""
-        style: plain
-      - type: text
-        background: "p:blue"
-        foreground: "p:white"
-        properties:
-          template: "{{ .HostName }}"
+          template: "{{ .Icon }} {{ if .WSL }} {{ end }}{{ .HostName }}"
         style: powerline
       - type: path
         background: "p:light-blue"
         foreground: "p:dark-blue"
         properties:
           folder_separator_icon: "<p:blue>  </>"
-          home_icon: " ~"
+          home_icon: "~"
           style: agnoster_full
-          template: "{{ .Path }}"
+          template: " {{ .Path }} "
         style: powerline
-        powerline_symbol: 
+        powerline_symbol: ""
   - alignment: right
     type: prompt
     segments:
@@ -90,14 +89,6 @@ blocks:
             {{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}\
             {{ if gt .StashCount 0 }}  {{ .StashCount }}{{ end }}\
             "
-        style: powerline
-        powerline_symbol: 
-        invert_powerline: true
-      - type: shell
-        background: "#d6deeb"
-        foreground: "#011627"
-        properties:
-          template: " {{ .Name }}"
         style: powerline
         powerline_symbol: 
         invert_powerline: true
@@ -169,14 +160,23 @@ blocks:
         style: powerline
         powerline_symbol: 
         invert_powerline: true
+      - type: shell
+        background: "#d6deeb"
+        foreground: "#011627"
+        properties:
+          template: " {{ .Name }}"
+        style: powerline
+        powerline_symbol: 
+        invert_powerline: true
       - type: time
-        background: "#234d70"
-        foreground: "#d6deeb"
+        background: "p:blue"
+        foreground: "p:white"
         properties:
           template: ' {{ .CurrentDate | date "15:04:05" }}'
           time_format: 15:04:05
-          postfix: "<#234d70,transparent></>"
-        style: plain
+        style: diamond
+        leading_diamond: ""
+        trailing_diamond: "<p:blue,transparent></>"
         invert_powerline: true
   - alignment: left
     type: prompt

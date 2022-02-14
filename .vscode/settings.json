@@ -4,6 +4,5 @@
     "*.ps1.cmd.tmpl": "powershell",
     "*.sh.cmd.tmpl": "shellscript",
     "dot_bashrc.tmpl": "shellscript"
-  },
-  "editor.fontFamily": "HackGen35Nerd, Hasklig, Cica, Consolas, 'Courier New', monospace"
+  }
 }

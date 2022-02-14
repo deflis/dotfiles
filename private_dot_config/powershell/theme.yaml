@@ -38,14 +38,26 @@ blocks:
     type: prompt
     segments:
       - type: os
-        background: "p:blue"
+        background: "p:black"
         background_templates:
+          - '{{ if eq .OS "windows" }}p:blue{{ end }}'
           - '{{ if eq .OS "ubuntu" }}p:orange{{ end }}'
           - '{{ if eq .OS "centos" }}p:yelloworange{{ end }}'
           - '{{ if eq .OS "linux" }}p:dark-yelloworange{{ end }}'
         foreground: "p:white"
         properties:
-          template: '{{ if eq .OS "windows" }}{{ else }}{{ .Icon }}{{ end }} {{ if .WSL }} {{ end }}{{ .HostName }}'
+          template: '{{ if eq .OS "windows" }}{{ else }}{{ .Icon }}{{ end }} {{ if .WSL }} {{ end }}'
+        style: powerline
+      - type: session
+        background: "p:black"
+        background_templates:
+          - '{{ if eq .OS "windows" }}p:blue{{ end }}'
+          - '{{ if eq .OS "ubuntu" }}p:orange{{ end }}'
+          - '{{ if eq .OS "centos" }}p:yelloworange{{ end }}'
+          - '{{ if eq .OS "linux" }}p:dark-yelloworange{{ end }}'
+        foreground: "p:white"
+        properties:
+          template: '{{ if .SSHSession }}\uf817 {{ end }}{{ .UserName }}@{{ .HostName }}'
         style: powerline
       - type: path
         background: "p:light-blue"

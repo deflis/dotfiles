@@ -138,6 +138,13 @@ blocks:
         style: powerline
         powerline_symbol: 
         invert_powerline: true
+      - type: perl
+        background: "#5F8CC2"
+        foreground: "#000000"
+        template:  {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}
+        style: powerline
+        powerline_symbol: 
+        invert_powerline: true
       - type: dotnet
         background: "#0e0e0e"
         foreground: "#0d6da8"

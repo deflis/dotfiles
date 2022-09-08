@@ -1,7 +1,8 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
+
 # oh-my-posh --config private_dot_config\powershell\theme.yaml --debug --shell uni
 # night-owlベースだけど、もう跡形もない
 # https://ohmyposh.dev/docs/config-overview
-$schema: https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
 palette:
   # [Hue 360](https://hue360.herokuapp.com/) で作成
   white: "#d6deeb"
@@ -48,8 +49,7 @@ blocks:
           - '{{ if eq .OS "windows" }}p:white{{ end }}'
           - '{{ if eq .OS "ubuntu" }}p:white{{ end }}'
           - '{{ if eq .OS "centos" }}p:black{{ end }}'
-        properties:
-          template: '{{ if eq .OS "windows" }}{{ else }}{{ .Icon }}{{ end }} {{ if .WSL }} {{ end }}'
+        template: '{{ if eq .OS "windows" }}{{ else }}{{ .Icon }}{{ end }} {{ if .WSL }} {{ end }}'
         style: powerline
       - type: session
         background: "p:black"
@@ -62,8 +62,7 @@ blocks:
           - '{{ if eq .OS "windows" }}p:white{{ end }}'
           - '{{ if eq .OS "ubuntu" }}p:white{{ end }}'
           - '{{ if eq .OS "centos" }}p:black{{ end }}'
-        properties:
-          template: "{{ if .SSHSession }}{{ .HostName }}{{ end }}"
+        template: "{{ if .SSHSession }}{{ .HostName }}{{ end }}"
         style: powerline
       - type: path
         background: "p:light-blue"
@@ -72,9 +71,8 @@ blocks:
           folder_separator_icon: "<p:blue>  </>"
           home_icon: "~"
           style: agnoster_full
-          template: " {{ .Path }} "
+        template: " {{ .Path }} "
         style: powerline
-        powerline_symbol: ""
   - alignment: right
     type: prompt
     segments:
@@ -97,15 +95,15 @@ blocks:
           fetch_status: true
           fetch_upstream_icon: true
           fetch_worktree_count: true
-          template: "\
-            {{ .UpstreamIcon }}\
-            {{ .HEAD }}\
-            {{ .BranchStatus }}\
-            {{ if .Working.Changed }}  {{ .Working.String }}{{ end }}\
-            {{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}\
-            {{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}\
-            {{ if gt .StashCount 0 }}  {{ .StashCount }}{{ end }}\
-            "
+        template: "\
+          {{ .UpstreamIcon }}\
+          {{ .HEAD }}\
+          {{ .BranchStatus }}\
+          {{ if .Working.Changed }}  {{ .Working.String }}{{ end }}\
+          {{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}\
+          {{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}\
+          {{ if gt .StashCount 0 }}  {{ .StashCount }}{{ end }}\
+          "
         style: powerline
         powerline_symbol: 
         invert_powerline: true
@@ -116,7 +114,7 @@ blocks:
           discharging_icon: " "
           charging_icon: " "
           charged_icon: " "
-          template: "{{ if not .Error }} {{ .Icon }} {{ .Percentage }}\uF295 {{ end }}"
+        template: "{{ if not .Error }} {{ .Icon }} {{ .Percentage }}\uF295 {{ end }}"
         style: powerline
         powerline_symbol: 
         invert_powerline: true
@@ -126,42 +124,38 @@ blocks:
         properties:
           fetch_package_manager: true
           npm_icon: "<#cc3a3a></>"
-          template: "\
-             {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }}\
-            "
           yarn_icon: "<#348cba></>"
+        template: "\
+           {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }}\
+          "
         style: powerline
         powerline_symbol: 
         invert_powerline: true
       - type: php
         background: "#787CB5"
         foreground: "#000000"
-        properties:
-          template:  {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}
+        template:  {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}
         style: powerline
         powerline_symbol: 
         invert_powerline: true
       - type: dotnet
         background: "#0e0e0e"
         foreground: "#0d6da8"
-        properties:
-          template: " {{ if .Unsupported }}{{ else }}{{ .Full }}{{ end }}"
+        template: " {{ if .Unsupported }}{{ else }}{{ .Full }}{{ end }}"
         style: powerline
         powerline_symbol: 
         invert_powerline: true
       - type: go
         background: "#ffffff"
         foreground: "#06aad5"
-        properties:
-          template: "ﳑ {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
+        template: "ﳑ {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
         style: powerline
         powerline_symbol: 
         invert_powerline: true
       - type: ruby
         background: "#ffffff"
         foreground: "#9c1006"
-        properties:
-          template: " {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
+        template: " {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
         style: powerline
         powerline_symbol: 
         invert_powerline: true
@@ -172,16 +166,15 @@ blocks:
         trailing_diamond: <transparent,p:dark-blue></>
         properties:
           style: roundrock
-          template: "{{ .FormattedMs }}"
           threshold: 0
+        template: "{{ .FormattedMs }}"
         style: powerline
         powerline_symbol: 
         invert_powerline: true
       - type: shell
         background: "#d6deeb"
         foreground: "#011627"
-        properties:
-          template: " {{ .Name }}"
+        template: " {{ .Name }}"
         style: powerline
         powerline_symbol: 
         invert_powerline: true
@@ -189,8 +182,8 @@ blocks:
         background: "p:blue"
         foreground: "p:white"
         properties:
-          template: ' {{ .CurrentDate | date "15:04:05" }}'
           time_format: 15:04:05
+        template: ' {{ .CurrentDate | date "15:04:05" }}'
         style: diamond
         leading_diamond: ""
         trailing_diamond: "<p:blue,transparent></>"
@@ -207,25 +200,23 @@ blocks:
           - "{{ if gt .Code 0 }}p:red{{ end }}"
         properties:
           always_enabled: true
-          template: ""
           prefix: ""
           postfix: " "
+        template: ""
         style: plain
       - type: text
         foreground: "p:white"
         foreground_templates:
           - "{{ if .Root }}p:light-red{{ end }}"
         properties:
-          template: "{{ if .Root }}#{{ else }}${{ end }} "
           prefix: ""
           postfix: ""
+        template: "{{ if .Root }}#{{ else }}${{ end }} "
         style: plain
-console_title: true
-console_title_style: template
 console_title_template: "[{{.UserName}}@{{.HostName}} {{.PWD}}] {{ if .Root }}#{{ else }}${{ end }} {{.Shell}}"
 osc99: true
 transient_prompt:
   background: transparent
   foreground: "p:white"
   template: "[{{.UserName}}@{{.HostName}} {{.PWD}}] {{ if .Root }}#{{ else }}${{ end }} "
-version: 1
+version: 2

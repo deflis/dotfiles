@@ -73,6 +73,7 @@ blocks:
           style: agnoster_full
         template: " {{ .Path }} "
         style: powerline
+        powerline_symbol: ""
   - alignment: right
     type: prompt
     segments:

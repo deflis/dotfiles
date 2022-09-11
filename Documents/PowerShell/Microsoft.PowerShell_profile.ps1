@@ -4,8 +4,6 @@ Enable-PoshTransientPrompt
 Import-Module posh-git
 $env:POSH_GIT_ENABLED = $true
 
-chezmoi completion powershell | Invoke-Expression
-
 # タブ補完のやり方を変更
 Set-PSReadLineKeyHandler -Key Tab -Function Complete
 

@@ -1,12 +1,17 @@
 README.md
+theme,png
+
 .vscode
 .config/windows_terminal
+
 Brewfile
 Brewfile.lock.json
 boostrap.sh
+
 {{ if ne .chezmoi.os "windows" }}
 Documents
 {{ end }}
+
 {{ if eq .chezmoi.os "windows" }}
 .bashrc
 .zshrc

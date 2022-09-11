@@ -2,6 +2,10 @@
 
 [chezmoi](https://www.chezmoi.io/) ベースにしていちからやり直します。
 
+![oh-my-posh](./theme.png)
+
+<!-- `oh-my-posh config export image  --rprompt-offset 20 --author deflis` -->
+
 ## 自動インストールできないもの
 
 - フォント

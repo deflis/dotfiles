@@ -200,8 +200,6 @@ blocks:
     type: prompt
     newline: true
     segments:
-      - type: iterm
-        style: plain
       - type: exit
         foreground: "p:green"
         foreground_templates:

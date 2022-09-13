@@ -18,4 +18,5 @@ Documents
 .tmux
 .tmux.conf
 .tmux.conf.local
+.config/kitty
 {{ end }}

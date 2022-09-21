@@ -20,3 +20,6 @@ local = "~/.config/zsh/defer"
 [plugins.dotfiles-sync]
 local = "~/.config/zsh/sync"
 apply = ["source"]
+
+[plugins.asdf]
+github = 'asdf-vm/asdf'

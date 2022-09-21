@@ -1,12 +1,7 @@
+eval "$(sheldon source)"
+
 ## load user .zshrc configuration file
 #
 if [ -f ${HOME}/.zshrc.mine ]; then
     source ${HOME}/.zshrc.mine
 fi
-
-## お行儀の悪いインストールスクリプト対策
-if [ -f ${HOME}/.zshrc ]; then
-    source ${HOME}/.zshrc
-fi
-
-eval "$(sheldon source)"

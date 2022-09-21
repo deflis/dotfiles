@@ -25,6 +25,18 @@ defer = { value = 'zsh-defer source "{{ file }}"', each = true }
 [plugins.dotfiles-defer]
 local = "~/.config/zsh/defer"
 
+[plugins.compinit]
+inline = 'autoload -Uz compinit && zsh-defer compinit'
+
+[plugins.zsh-completions]
+github = "zsh-users/zsh-completions"
+
+[plugins.zsh-better-npm-completion]
+github = "lukechilds/zsh-better-npm-completion"
+
+[plugins.aws_zsh_completer]
+remote = "https://raw.githubusercontent.com/aws/aws-cli/v2/bin/aws_zsh_completer.sh"
+
 [plugins.dotfiles-sync]
 local = "~/.config/zsh/sync"
 apply = ["source"]

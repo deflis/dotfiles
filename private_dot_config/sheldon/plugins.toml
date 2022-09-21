@@ -49,3 +49,4 @@ github = 'mollifier/anyframe'
 
 [plugins.dotfiles-anyframe]
 local = "~/.config/zsh/anyframe"
+apply = ["fpath"]

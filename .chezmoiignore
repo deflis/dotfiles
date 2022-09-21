@@ -19,4 +19,5 @@ Documents
 .tmux.conf
 .tmux.conf.local
 .config/kitty
+.config/zsh
 {{ end }}

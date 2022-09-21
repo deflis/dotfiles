@@ -1,11 +1,3 @@
-## Common Environment variable configuration
-export LANG=en_US.UTF-8
-case ${UID} in
-0)
-    LANG=C
-    ;;
-esac
-
 ## Command history configuration
 #
 HISTFILE=${HOME}/.zsh_history
@@ -16,7 +8,6 @@ setopt hist_ignore_dups     # ignore duplication command history list
 setopt share_history        # share command history data
 
 {{ if (eq .chezmoi.os "linux") -}}
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 {{   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
 # WSL-specific code
 export SSH_AUTH_SOCK="$HOME/.ssh/agent.sock"
@@ -34,22 +25,11 @@ fi
 {{ end -}}
 
 ## oh-my-posh
+#
 eval "$(oh-my-posh --init --shell zsh --config ~/.config/powershell/theme.yaml)"
 enable_poshtransientprompt
 
-## Environment variable configuration
-if type code >/dev/null 2>&1; then
-  export EDITOR="code --wait"
-elif type vim >/dev/null 2>&1; then
-  export EDITOR=vim
-fi
-
 export LESS='--tabs=4 --no-init --LONG-PROMPT --ignore-case -R'
-
-[ -d ${HOME}/bin ] && export PATH=${PATH}:${HOME}/bin
-[ -d ${HOME}/.cabal/bin ] && export PATH=${PATH}:${HOME}/.cabal/bin
-export GOPATH=~/go
-export path=(~/go/bin $path)
 
 ## Alias configuration
 setopt complete_aliases     # aliased ls needs if file/dir completions work
@@ -84,3 +64,10 @@ alias su="su -l"
 if [ -f ${HOME}/.zshrc.mine ]; then
     source ${HOME}/.zshrc.mine
 fi
+
+## お行儀の悪いインストールスクリプト対策
+if [ -f ${HOME}/.zshrc ]; then
+    source ${HOME}/.zshrc
+fi
+
+eval "$(sheldon source)"

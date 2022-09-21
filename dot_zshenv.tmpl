@@ -1,0 +1,37 @@
+# path_helperが悪さをするらしいので対策
+# https://github.com/mizdra/dotfiles/blob/2fadd667a059abae3d7c2c5e05a792569c687865/dot_zshenv#L1-L14
+setopt no_global_rcs
+if [ -x /usr/libexec/path_helper ]; then
+    eval `/usr/libexec/path_helper -s`
+fi
+
+export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:=${HOME}/.config}
+export ZDOTDIR=${ZDOTDIR:=${XDG_CONFIG_HOME}/zsh}
+
+## Common Environment variable configuration
+export LANG=en_US.UTF-8
+case ${UID} in
+0)
+    LANG=C
+    ;;
+esac
+
+## Environment variable configuration
+if type code >/dev/null 2>&1; then
+  export EDITOR="code --wait"
+elif type vim >/dev/null 2>&1; then
+  export EDITOR=vim
+fi
+
+[ -d ${HOME}/bin ] && export PATH=${PATH}:${HOME}/bin
+
+# go
+export GOPATH=~/go
+export path=(~/go/bin $path)
+
+{{ if (eq .chezmoi.os "darwin") -}}
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+{{ end -}}
+{{ if (eq .chezmoi.os "linux") -}}
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+{{ end -}}

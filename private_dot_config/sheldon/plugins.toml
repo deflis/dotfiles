@@ -22,11 +22,12 @@ apply = ["source"]
 [templates]
 defer = { value = 'zsh-defer source "{{ file }}"', each = true }
 
+[plugins.compinit]
+inline = 'autoload -Uz compinit && zsh-defer compinit'
+
 [plugins.dotfiles-defer]
 local = "~/.config/zsh/defer"
 
-[plugins.compinit]
-inline = 'autoload -Uz compinit && zsh-defer compinit'
 
 [plugins.zsh-completions]
 github = "zsh-users/zsh-completions"

@@ -43,3 +43,6 @@ apply = ["source"]
 
 [plugins.asdf]
 github = 'asdf-vm/asdf'
+
+[plugins.anyframe]
+github = 'mollifier/anyframe'

@@ -20,4 +20,5 @@ Documents
 .tmux.conf.local
 .config/kitty
 .config/zsh
+.config/sheldon
 {{ end }}

@@ -14,7 +14,9 @@ shell = "zsh"
 
 [plugins]
 
-# For example:
-#
-# [plugins.base16]
-# github = "chriskempson/base16-shell"
+[plugins.dotfiles-defer]
+local = "~/.config/zsh/defer"
+
+[plugins.dotfiles-sync]
+local = "~/.config/zsh/sync"
+apply = ["source"]

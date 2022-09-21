@@ -28,7 +28,6 @@ inline = 'autoload -Uz compinit && zsh-defer compinit'
 [plugins.dotfiles-defer]
 local = "~/.config/zsh/defer"
 
-
 [plugins.zsh-completions]
 github = "zsh-users/zsh-completions"
 
@@ -47,3 +46,6 @@ github = 'asdf-vm/asdf'
 
 [plugins.anyframe]
 github = 'mollifier/anyframe'
+
+[plugins.dotfiles-anyframe]
+local = "~/.config/zsh/anyframe"

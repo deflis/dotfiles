@@ -1,12 +1,3 @@
-## Command history configuration
-#
-HISTFILE=${HOME}/.zsh_history
-HISTSIZE=50000
-SAVEHIST=50000
-setopt hist_ignore_space    # ignore 
-setopt hist_ignore_dups     # ignore duplication command history list
-setopt share_history        # share command history data
-
 ## Alias configuration
 setopt complete_aliases     # aliased ls needs if file/dir completions work
 
@@ -36,3 +27,6 @@ alias df="df -h"
 alias su="su -l"
 
 export LESS='--tabs=4 --no-init --LONG-PROMPT --ignore-case -R'
+
+alias cr=anyframe-widget-cd-ghq-repository-custom
+alias tailf="tail -f"

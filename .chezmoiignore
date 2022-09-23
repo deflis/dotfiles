@@ -1,5 +1,5 @@
 README.md
-theme,png
+theme.png
 
 .vscode
 .config/windows_terminal
@@ -22,4 +22,5 @@ AppData
 .config/kitty
 .config/zsh
 .config/sheldon
+.config/nushell
 {{ end }}

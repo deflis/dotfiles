@@ -1,0 +1,7 @@
+eval "$(sheldon source)"
+
+## load user .zshrc configuration file
+#
+if [ -f ${HOME}/.zshrc.mine ]; then
+    source ${HOME}/.zshrc.mine
+fi

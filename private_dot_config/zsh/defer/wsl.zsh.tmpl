@@ -1,0 +1,18 @@
+{{ if (eq .chezmoi.os "linux") -}}
+{{   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
+# socatとnpipereplayが必要
+# `C:\usr\npipereplay\` に npipereplay を置く必要がある
+
+# WSL-specific code
+export SSH_AUTH_SOCK=$HOME/.ssh/agent.sock
+ALREADY_RUNNING=$(ps -auxww | grep -q "[n]piperelay.exe -ei -s //./pipe/openssh-ssh-agent"; echo $?)
+if [[ $ALREADY_RUNNING != "0" ]]; then
+    if [[ -S $SSH_AUTH_SOCK ]]; then
+        echo "removing previous socket..."
+        rm $SSH_AUTH_SOCK
+    fi
+    echo "Starting SSH-Agent relay..."
+    (setsid socat UNIX-LISTEN:$SSH_AUTH_SOCK,fork EXEC:"/mnt/c/usr/npiperelay/npiperelay.exe -ei -s //./pipe/openssh-ssh-agent",nofork &) >/dev/null 2>&1
+fi
+{{   end -}}
+{{ end -}}

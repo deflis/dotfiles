@@ -10,6 +10,7 @@ boostrap.sh
 
 {{ if ne .chezmoi.os "windows" }}
 Documents
+AppData
 {{ end }}
 
 {{ if eq .chezmoi.os "windows" }}

@@ -6,16 +6,6 @@
 {{ if (eq .chezmoi.os "linux") }}
 {{    if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
 {{      if (.chezmoi.kernel.osrelease | lower | contains "wsl2") }}
-windows_destination="/mnt/c/usr/ssh-agent/wsl2-ssh-pageant.exe"
-linux_destination="$HOME/.ssh/wsl2-ssh-pageant.exe"
-if [ ! -e $linux_destination ]; then
-  mkdir -pv $(dirname $windows_destination)
-  wget -O "$windows_destination" "https://github.com/BlackReloaded/wsl2-ssh-pageant/releases/latest/download/wsl2-ssh-pageant.exe"
-  # Set the executable bit.
-  chmod +x "$windows_destination"
-  # Symlink to linux for ease of use later
-  ln -sf $windows_destination $linux_destination
-fi
 {{      end }}
 {{    end }}
 {{  end }}

@@ -6,6 +6,7 @@ tap "homebrew/core"
 tap "jandedobbeleer/oh-my-posh"
 
 brew "awscli"
+brew "chezmoi"
 brew "fzf"
 brew "gh"
 brew "ghq"

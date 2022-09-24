@@ -1,7 +1,4 @@
 {{ if eq .chezmoi.os "windows" -}}
-@set args=%*
-@pwsh -Command "iex((@('')*3+(cat '%~f0'|select -skip 3))-join[char]10)"
-@exit /b %ERRORLEVEL%
 
 # Scoop インストールしたりする initial script
 # PowerShell 7 がインストールされてる前提

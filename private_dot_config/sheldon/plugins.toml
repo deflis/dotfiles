@@ -43,7 +43,8 @@ remote = "https://raw.githubusercontent.com/aws/aws-cli/v2/bin/aws_zsh_completer
 
 [plugins.asdf]
 github = 'asdf-vm/asdf'
-apply = ["fpath", "defer"]
+apply = ["defer"]
+inline = 'fpath=( "{{ dir }}/completions" $fpath )'
 
 [plugins.anyframe]
 github = 'mollifier/anyframe'

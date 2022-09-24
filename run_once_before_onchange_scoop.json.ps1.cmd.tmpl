@@ -20,19 +20,7 @@ If(!(Test-CommandExists scoop)) {
   Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
 }
 
-If(!(Test-CommandExists oh-my-posh)) {
-  scoop install https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/oh-my-posh.json
-}
-If(!(Test-CommandExists ghq)) {
-  scoop install ghq
-}
-If(!(Test-CommandExists sudo)) {
-  scoop install sudo
-}
-If(!(Test-CommandExists git)) {
-  scoop install git
-}
-
-PowerShellGet\Install-Module posh-git -Scope CurrentUser
+Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+PowerShellGet\Install-Module posh-git -Scope CurrentUser -Force
 
 {{ end -}}

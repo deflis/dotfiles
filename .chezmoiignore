@@ -6,7 +6,9 @@ theme.png
 
 Brewfile
 Brewfile.lock.json
+scoop.json
 boostrap.sh
+script_*
 
 {{ if ne .chezmoi.os "windows" }}
 Documents

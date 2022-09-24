@@ -1,0 +1,11 @@
+{{ if eq .chezmoi.os "windows" -}}
+@exit
+{{ end -}}
+{{ if eq .chezmoi.os "windows" -}}
+@set args=%*
+@pwsh -Command "iex((@('')*3+(cat '%~f0'|select -skip 3))-join[char]10)"
+@exit /b %ERRORLEVEL%
+
+scoop import {{.chezmoi.sourceDir}}/scoop.json
+
+{{ end -}}

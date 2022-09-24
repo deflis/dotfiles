@@ -21,6 +21,7 @@ apply = ["source"]
 
 [templates]
 defer = { value = 'zsh-defer source "{{ file }}"', each = true }
+completions = { value = 'fpath=( "{{ dir }}/completions" $fpath )'}
 
 [plugins.compinit]
 inline = 'autoload -Uz compinit && zsh-defer compinit'
@@ -43,8 +44,7 @@ remote = "https://raw.githubusercontent.com/aws/aws-cli/v2/bin/aws_zsh_completer
 
 [plugins.asdf]
 github = 'asdf-vm/asdf'
-apply = ["defer"]
-inline = 'fpath=( "{{ dir }}/completions" $fpath )'
+apply = ["defer", "completions"]
 
 [plugins.anyframe]
 github = 'mollifier/anyframe'

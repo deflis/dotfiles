@@ -100,7 +100,7 @@
         }
       },
       "jandedobbeleer/oh-my-posh/oh-my-posh": {
-        "version": "9.5.0",
+        "version": "10.1.0",
         "bottle": false
       },
       "git": {

@@ -28,3 +28,5 @@ setopt nolistbeep
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
 bindkey '^ ' autosuggest-accept
+
+export FZF_DEFAULT_OPTS='--height 40% --layout=reverse'

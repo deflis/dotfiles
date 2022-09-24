@@ -1,88 +1,9 @@
 {
-    "apps": [
-        {
-            "Info": "",
-            "Updated": "2022-09-24T15:44:25.7816121+09:00",
-            "Version": "22.01",
-            "Name": "7zip",
-            "Source": "main"
-        },
-        {
-            "Info": "",
-            "Updated": "2022-02-12T19:34:29.6556583+09:00",
-            "Version": "1.14.0",
-            "Name": "bfg",
-            "Source": "main"
-        },
-        {
-            "Info": "",
-            "Updated": "2022-09-24T15:44:29.7871708+09:00",
-            "Version": "2.23.0",
-            "Name": "chezmoi",
-            "Source": "main"
-        },
-        {
-            "Info": "",
-            "Updated": "2022-09-24T19:33:30.0407473+09:00",
-            "Version": "0.33.0",
-            "Name": "fzf",
-            "Source": "main"
-        },
-        {
-            "Info": "",
-            "Updated": "2022-09-24T15:44:33.4295569+09:00",
-            "Version": "2.16.0",
-            "Name": "gh",
-            "Source": "github-gh"
-        },
-        {
-            "Info": "",
-            "Updated": "2022-09-24T15:44:34.7896523+09:00",
-            "Version": "1.3.0",
-            "Name": "ghq",
-            "Source": "main"
-        },
-        {
-            "Info": "",
-            "Updated": "2022-09-24T15:44:48.8594158+09:00",
-            "Version": "2.37.3.windows.1",
-            "Name": "git",
-            "Source": "main"
-        },
-        {
-            "Info": "",
-            "Updated": "2022-09-24T15:54:06.433065+09:00",
-            "Version": "0.1.0",
-            "Name": "npiperelay",
-            "Source": "extras"
-        },
-        {
-            "Info": "",
-            "Updated": "2022-09-24T15:44:58.4446746+09:00",
-            "Version": "10.1.0",
-            "Name": "oh-my-posh",
-            "Source": "https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/oh-my-posh.json"
-        },
-        {
-            "Info": "",
-            "Updated": "2020-06-19T01:21:59.4163213+09:00",
-            "Version": "0.2020.01.26",
-            "Name": "sudo",
-            "Source": "main"
-        },
-        {
-            "Info": "",
-            "Updated": "2022-09-23T02:45:09.3694614+09:00",
-            "Version": "0.8.3",
-            "Name": "zoxide",
-            "Source": "main"
-        }
-    ],
     "buckets": [
         {
             "Name": "extras",
             "Source": "https://github.com/lukesampson/scoop-extras",
-            "Updated": "2022-09-24T19:11:34+09:00",
+            "Updated": "2022-09-25T05:28:42+09:00",
             "Manifests": 1691
         },
         {
@@ -94,8 +15,94 @@
         {
             "Name": "main",
             "Source": "https://github.com/ScoopInstaller/Main",
-            "Updated": "2022-09-24T17:56:10+09:00",
+            "Updated": "2022-09-25T05:29:04+09:00",
             "Manifests": 1083
+        }
+    ],
+    "apps": [
+        {
+            "Name": "7zip",
+            "Updated": "2022-09-24T15:44:25.7816121+09:00",
+            "Source": "main",
+            "Info": "",
+            "Version": "22.01"
+        },
+        {
+            "Name": "bfg",
+            "Updated": "2022-02-12T19:34:29.6556583+09:00",
+            "Source": "main",
+            "Info": "",
+            "Version": "1.14.0"
+        },
+        {
+            "Name": "chezmoi",
+            "Updated": "2022-09-24T15:44:29.7871708+09:00",
+            "Source": "main",
+            "Info": "",
+            "Version": "2.23.0"
+        },
+        {
+            "Name": "fzf",
+            "Updated": "2022-09-24T19:33:30.0407473+09:00",
+            "Source": "main",
+            "Info": "",
+            "Version": "0.33.0"
+        },
+        {
+            "Name": "gh",
+            "Updated": "2022-09-24T15:44:33.4295569+09:00",
+            "Source": "github-gh",
+            "Info": "",
+            "Version": "2.16.0"
+        },
+        {
+            "Name": "ghq",
+            "Updated": "2022-09-24T15:44:34.7896523+09:00",
+            "Source": "main",
+            "Info": "",
+            "Version": "1.3.0"
+        },
+        {
+            "Name": "git",
+            "Updated": "2022-09-24T15:44:48.8594158+09:00",
+            "Source": "main",
+            "Info": "",
+            "Version": "2.37.3.windows.1"
+        },
+        {
+            "Name": "npiperelay",
+            "Updated": "2022-09-24T15:54:06.433065+09:00",
+            "Source": "extras",
+            "Info": "",
+            "Version": "0.1.0"
+        },
+        {
+            "Name": "oh-my-posh",
+            "Updated": "2022-09-24T15:44:58.4446746+09:00",
+            "Source": "https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/oh-my-posh.json",
+            "Info": "",
+            "Version": "10.1.0"
+        },
+        {
+            "Name": "posh-git",
+            "Updated": "2022-09-25T05:55:51.035404+09:00",
+            "Source": "extras",
+            "Info": "",
+            "Version": "1.1.0"
+        },
+        {
+            "Name": "sudo",
+            "Updated": "2020-06-19T01:21:59.4163213+09:00",
+            "Source": "main",
+            "Info": "",
+            "Version": "0.2020.01.26"
+        },
+        {
+            "Name": "zoxide",
+            "Updated": "2022-09-23T02:45:09.3694614+09:00",
+            "Source": "main",
+            "Info": "",
+            "Version": "0.8.3"
         }
     ]
 }

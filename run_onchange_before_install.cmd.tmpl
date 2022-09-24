@@ -20,7 +20,4 @@ If(!(Test-CommandExists scoop)) {
   Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
 }
 
-Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
-PowerShellGet\Install-Module posh-git -Scope CurrentUser -Force
-
 {{ end -}}

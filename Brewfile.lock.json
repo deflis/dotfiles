@@ -100,7 +100,7 @@
         }
       },
       "jandedobbeleer/oh-my-posh/oh-my-posh": {
-        "version": "10.1.0",
+        "version": "9.5.0",
         "bottle": false
       },
       "git": {
@@ -475,7 +475,7 @@
         }
       },
       "oh-my-posh": {
-        "version": "10.1.0",
+        "version": "9.5.0",
         "bottle": {
           "rebuild": 0,
           "root_url": "https://ghcr.io/v2/homebrew/core",
@@ -739,7 +739,7 @@
       "monterey": {
         "HOMEBREW_VERSION": "3.6.2",
         "HOMEBREW_PREFIX": "/opt/homebrew",
-        "Homebrew/homebrew-core": "44f9ecb1cc912260152fd6221fe012dbfca1af90",
+        "Homebrew/homebrew-core": "9909db062f1ec31634525f26638a85303470d0c5",
         "CLT": "14.0.0.0.1.1661618636",
         "Xcode": "14.0",
         "macOS": "12.6"

@@ -5,10 +5,10 @@
         "revision": "73b77351709591cadc3f4a918b3276ee82cafbad"
       },
       "homebrew/core": {
-        "revision": "e920f975f03739756ccacc46c0fc549883e6180b"
+        "revision": "44f9ecb1cc912260152fd6221fe012dbfca1af90"
       },
       "jandedobbeleer/oh-my-posh": {
-        "revision": "0b5eed33fb529ce3c7c65f04962e6ce54dd7bed4"
+        "revision": "45a7d080f617201a9d7a6d89b7d8dd25057f4f9f"
       }
     },
     "brew": {
@@ -301,7 +301,7 @@
       "Ubuntu 18.04.5 LTS (bionic)": {
         "HOMEBREW_VERSION": "3.6.2",
         "HOMEBREW_PREFIX": "/home/linuxbrew/.linuxbrew",
-        "Homebrew/linuxbrew-core": "e920f975f03739756ccacc46c0fc549883e6180b",
+        "Homebrew/linuxbrew-core": "44f9ecb1cc912260152fd6221fe012dbfca1af90",
         "GCC": "7.5.0"
       },
       "Zorin OS 16 (focal)": {

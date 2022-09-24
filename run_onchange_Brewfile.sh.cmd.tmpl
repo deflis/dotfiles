@@ -1,0 +1,24 @@
+{{ if eq .chezmoi.os "windows" -}}
+@exit
+{{ end -}}
+#!/usr/bin/env bash
+
+
+if !(type "brew" > /dev/null 2>&1) ; then
+  {{ if (eq .chezmoi.os "linux") }}
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  {{  end }}
+  {{ if (eq .chezmoi.os "darwin") }}
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  {{  end }}
+fi
+
+{{ if (eq .chezmoi.os "darwin") -}}
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+{{ end -}}
+{{ if (eq .chezmoi.os "linux") -}}
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+{{ end -}}
+
+cd {{.chezmoi.sourceDir}}
+brew bundle

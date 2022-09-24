@@ -3,3 +3,4 @@
 if type brew &>/dev/null; then
 [ -d $(brew --prefix)/share/zsh/site-functions ] && fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
 fi
+source "$(chezmoi completion bash)"

@@ -22,3 +22,6 @@ fi
 
 cd {{.chezmoi.sourceDir}}
 brew bundle
+
+# コメントでファイルをインクルードして変更検知させるハック
+{{ include "Brewfile"| comment "# " }}

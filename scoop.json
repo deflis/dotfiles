@@ -1,81 +1,81 @@
 {
     "apps": [
         {
-            "Name": "7zip",
-            "Version": "22.01",
+            "Info": "",
             "Updated": "2022-09-24T15:44:25.7816121+09:00",
-            "Source": "main",
-            "Info": ""
+            "Version": "22.01",
+            "Name": "7zip",
+            "Source": "main"
         },
         {
-            "Name": "bfg",
-            "Version": "1.14.0",
+            "Info": "",
             "Updated": "2022-02-12T19:34:29.6556583+09:00",
-            "Source": "main",
-            "Info": ""
+            "Version": "1.14.0",
+            "Name": "bfg",
+            "Source": "main"
         },
         {
-            "Name": "chezmoi",
-            "Version": "2.23.0",
+            "Info": "",
             "Updated": "2022-09-24T15:44:29.7871708+09:00",
-            "Source": "main",
-            "Info": ""
+            "Version": "2.23.0",
+            "Name": "chezmoi",
+            "Source": "main"
         },
         {
-            "Name": "fzf",
-            "Version": "0.33.0",
+            "Info": "",
             "Updated": "2022-09-24T19:33:30.0407473+09:00",
-            "Source": "main",
-            "Info": ""
+            "Version": "0.33.0",
+            "Name": "fzf",
+            "Source": "main"
         },
         {
-            "Name": "gh",
-            "Version": "2.16.0",
+            "Info": "",
             "Updated": "2022-09-24T15:44:33.4295569+09:00",
-            "Source": "github-gh",
-            "Info": ""
+            "Version": "2.16.0",
+            "Name": "gh",
+            "Source": "github-gh"
         },
         {
-            "Name": "ghq",
-            "Version": "1.3.0",
+            "Info": "",
             "Updated": "2022-09-24T15:44:34.7896523+09:00",
-            "Source": "main",
-            "Info": ""
+            "Version": "1.3.0",
+            "Name": "ghq",
+            "Source": "main"
         },
         {
-            "Name": "git",
-            "Version": "2.37.3.windows.1",
+            "Info": "",
             "Updated": "2022-09-24T15:44:48.8594158+09:00",
-            "Source": "main",
-            "Info": ""
+            "Version": "2.37.3.windows.1",
+            "Name": "git",
+            "Source": "main"
         },
         {
-            "Name": "npiperelay",
-            "Version": "0.1.0",
+            "Info": "",
             "Updated": "2022-09-24T15:54:06.433065+09:00",
-            "Source": "extras",
-            "Info": ""
+            "Version": "0.1.0",
+            "Name": "npiperelay",
+            "Source": "extras"
         },
         {
-            "Name": "oh-my-posh",
-            "Version": "10.1.0",
+            "Info": "",
             "Updated": "2022-09-24T15:44:58.4446746+09:00",
-            "Source": "https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/oh-my-posh.json",
-            "Info": ""
+            "Version": "10.1.0",
+            "Name": "oh-my-posh",
+            "Source": "https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/oh-my-posh.json"
         },
         {
-            "Name": "sudo",
-            "Version": "0.2020.01.26",
+            "Info": "",
             "Updated": "2020-06-19T01:21:59.4163213+09:00",
-            "Source": "main",
-            "Info": ""
+            "Version": "0.2020.01.26",
+            "Name": "sudo",
+            "Source": "main"
         },
         {
-            "Name": "zoxide",
-            "Version": "0.8.3",
+            "Info": "",
             "Updated": "2022-09-23T02:45:09.3694614+09:00",
-            "Source": "main",
-            "Info": ""
+            "Version": "0.8.3",
+            "Name": "zoxide",
+            "Source": "main"
         }
     ],
     "buckets": [

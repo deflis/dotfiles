@@ -1,1 +1,1 @@
-.config/nushell/config.nu
+~/.config/nushell/config.nu

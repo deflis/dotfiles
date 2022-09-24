@@ -3,87 +3,87 @@
         {
             "Name": "7zip",
             "Version": "22.01",
-            "Info": "",
             "Updated": "2022-09-24T15:44:25.7816121+09:00",
-            "Source": "main"
+            "Source": "main",
+            "Info": ""
         },
         {
             "Name": "bfg",
             "Version": "1.14.0",
-            "Info": "",
             "Updated": "2022-02-12T19:34:29.6556583+09:00",
-            "Source": "main"
+            "Source": "main",
+            "Info": ""
         },
         {
             "Name": "chezmoi",
             "Version": "2.23.0",
-            "Info": "",
             "Updated": "2022-09-24T15:44:29.7871708+09:00",
-            "Source": "main"
+            "Source": "main",
+            "Info": ""
+        },
+        {
+            "Name": "fzf",
+            "Version": "0.33.0",
+            "Updated": "2022-09-24T19:33:30.0407473+09:00",
+            "Source": "main",
+            "Info": ""
         },
         {
             "Name": "gh",
             "Version": "2.16.0",
-            "Info": "",
             "Updated": "2022-09-24T15:44:33.4295569+09:00",
-            "Source": "github-gh"
+            "Source": "github-gh",
+            "Info": ""
         },
         {
             "Name": "ghq",
             "Version": "1.3.0",
-            "Info": "",
             "Updated": "2022-09-24T15:44:34.7896523+09:00",
-            "Source": "main"
+            "Source": "main",
+            "Info": ""
         },
         {
             "Name": "git",
             "Version": "2.37.3.windows.1",
-            "Info": "",
             "Updated": "2022-09-24T15:44:48.8594158+09:00",
-            "Source": "main"
+            "Source": "main",
+            "Info": ""
         },
         {
             "Name": "npiperelay",
             "Version": "0.1.0",
-            "Info": "",
             "Updated": "2022-09-24T15:54:06.433065+09:00",
-            "Source": "extras"
+            "Source": "extras",
+            "Info": ""
         },
         {
             "Name": "oh-my-posh",
             "Version": "10.1.0",
-            "Info": "",
             "Updated": "2022-09-24T15:44:58.4446746+09:00",
-            "Source": "https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/oh-my-posh.json"
-        },
-        {
-            "Name": "peco",
-            "Version": "0.5.10",
-            "Info": "",
-            "Updated": "2022-09-24T15:44:59.5205888+09:00",
-            "Source": "main"
+            "Source": "https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/oh-my-posh.json",
+            "Info": ""
         },
         {
             "Name": "sudo",
             "Version": "0.2020.01.26",
-            "Info": "",
             "Updated": "2020-06-19T01:21:59.4163213+09:00",
-            "Source": "main"
+            "Source": "main",
+            "Info": ""
         },
         {
             "Name": "zoxide",
             "Version": "0.8.3",
-            "Info": "",
             "Updated": "2022-09-23T02:45:09.3694614+09:00",
-            "Source": "main"
+            "Source": "main",
+            "Info": ""
         }
     ],
     "buckets": [
         {
             "Name": "extras",
             "Source": "https://github.com/lukesampson/scoop-extras",
-            "Updated": "2022-09-24T13:54:04+09:00",
-            "Manifests": 1692
+            "Updated": "2022-09-24T19:11:34+09:00",
+            "Manifests": 1691
         },
         {
             "Name": "github-gh",
@@ -94,7 +94,7 @@
         {
             "Name": "main",
             "Source": "https://github.com/ScoopInstaller/Main",
-            "Updated": "2022-09-24T14:25:00+09:00",
+            "Updated": "2022-09-24T17:56:10+09:00",
             "Manifests": 1083
         }
     ]

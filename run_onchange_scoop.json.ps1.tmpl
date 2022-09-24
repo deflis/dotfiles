@@ -1,0 +1,5 @@
+{{ if eq .chezmoi.os "windows" -}}
+
+scoop import {{.chezmoi.sourceDir}}/scoop.json
+
+{{ end -}}

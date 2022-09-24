@@ -1,0 +1,35 @@
+name: test
+
+on: [push]
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["ubuntu-latest", "macos-latest"]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install dotfiles
+        run: sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply -S .
+  test-windows:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["windows"]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install chezmoi
+        shell: pwsh
+        run: (irm -useb https://chezmoi.io/get.ps1) | powershell -c -
+
+      - name: Install dotfiles
+        run: chezmoi init --apply -S .

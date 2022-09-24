@@ -3,6 +3,8 @@ theme.png
 
 .vscode
 .config/windows_terminal
+.github
+.editorconfig
 
 Brewfile
 Brewfile.lock.json

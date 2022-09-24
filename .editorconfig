@@ -11,6 +11,11 @@ indent_style = space
 indent_size = 2
 
 # Windows-style newlines with a newline ending
-[*.{cmd,ps1}]
+[*.{cmd,ps1,cmd.tmpl,ps1.tmpl}]
 end_of_line = crlf
 
+
+
+# Windows-style newlines with a newline ending
+[*.sh.cmd.tmpl]
+end_of_line = lf

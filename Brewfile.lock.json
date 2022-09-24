@@ -5,7 +5,7 @@
         "revision": "73b77351709591cadc3f4a918b3276ee82cafbad"
       },
       "homebrew/core": {
-        "revision": "44f9ecb1cc912260152fd6221fe012dbfca1af90"
+        "revision": "9909db062f1ec31634525f26638a85303470d0c5"
       },
       "jandedobbeleer/oh-my-posh": {
         "revision": "45a7d080f617201a9d7a6d89b7d8dd25057f4f9f"
@@ -475,7 +475,7 @@
         }
       },
       "oh-my-posh": {
-        "version": "9.5.0",
+        "version": "10.1.0",
         "bottle": {
           "rebuild": 0,
           "root_url": "https://ghcr.io/v2/homebrew/core",
@@ -731,7 +731,7 @@
       "Ubuntu 18.04.5 LTS (bionic)": {
         "HOMEBREW_VERSION": "3.6.2",
         "HOMEBREW_PREFIX": "/home/linuxbrew/.linuxbrew",
-        "Homebrew/linuxbrew-core": "44f9ecb1cc912260152fd6221fe012dbfca1af90",
+        "Homebrew/linuxbrew-core": "9909db062f1ec31634525f26638a85303470d0c5",
         "GCC": "7.5.0"
       }
     },

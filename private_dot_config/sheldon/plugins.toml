@@ -23,9 +23,6 @@ apply = ["source"]
 defer = { value = 'zsh-defer source "{{ file }}"', each = true }
 completions = 'fpath=( "{{ dir }}/completions" $fpath )'
 
-[plugins.compinit]
-inline = 'autoload -Uz compinit && zsh-defer compinit'
-
 [plugins.dotfiles-sync]
 local = "~/.config/zsh/sync"
 apply = ["source"]
@@ -55,3 +52,6 @@ apply = ["fpath"]
 
 [plugins.autosuggestions]
 github = 'zsh-users/zsh-autosuggestions'
+
+[plugins.compinit]
+inline = 'autoload -Uz compinit && zsh-defer compinit'

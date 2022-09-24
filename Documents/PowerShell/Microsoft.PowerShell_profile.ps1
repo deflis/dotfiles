@@ -8,6 +8,7 @@ $env:POSH_GIT_ENABLED = $true
 Set-PSReadLineKeyHandler -Key Tab -Function Complete
 
 $env:EDITOR = "code --wait"
+$env:FZF_DEFAULT_OPTS = "--height 40% --layout=reverse"
 
 # 今すぐalias登録すべきPowerShellワンライナー
 # https://qiita.com/mu_sette/items/3954759daee8ae9ad26f

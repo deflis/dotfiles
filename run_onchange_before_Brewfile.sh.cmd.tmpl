@@ -6,7 +6,7 @@
 
 if !(type "brew" > /dev/null 2>&1) ; then
   {{ if (eq .chezmoi.os "linux") }}
-    {{ if eq .chezmoi.osRelease.id "debian" }}
+    {{ if or (eq .chezmoi.osRelease.id "debian") (eq .chezmoi.osRelease.id "ubuntu") }}
       sudo apt-get install build-essential procps curl file git
     {{ else if eq .chezmoi.osRelease.id "fedora" }}
       sudo yum groupinstall 'Development Tools'

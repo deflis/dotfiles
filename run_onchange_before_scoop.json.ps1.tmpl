@@ -1,0 +1,8 @@
+{{ if eq .chezmoi.os "windows" -}}
+
+scoop import {{.chezmoi.sourceDir}}/scoop.json
+
+# コメントでファイルをインクルードして変更検知させるハック
+{{ include "scoop.json"| comment "# " }}
+
+{{ end -}}

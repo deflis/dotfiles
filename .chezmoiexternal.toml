@@ -1,11 +1,9 @@
-[".tmux"]
-  type = "archive"
-  url = "https://github.com/gpakosz/.tmux/archive/master.tar.gz" 
-  exact = true
-  stripComponents = 1
+[".tmux.conf"]
+  type = "file"
+  url = "https://raw.githubusercontent.com/gpakosz/.tmux/master/.tmux.conf" 
   refreshPeriod = "168h"
 
 [".config/kitty/kitty.d/onehalfdark.conf"]
   type = "file"
   url = "https://raw.githubusercontent.com/sonph/onehalf/master/kitty/onehalf-dark.conf"
-    refreshPeriod = "168h"
+  refreshPeriod = "168h"

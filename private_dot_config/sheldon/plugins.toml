@@ -53,5 +53,8 @@ apply = ["fpath"]
 [plugins.autosuggestions]
 github = 'zsh-users/zsh-autosuggestions'
 
+[plugins.syntax-highlighting]
+github = 'zsh-users/zsh-syntax-highlighting'
+
 [plugins.compinit]
 inline = 'autoload -Uz compinit && zsh-defer compinit'

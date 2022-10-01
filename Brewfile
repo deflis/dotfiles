@@ -5,7 +5,7 @@ tap "homebrew/cask-fonts"
 tap "homebrew/core"
 tap "jandedobbeleer/oh-my-posh"
 
-brew "awscli"
+# brew "awscli"
 brew "chezmoi"
 brew "fzf"
 brew "gh"

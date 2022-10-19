@@ -26,6 +26,6 @@ Invoke-Expression (& {
 })
 
 
-function q {
+function cdr {
     cd $(ghq list -p | fzf)
 }

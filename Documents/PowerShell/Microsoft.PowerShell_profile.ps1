@@ -25,7 +25,7 @@ Invoke-Expression (& {
     (zoxide init --hook $hook powershell --cmd cd | Out-String)
 })
 
-$ fgh() {
-  declare -r REPO_NAME="$(ghq list >/dev/null | fzf-tmux --reverse +m)"
-  [[ -n "${REPO_NAME}" ]] && cd "$(ghq root)/${REPO_NAME}"
+
+function q {
+    cd $(ghq list -p | fzf)
 }

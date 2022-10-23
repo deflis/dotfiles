@@ -26,8 +26,9 @@ Invoke-Expression (& {
 })
 
 {{ output "zoxide" "init" "--hook" "pwd" "powershell" }}
-{{ output "zoxide" "init" "--hook" "pwd" "powershell" "--cmd" "cd" }}
 
+Set-Alias -Name cd -Value __zoxide_z -Option AllScope -Scope Global -Force
+Set-Alias -Name cdi -Value __zoxide_zi -Option AllScope -Scope Global -Force
 
 function cdr {
     cd $(ghq list -p | fzf)

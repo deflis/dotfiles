@@ -17,4 +17,7 @@ If(!(Test-CommandExists scoop)) {
   Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
 }
 
+Install-Module -Name PSFzf
+Install-Module -Name posh-git
+
 {{ end -}}

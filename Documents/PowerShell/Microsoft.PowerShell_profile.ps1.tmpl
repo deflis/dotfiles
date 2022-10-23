@@ -4,6 +4,7 @@
 
 Enable-PoshTransientPrompt
 Import-Module posh-git
+Import-Module PSFzf
 $env:POSH_GIT_ENABLED = $true
 
 # タブ補完のやり方を変更
@@ -29,8 +30,10 @@ Set-Alias ll CustomListChildItems
 
 {{ output "zoxide" "init" "--hook" "pwd" "powershell" }}
 
-Set-Alias -Name cd -Value __zoxide_z -Option AllScope -Scope Global -Force
-Set-Alias -Name cdi -Value __zoxide_zi -Option AllScope -Scope Global -Force
+Set-Alias -Name cd -Value z -Option AllScope -Scope Global -Force
+Set-Alias -Name cdi -Value zi -Option AllScope -Scope Global -Force
+
+Set-PsFzfOption -PSReadlineChordReverseHistory 'Ctrl+r'
 
 function cdr {
     cd $(ghq list -p | fzf)

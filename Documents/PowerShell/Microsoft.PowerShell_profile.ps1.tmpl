@@ -25,6 +25,9 @@ Invoke-Expression (& {
     (zoxide init --hook $hook powershell --cmd cd | Out-String)
 })
 
+{{ output "zoxide" "init" "--hook" "pwd" "powershell" }}
+{{ output "zoxide" "init" "--hook" "pwd" "powershell" "--cmd" "cd" }}
+
 
 function cdr {
     cd $(ghq list -p | fzf)

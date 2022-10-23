@@ -1,6 +1,6 @@
 # oh-my-posh --init --shell pwsh --config "$(scoop prefix oh-my-posh)/themes/night-owl.omp.json" | Invoke-Expression
 # oh-my-posh --init --shell pwsh --config "~/.config/powershell/theme.yaml" | Invoke-Expression
-{{ output "oh-my-posh" "--init" "--shell" "pwsh" "--config" "~/.config/powershell/theme.yaml" }}
+{{ output "oh-my-posh" "init" "pwsh" "--config=~/.config/powershell/theme.yaml" }}
 
 Enable-PoshTransientPrompt
 Import-Module posh-git
@@ -17,15 +17,15 @@ $env:FZF_DEFAULT_OPTS = "--height 40% --layout=reverse"
 function CustomListChildItems { Get-ChildItem $args[0] -force | Sort-Object -Property @{ Expression = 'LastWriteTime'; Descending = $true }, @{ Expression = 'Name'; Ascending = $true } | Format-Table -AutoSize -Property Mode, Length, LastWriteTime, Name }
 Set-Alias ll CustomListChildItems
 
-Invoke-Expression (& {
-    $hook = if ($PSVersionTable.PSVersion.Major -lt 6) { 'prompt' } else { 'pwd' }
-    (zoxide init --hook $hook powershell | Out-String)
-})
+#Invoke-Expression (& {
+#    $hook = if ($PSVersionTable.PSVersion.Major -lt 6) { 'prompt' } else { 'pwd' }
+#    (zoxide init --hook $hook powershell | Out-String)
+#})
 
-Invoke-Expression (& {
-    $hook = if ($PSVersionTable.PSVersion.Major -lt 6) { 'prompt' } else { 'pwd' }
-    (zoxide init --hook $hook powershell --cmd cd | Out-String)
-})
+#Invoke-Expression (& {
+#    $hook = if ($PSVersionTable.PSVersion.Major -lt 6) { 'prompt' } else { 'pwd' }
+#    (zoxide init --hook $hook powershell --cmd cd | Out-String)
+#})
 
 {{ output "zoxide" "init" "--hook" "pwd" "powershell" }}
 

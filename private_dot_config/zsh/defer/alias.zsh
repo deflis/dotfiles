@@ -28,5 +28,5 @@ alias su="su -l"
 
 export LESS='--tabs=4 --no-init --LONG-PROMPT --ignore-case -R'
 
-alias cr=anyframe-widget-cd-ghq-repository-custom
+alias cdr=anyframe-widget-cd-ghq-repository-custom
 alias tailf="tail -f"

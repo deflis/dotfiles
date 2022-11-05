@@ -4,6 +4,13 @@
 #!/usr/bin/env bash
 
 
+if [ -e /opt/homebrew/bin/brew ] ; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+if [ -e /home/linuxbrew/.linuxbrew/bin/brew ] ; then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
 if !(type "brew" > /dev/null 2>&1) ; then
   {{ if (eq .chezmoi.os "linux") }}
     {{ if or (eq .chezmoi.osRelease.id "debian") (eq .chezmoi.osRelease.id "ubuntu") }}
@@ -13,19 +20,15 @@ if !(type "brew" > /dev/null 2>&1) ; then
       sudo yum install procps-ng curl file git
       sudo yum install libxcrypt-compat # needed by Fedora 30 and up
     {{ end }}
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   {{  end }}
-  {{ if (eq .chezmoi.os "darwin") }}
-]    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  {{  end }}
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  {{ if (eq .chezmoi.os "darwin") -}}
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  {{ end -}}
+  {{ if (eq .chezmoi.os "linux") -}}
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  {{ end -}}
 fi
-
-{{ if (eq .chezmoi.os "darwin") -}}
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-{{ end -}}
-{{ if (eq .chezmoi.os "linux") -}}
-  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-{{ end -}}
 
 cd {{.chezmoi.sourceDir}}
 brew bundle

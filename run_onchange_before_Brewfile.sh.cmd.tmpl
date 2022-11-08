@@ -21,17 +21,21 @@ if !(type "brew" > /dev/null 2>&1) ; then
       sudo yum install libxcrypt-compat # needed by Fedora 30 and up
     {{ end }}
   {{  end }}
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  {{ if (eq .chezmoi.os "darwin") -}}
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-  {{ end -}}
-  {{ if (eq .chezmoi.os "linux") -}}
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  {{ if (not (contains "arm" (output "uname" "-m"))) }}
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    {{ if (eq .chezmoi.os "darwin") -}}
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+    {{ end -}}
+    {{ if (eq .chezmoi.os "linux") -}}
+      eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    {{ end -}}
   {{ end -}}
 fi
 
-cd {{.chezmoi.sourceDir}}
-brew bundle
+if (type "brew" > /dev/null 2>&1) ; then
+  cd {{.chezmoi.sourceDir}}
+  brew bundle
+fi
 
 # コメントでファイルをインクルードして変更検知させるハック
 {{ include "Brewfile"| comment "# " }}

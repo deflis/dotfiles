@@ -30,9 +30,11 @@ fi
 export GOPATH=~/go
 export path=(~/go/bin $path)
 
-{{ if (eq .chezmoi.os "darwin") -}}
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-{{ end -}}
-{{ if (eq .chezmoi.os "linux") -}}
-  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+{{ if contains "exists" (output "bash" "-c" "type \"brew\" > /dev/null 2>&1 && echo exists || exit 0") -}}
+  {{ if (eq .chezmoi.os "darwin") -}}
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  {{ end -}}
+  {{ if (eq .chezmoi.os "linux") -}}
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  {{ end -}}
 {{ end -}}

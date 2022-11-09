@@ -7,3 +7,6 @@
 
 [interpreters.nu]
     command = "nu"
+
+[data]
+  homebrew = {{ and (or (eq .chezmoi.os "darwin") (ne .chezmoi.os "linux") (not (contains "arm" (output "uname" "-m")))) (promptBool "install or update homebrew?" false) }}

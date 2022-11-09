@@ -3,7 +3,7 @@
 {{ end -}}
 #!/usr/bin/env bash
 
-{{ if (or (and (eq .chezmoi.os "linux") (contains "arm" (output "uname" "-m"))) (not (promptBool "install or update homebrew?" false))) }}
+{{ if not (.homebrew) }}
   exit
 {{ end -}}
 

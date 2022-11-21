@@ -2,3 +2,8 @@
   type = "file"
   url = "https://raw.githubusercontent.com/sonph/onehalf/master/kitty/onehalf-dark.conf"
   refreshPeriod = "168h"
+
+[".tmux/plugins/tpm"]
+  type = "git-repo"
+  url = "https://github.com/tmux-plugins/tpm.git"
+  refreshPeriod = "168h"

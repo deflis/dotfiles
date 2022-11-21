@@ -1,8 +1,3 @@
-[".tmux.conf"]
-  type = "file"
-  url = "https://raw.githubusercontent.com/gpakosz/.tmux/master/.tmux.conf" 
-  refreshPeriod = "168h"
-
 [".config/kitty/kitty.d/onehalfdark.conf"]
   type = "file"
   url = "https://raw.githubusercontent.com/sonph/onehalf/master/kitty/onehalf-dark.conf"

@@ -3,6 +3,7 @@
     "*.ps1.cmd": "powershell",
     "*.ps1.cmd.tmpl": "powershell",
     "*.sh.cmd.tmpl": "shellscript",
+    "*.nu.tmpl": "nushell",
     "dot_bashrc.tmpl": "shellscript",
     "dot_tmux.conf*": "tmux"
   }

@@ -25,7 +25,6 @@ brew "ripgrep"
 brew "chezmoi"
 if OS.mac?
   brew "awscli"
-  brew "reattach-to-user-namespace"
 
   cask "1password-cli"
   cask "docker"

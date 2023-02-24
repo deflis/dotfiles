@@ -2,15 +2,18 @@ README.md
 theme.png
 
 .vscode
-.config/windows_terminal
 .github
 .editorconfig
+*.md
 
 Brewfile
 Brewfile.lock.json
 scoop.json
 bootstrap.sh
 script_*
+
+# 環境ごとの差異が大きいので、備忘録として入れている。なので実体ではない。
+.config/windows_terminal
 
 {{ if ne .chezmoi.os "windows" }}
 Documents

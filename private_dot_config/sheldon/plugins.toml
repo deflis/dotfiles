@@ -42,7 +42,7 @@ remote = "https://raw.githubusercontent.com/aws/aws-cli/v2/bin/aws_zsh_completer
 [plugins.asdf]
 github = 'asdf-vm/asdf'
 apply = ["defer", "completions"]
-
+  
 [plugins.anyframe]
 github = 'mollifier/anyframe'
 

@@ -4,6 +4,62 @@
   refreshPeriod = "168h"
 
 [".tmux/plugins/tpm"]
-  type = "git-repo"
-  url = "https://github.com/tmux-plugins/tpm.git"
+  type = "archive"
+  url = "https://github.com/tmux-plugins/tpm/archive/master.tar.gz"
+  exact = true
+  stripComponents = 1
+  refreshPeriod = "168h"
+
+[".config/zsh/plugins/zsh-defer"]
+  type = "archive"
+  url = "https://github.com/romkatv/zsh-defer/archive/master.tar.gz"
+  exact = true
+  stripComponents = 1
+  refreshPeriod = "168h"
+
+[".config/zsh/plugins/zsh-completions"]
+  type = "archive"
+  url = "https://github.com/zsh-users/zsh-completions/archive/master.tar.gz"
+  exact = true
+  stripComponents = 1
+  refreshPeriod = "168h"
+
+[".config/zsh/plugins/zsh-better-npm-completion"]
+  type = "archive"
+  url = "https://github.com/zsh-users/zsh-completions/archive/master.tar.gz"
+  exact = true
+  stripComponents = 1
+  refreshPeriod = "168h"
+
+[".config/zsh/plugins/anyframe"]
+  type = "archive"
+  url = "https://github.com/mollifier/anyframe/archive/master.tar.gz"
+  exact = true
+  stripComponents = 1
+  refreshPeriod = "168h"
+
+[".config/zsh/plugins/autosuggestions"]
+  type = "archive"
+  url = "https://github.com/zsh-users/zsh-autosuggestions/archive/master.tar.gz"
+  exact = true
+  stripComponents = 1
+  refreshPeriod = "168h"
+
+[".config/zsh/plugins/syntax-highlighting"]
+  type = "archive"
+  url = "https://github.com/zsh-users/zsh-syntax-highlighting/archive/master.tar.gz"
+  exact = true
+  stripComponents = 1
+  refreshPeriod = "168h"
+
+[".config/zsh/fpath/aws_zsh_completer.sh"]
+  type = "file"
+  url = "https://raw.githubusercontent.com/aws/aws-cli/v2/bin/aws_zsh_completer.sh"
+  refreshPeriod = "168h"
+
+[".asdf"]
+  type = "archive"
+  url = "https://github.com/asdf-vm/asdf/archive/master.tar.gz"
+  exact = true
+  stripComponents = 1
   refreshPeriod = "168h"

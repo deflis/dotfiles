@@ -25,6 +25,7 @@ Library
 {{ end }}
 
 {{ if eq .chezmoi.os "windows" }}
+.asdf
 .bashrc
 .zshrc
 .tmux

@@ -1,7 +1,40 @@
-eval "$(sheldon source)"
+# fpath
+fpath=(
+  $ZDOTDIR/fpath(N-/)
+  $ZDOTDIR/plugins/zsh-completions/src(N-/)
+  $ZDOTDIR/plugins/zsh-better-npm-completion/src(N-/)
+  $ZDOTDIR/plugins/anyframe(N-/)
+  ~/.asdf/compilations(N-/)
+
+  $fpath
+)
+
+# zsh-defer
+source $ZDOTDIR/plugins/zsh-defer/zsh-defer.plugin.zsh
+
+# load configs
+for f ($ZDOTDIR/sync/*(N-.)) source $f
+for f ($ZDOTDIR/defer/*(N-.)) zsh-defer source $f
+
+# asdf
+zsh-defer . ~/.asdf/asdf.sh
+
+# plugins
+zsh-defer source $ZDOTDIR/plugins/autosuggestions/zsh-autosuggestions.zsh
+zsh-defer source $ZDOTDIR/plugins/syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# anyframe
+autoload -Uz anyframe-init
+anyframe-init
+
+#eval "$(sheldon source)"
 
 ## load user .zshrc configuration file
 #
 if [ -f ${HOME}/.zshrc.mine ]; then
     source ${HOME}/.zshrc.mine
 fi
+
+autoload -Uz compinit
+zsh-defer compinit 
+

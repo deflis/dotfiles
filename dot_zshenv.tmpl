@@ -1,9 +1,11 @@
+{{ if (eq .chezmoi.os "darwin") -}}
 # path_helperが悪さをするらしいので対策
 # https://github.com/mizdra/dotfiles/blob/2fadd667a059abae3d7c2c5e05a792569c687865/dot_zshenv#L1-L14
 setopt no_global_rcs
 if [ -x /usr/libexec/path_helper ]; then
     eval `/usr/libexec/path_helper -s`
 fi
+{{ end -}}
 
 export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:=${HOME}/.config}
 export ZDOTDIR=${ZDOTDIR:=${XDG_CONFIG_HOME}/zsh}
@@ -17,24 +19,33 @@ case ${UID} in
 esac
 
 ## Environment variable configuration
+{{ if lookPath "code" -}}
+export EDITOR="code --wait"
+{{ else -}}
 if type code >/dev/null 2>&1; then
   export EDITOR="code --wait"
 elif type vim >/dev/null 2>&1; then
   export EDITOR=vim
 fi
+{{ end -}}
 
-[ -d ${HOME}/bin ] && export PATH=${PATH}:${HOME}/bin
-[ -d ${HOME}/.local/bin ] && export PATH=${PATH}:${HOME}/.local/bin
+path=(
+  $path
+  ${HOME}/bin(N-/)
+  ${HOME}/.local/bin(N-/)
+)
 
 # go
 export GOPATH=~/go
 export path=(~/go/bin $path)
 
-{{ if contains "exists" (output "bash" "-c" "type \"brew\" > /dev/null 2>&1 && echo exists || exit 0") -}}
+{{ if lookPath "brew" -}}
+  {{ output "brew" "shellenv" }}
+{{ else -}}
   {{ if (eq .chezmoi.os "darwin") -}}
-    eval "$(/opt/homebrew/bin/brew shellenv)"
+    [ /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
   {{ end -}}
   {{ if (eq .chezmoi.os "linux") -}}
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    [ /home/linuxbrew/.linuxbrew/bin/brew ] && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
   {{ end -}}
 {{ end -}}

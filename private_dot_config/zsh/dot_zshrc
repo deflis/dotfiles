@@ -4,7 +4,7 @@ fpath=(
   $ZDOTDIR/plugins/zsh-completions/src(N-/)
   $ZDOTDIR/plugins/zsh-better-npm-completion/src(N-/)
   $ZDOTDIR/plugins/anyframe(N-/)
-  ~/.asdf/compilations(N-/)
+  ~/.asdf/completions(N-/)
 
   $fpath
 )

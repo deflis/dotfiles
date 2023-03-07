@@ -4,7 +4,9 @@
     "*.ps1.cmd.tmpl": "powershell",
     "*.sh.cmd.tmpl": "shellscript",
     "*.nu.tmpl": "nushell",
+    "*.toml.tmpl": "toml",
     "dot_bashrc.tmpl": "shellscript",
-    "dot_tmux.conf*": "tmux"
+    "dot_tmux.conf*": "tmux",
+    "dot_zsh*": "shellscript"
   }
 }

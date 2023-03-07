@@ -9,4 +9,8 @@
     command = "nu"
 
 [data]
-  homebrew = {{ and (or (eq .chezmoi.os "darwin") (ne .chezmoi.os "linux") (not (contains "arm" (output "uname" "-m")))) (promptBool "install or update homebrew?" false) }}
+    homebrew = {{ and (or (eq .chezmoi.os "darwin") (ne .chezmoi.os "linux") (not (contains "arm" (output "uname" "-m")))) (promptBool "install or update homebrew?" false) }}
+
+[edit]
+    command = "code"
+    args = ["--wait"]

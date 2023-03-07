@@ -1,0 +1,11 @@
+{{ if eq .chezmoi.os "windows" -}}
+@exit
+{{ end -}}
+#!/usr/bin/env bash
+
+if (type "sheldon" > /dev/null 2>&1) ; then
+  sheldon lock --update
+fi
+
+# コメントでファイルをインクルードして変更検知させるハック
+{{ include "private_dot_config/sheldon/plugins.toml"| comment "# " }}

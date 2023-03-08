@@ -49,3 +49,8 @@ export path=(~/go/bin $path)
     [ /home/linuxbrew/.linuxbrew/bin/brew ] && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
   {{ end -}}
 {{ end -}}
+
+{{ if eq .chezmoi.hostname "deflisnohatenaMBP" -}}
+export path=(~/.plenv/bin $path);
+eval "$(plenv init -)"
+{{ end -}}

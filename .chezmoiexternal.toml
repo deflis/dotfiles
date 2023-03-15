@@ -56,10 +56,3 @@
   type = "file"
   url = "https://raw.githubusercontent.com/aws/aws-cli/v2/bin/aws_zsh_completer.sh"
   refreshPeriod = "168h"
-
-[".asdf"]
-  type = "archive"
-  url = "https://github.com/asdf-vm/asdf/archive/master.tar.gz"
-  exact = true
-  stripComponents = 1
-  refreshPeriod = "168h"

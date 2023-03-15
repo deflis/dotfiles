@@ -30,11 +30,11 @@ set -g status-interval 15
 
 set -g window-status-format " "
 set -ga window-status-format "#{?#{==:#{active_window_index},#{e|-|:#I,1}},,#[fg=#3261ab] #[default]}"
-set -ga window-status-format "#I: #W"
+set -ga window-status-format "#I: #{?#{m:#W,zsh},#(basename #{pane_current_path}),[#W]}"
 set -ga window-status-format "#{?#{window_end_flag}, #[fg=#3261ab],}"
 set -g window-status-current-format "#[bg=#d6deeb] "
 set -ga window-status-current-format "#[fg=#d6deeb,bg=#3261ab]#[default] "
-set -ga window-status-current-format "#I: #W"
+set -ga window-status-current-format "#I: #{?#{m:#W,zsh},#(basename #{pane_current_path}),[#W]}"
 set -ga window-status-current-format " #[fg=#3261ab,bg=#d6deeb]"
 set -g window-status-separator ""
 
@@ -43,5 +43,3 @@ set -g window-status-current-style fg=#d6deeb,bg=#3261ab
 set -g window-status-bell-style default
 set -g window-status-activity-style default
 
-set -g window-status-format         '#I:#{?#{m:#W,zsh},#(basename #{pane_current_path}),#W}#F'
-set -g window-status-current-format '#I:#{?#{m:#W,zsh},#(basename #{pane_current_path}),#W}#F'

@@ -16,6 +16,7 @@ if [ ! -e ~/.asdf ] ; then
 fi
 
 if (type "asdf" > /dev/null 2>&1) ; then
+  asdf update
   asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
 fi
 

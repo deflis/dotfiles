@@ -34,4 +34,5 @@ Library
 .config/kitty
 .config/zsh
 .config/sheldon
+.config/zellij
 {{ end }}

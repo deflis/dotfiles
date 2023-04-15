@@ -56,3 +56,4 @@
   type = "file"
   url = "https://raw.githubusercontent.com/aws/aws-cli/v2/bin/aws_zsh_completer.sh"
   refreshPeriod = "168h"
+

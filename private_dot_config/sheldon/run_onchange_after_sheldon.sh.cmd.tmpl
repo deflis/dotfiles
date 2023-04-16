@@ -3,6 +3,9 @@
 {{ end -}}
 #!/usr/bin/env bash
 
+# 一旦スクリプトの実行を止める
+exit
+
 if (type "sheldon" > /dev/null 2>&1) ; then
   sheldon lock --update
 fi

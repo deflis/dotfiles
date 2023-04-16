@@ -2,4 +2,4 @@
 
 scoop update
 scoop update *
-scoop export > ./scoop.json
+scoop export | ConvertFrom-Json | Sort-Object name | ConvertTo-Json -Depth 100 | Set-Content ./scoop.json

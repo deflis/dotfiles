@@ -18,16 +18,7 @@ $env:FZF_DEFAULT_OPTS = "--height 40% --layout=reverse"
 function CustomListChildItems { Get-ChildItem $args[0] -force | Sort-Object -Property @{ Expression = 'LastWriteTime'; Descending = $true }, @{ Expression = 'Name'; Ascending = $true } | Format-Table -AutoSize -Property Mode, Length, LastWriteTime, Name }
 Set-Alias ll CustomListChildItems
 
-#Invoke-Expression (& {
-#    $hook = if ($PSVersionTable.PSVersion.Major -lt 6) { 'prompt' } else { 'pwd' }
-#    (zoxide init --hook $hook powershell | Out-String)
-#})
-
-#Invoke-Expression (& {
-#    $hook = if ($PSVersionTable.PSVersion.Major -lt 6) { 'prompt' } else { 'pwd' }
-#    (zoxide init --hook $hook powershell --cmd cd | Out-String)
-#})
-
+{{ output "chezmoi" "completion" "powershell" }}
 {{ output "zoxide" "init" "--hook" "pwd" "powershell" }}
 
 Set-Alias -Name cd -Value z -Option AllScope -Scope Global -Force

@@ -2,6 +2,7 @@
   "files.associations": {
     "*.ps1.cmd": "powershell",
     "*.ps1.cmd.tmpl": "powershell",
+    "*.ps1.tmpl": "powershell",
     "*.sh.cmd.tmpl": "shellscript",
     "*.nu.tmpl": "nushell",
     "*.toml.tmpl": "toml",

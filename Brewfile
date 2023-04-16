@@ -23,6 +23,7 @@ brew "zoxide"
 brew "zsh"
 brew "ripgrep"
 brew "chezmoi"
+brew "rtx"
 if OS.mac?
   brew "awscli"
 
@@ -39,6 +40,7 @@ if OS.mac?
   cask "session-manager-plugin"
   cask "ueli"
   cask "visual-studio-code"
+  cask "wezterm"
 end
 
 if OS.linux?

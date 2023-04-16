@@ -15,32 +15,10 @@ config.launch_menu = {}
 
 if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
   config.default_prog = { 'pwsh' }
-  table.insert(config.launch_menu, {
-    label = 'PowerShell',
-    args = { 'powershell.exe', '-NoLogo' },
-  })
-
-  -- Find installed visual studio version(s) and add their compilation
-  -- environment command prompts to the menu
-  for _, vsvers in
-    ipairs(
-      wezterm.glob('Microsoft Visual Studio/20*', 'C:/Program Files (x86)')
-    )
-  do
-    local year = vsvers:gsub('Microsoft Visual Studio/', '')
-    table.insert(config.launch_menu, {
-      label = 'x64 Native Tools VS ' .. year,
-      args = {
-        'cmd.exe',
-        '/k',
-        'C:/Program Files (x86)/'
-          .. vsvers
-          .. '/BuildTools/VC/Auxiliary/Build/vcvars64.bat',
-      },
-    })
-  end
 end
-
+config.keys = {
+  { key = 'l', mods = 'ALT', action = wezterm.action.ShowLauncher },
+}
 
 config.color_scheme = 'OneHalfDark'
 config.window_background_opacity = 0.8
@@ -51,7 +29,7 @@ config.window_frame = {
   -- Whatever font is selected here, it will have the
   -- main font setting appended to it to pick up any
   -- fallback fonts you may have used there.
-  font = wezterm.font { family = 'Roboto', weight = 'Bold' },
+  font = wezterm.font { family = 'HackGen Console', weight = 'Bold' },
 
   -- The size of the font in the tab bar.
   -- Default to 10. on Windows but 12.0 on other systems
@@ -65,13 +43,8 @@ config.window_frame = {
   -- the window is not focused
   inactive_titlebar_bg = '#333333',
 }
-
-config.colors = {
-  tab_bar = {
-    -- The color of the inactive tab bar edge/divider
-    inactive_tab_edge = '#575757',
-  },
-}
+config.window_decorations = "RESIZE"
+config.font = wezterm.font 'HackGen Console NFJ'
 
 -- and finally, return the configuration to wezterm
 return config

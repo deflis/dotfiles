@@ -179,6 +179,7 @@ plugins {
     strider { path "strider"; }
     compact-bar { path "compact-bar"; }
 }
+theme "one-half-dark"
 
 themes {
     one-half-dark {

@@ -136,16 +136,6 @@ let-env config = {
 
 alias ll = (ls -al)
 
-{{ if lookPath "zoxide" -}}
-{{ output "zoxide" "init" "nushell" -}}
-alias cd = z
-alias cdi = zi
-{{ end -}}
-
-{{ if lookPath "rtx" -}}
-{{ output "rtx" "activate" "nu" }}
-{{ end -}}
-
-{{ if lookPath "oh-my-posh" -}}
-{{ output "oh-my-posh" "init" "nu" "--config" "~/.config/powershell/theme.yaml" "--print" }}
-{{ end -}}
+source "~/.config/nushell/rtx.nu"
+source "~/.config/nushell/oh-my-posh.nu"
+source "~/.config/nushell/zoxide.nu"

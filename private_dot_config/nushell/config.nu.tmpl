@@ -139,12 +139,13 @@ alias ll = (ls -al)
 {{ if lookPath "oh-my-posh" -}}
   {{ output "oh-my-posh" "init" "nu" "--print" }}
 {{ end -}}
+
 {{ if lookPath "zoxide" -}}
   {{ output "zoxide" "init" "nushell" }}
   alias cd = z
   alias cdi = zi
 {{ end -}}
 
-{{ if stat (joinPath .chezmoi.homeDir ".asdf/asdf.nu") -}}
-source {{ joinPath .chezmoi.homeDir ".asdf/asdf.nu" }}
-{{ end }}
+{{ if lookPath "rtx" -}}
+  {{ output "rtx" "activate" "nu" }}
+{{ end -}}

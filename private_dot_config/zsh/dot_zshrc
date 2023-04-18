@@ -17,7 +17,7 @@ for f ($ZDOTDIR/sync/*(N-.)) source $f
 for f ($ZDOTDIR/defer/*(N-.)) zsh-defer source $f
 
 # asdf
-zsh-defer . ~/.asdf/asdf.sh
+# zsh-defer . ~/.asdf/asdf.sh
 
 # plugins
 zsh-defer source $ZDOTDIR/plugins/autosuggestions/zsh-autosuggestions.zsh

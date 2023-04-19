@@ -136,6 +136,8 @@ let-env config = {
 
 alias ll = (ls -al)
 
-source "~/.config/nushell/rtx.nu"
+# rtxがバグってるので、一旦コメントアウト
+# https://github.com/jdxcode/rtx/pull/475
+# source "~/.config/nushell/rtx.nu"
 source "~/.config/nushell/oh-my-posh.nu"
 source "~/.config/nushell/zoxide.nu"

@@ -6,12 +6,13 @@ let-env config = {
   show_banner: false
 }
 
-alias ll = (ls -al)
+alias ll = ls -al
 
 source "~/.config/nushell/completions.nu"
 
-# rtxがバグってるので、一旦コメントアウト
-# https://github.com/jdxcode/rtx/pull/475
-# source "~/.config/nushell/rtx.nu"
+source "~/.config/nushell/rtx.nu"
+source "~/.config/nushell/fnm.nu"
+
 source "~/.config/nushell/oh-my-posh.nu"
 source "~/.config/nushell/zoxide.nu"
+

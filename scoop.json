@@ -1,143 +1,157 @@
 {
-  "buckets": [
-    {
-      "Name": "extras",
-      "Source": "https://github.com/lukesampson/scoop-extras",
-      "Updated": "2023-04-16T18:56:55+09:00",
-      "Manifests": 1824
-    },
-    {
-      "Name": "github-gh",
-      "Source": "https://github.com/cli/scoop-gh.git",
-      "Updated": "2023-04-08T04:45:34+09:00",
-      "Manifests": 0
-    },
-    {
-      "Name": "main",
-      "Source": "https://github.com/ScoopInstaller/Main",
-      "Updated": "2023-04-16T20:35:07+09:00",
-      "Manifests": 1189
-    }
-  ],
   "apps": [
     {
-      "Source": "main",
-      "Version": "2.16.1",
-      "Updated": "2023-04-16T20:19:23.9850649+09:00",
+      "Info": "",
       "Name": "1password-cli",
-      "Info": ""
+      "Source": "main",
+      "Updated": "2023-04-16T20:19:23.9850649+09:00",
+      "Version": "2.16.1"
     },
     {
-      "Source": "main",
-      "Version": "22.01",
-      "Updated": "2022-11-15T16:29:22.096394+09:00",
+      "Info": "",
       "Name": "7zip",
-      "Info": ""
+      "Source": "main",
+      "Updated": "2022-11-15T16:29:22.096394+09:00",
+      "Version": "22.01"
     },
     {
+      "Info": "",
+      "Name": "aria2",
       "Source": "main",
-      "Version": "1.14.0",
-      "Updated": "2022-11-15T16:37:25.0128306+09:00",
+      "Updated": "2023-04-23T05:56:26.9685744+09:00",
+      "Version": "1.36.0-1"
+    },
+    {
+      "Info": "",
       "Name": "bfg",
-      "Info": ""
+      "Source": "main",
+      "Updated": "2022-11-15T16:37:25.0128306+09:00",
+      "Version": "1.14.0"
     },
     {
-      "Source": "main",
-      "Version": "2.31.0",
-      "Updated": "2023-02-27T00:57:06.7351083+09:00",
+      "Info": "",
       "Name": "chezmoi",
-      "Info": ""
+      "Source": "main",
+      "Updated": "2023-04-23T05:09:14.897468+09:00",
+      "Version": "2.33.3"
     },
     {
+      "Info": "",
+      "Name": "fnm",
       "Source": "main",
-      "Version": "0.39.0",
-      "Updated": "2023-04-16T20:19:28.5338776+09:00",
+      "Updated": "2023-04-23T04:19:10.2413005+09:00",
+      "Version": "1.33.1"
+    },
+    {
+      "Info": "",
       "Name": "fzf",
-      "Info": ""
+      "Source": "main",
+      "Updated": "2023-04-16T20:19:28.5338776+09:00",
+      "Version": "0.39.0"
     },
     {
-      "Source": "main",
-      "Version": "2.27.0",
-      "Updated": "2023-04-16T20:19:30.9756852+09:00",
+      "Info": "",
       "Name": "gh",
-      "Info": ""
+      "Source": "main",
+      "Updated": "2023-04-16T20:19:30.9756852+09:00",
+      "Version": "2.27.0"
     },
     {
-      "Source": "main",
-      "Version": "1.4.1",
-      "Updated": "2023-02-27T00:57:13.3147127+09:00",
+      "Info": "",
       "Name": "ghq",
-      "Info": ""
+      "Source": "main",
+      "Updated": "2023-04-23T05:09:16.7475273+09:00",
+      "Version": "1.4.2"
     },
     {
-      "Source": "main",
-      "Version": "2.40.0.windows.1",
-      "Updated": "2023-04-16T20:19:51.5873569+09:00",
+      "Info": "",
       "Name": "git",
-      "Info": ""
+      "Source": "main",
+      "Updated": "2023-04-16T20:19:51.5873569+09:00",
+      "Version": "2.40.0.windows.1"
     },
     {
-      "Source": "main",
-      "Version": "3.2.2",
-      "Updated": "2023-04-16T20:19:55.0710449+09:00",
+      "Info": "",
       "Name": "ngrok",
-      "Info": ""
+      "Source": "main",
+      "Updated": "2023-04-16T20:19:55.0710449+09:00",
+      "Version": "3.2.2"
     },
     {
-      "Source": "extras",
-      "Version": "0.1.0",
-      "Updated": "2022-11-15T16:37:32.5690634+09:00",
+      "Info": "",
       "Name": "npiperelay",
-      "Info": ""
+      "Source": "extras",
+      "Updated": "2022-11-15T16:37:32.5690634+09:00",
+      "Version": "0.1.0"
     },
     {
-      "Source": "main",
-      "Version": "0.78.0",
-      "Updated": "2023-04-16T20:45:42.6594237+09:00",
+      "Info": "",
       "Name": "nu",
-      "Info": ""
+      "Source": "main",
+      "Updated": "2023-04-16T20:45:42.6594237+09:00",
+      "Version": "0.78.0"
     },
     {
-      "Source": "https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/oh-my-posh.json",
-      "Version": "14.30.0",
-      "Updated": "2023-04-16T20:20:05.6130072+09:00",
+      "Info": "",
       "Name": "oh-my-posh",
-      "Info": ""
+      "Source": "https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/oh-my-posh.json",
+      "Updated": "2023-04-23T05:09:26.2860961+09:00",
+      "Version": "14.32.1"
     },
     {
-      "Source": "main",
-      "Version": "3.1.2",
-      "Updated": "2023-04-16T20:20:10.1154223+09:00",
+      "Info": "",
       "Name": "pandoc",
-      "Info": ""
+      "Source": "main",
+      "Updated": "2023-04-16T20:20:10.1154223+09:00",
+      "Version": "3.1.2"
     },
     {
-      "Source": "extras",
-      "Version": "1.1.0",
-      "Updated": "2022-11-15T16:37:40.976872+09:00",
+      "Info": "",
       "Name": "posh-git",
-      "Info": ""
-    },
-    {
-      "Source": "main",
-      "Version": "0.2020.01.26",
-      "Updated": "2022-11-15T16:37:41.3056599+09:00",
-      "Name": "sudo",
-      "Info": ""
-    },
-    {
       "Source": "extras",
-      "Version": "20230408-112425-69ae8472",
-      "Updated": "2023-04-16T18:31:22.0024457+09:00",
-      "Name": "wezterm",
-      "Info": ""
+      "Updated": "2022-11-15T16:37:40.976872+09:00",
+      "Version": "1.1.0"
     },
     {
+      "Info": "",
+      "Name": "sudo",
       "Source": "main",
-      "Version": "0.9.0",
-      "Updated": "2023-02-27T00:57:40.8187623+09:00",
+      "Updated": "2022-11-15T16:37:41.3056599+09:00",
+      "Version": "0.2020.01.26"
+    },
+    {
+      "Info": "",
+      "Name": "wezterm",
+      "Source": "extras",
+      "Updated": "2023-04-16T18:31:22.0024457+09:00",
+      "Version": "20230408-112425-69ae8472"
+    },
+    {
+      "Info": "",
       "Name": "zoxide",
-      "Info": ""
+      "Source": "main",
+      "Updated": "2023-02-27T00:57:40.8187623+09:00",
+      "Version": "0.9.0"
+    }
+  ],
+  "buckets": [
+    {
+      "Manifests": 1858,
+      "Name": "extras",
+      "Source": "https://github.com/lukesampson/scoop-extras",
+      "Updated": "2023-04-23T05:30:09+09:00"
+    },
+    {
+      "Manifests": 0,
+      "Name": "github-gh",
+      "Source": "https://github.com/cli/scoop-gh.git",
+      "Updated": "2023-04-08T04:45:34+09:00"
+    },
+    {
+      "Manifests": 1195,
+      "Name": "main",
+      "Source": "https://github.com/ScoopInstaller/Main",
+      "Updated": "2023-04-23T05:24:25+09:00"
     }
   ]
 }

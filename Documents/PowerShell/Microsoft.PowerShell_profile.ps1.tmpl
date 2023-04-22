@@ -20,6 +20,7 @@ Set-Alias ll CustomListChildItems
 
 {{ output "chezmoi" "completion" "powershell" }}
 {{ output "zoxide" "init" "--hook" "pwd" "powershell" }}
+{{ output "fnm" "env" "--use-on-cd" "--shell" "powershell" }}
 
 Set-Alias -Name cd -Value z -Option AllScope -Scope Global -Force
 Set-Alias -Name cdi -Value zi -Option AllScope -Scope Global -Force
@@ -28,4 +29,9 @@ Set-PsFzfOption -PSReadlineChordReverseHistory 'Ctrl+r'
 
 function cdr {
     cd $(ghq list -p | fzf)
+}
+
+# https://qiita.com/mizutoki79/items/372e1f21548e926f76e0
+function which ($command) {
+    Get-command -Name $command -ShowCommandInfo | Format-List -Property Definition
 }

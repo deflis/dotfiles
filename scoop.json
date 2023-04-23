@@ -95,8 +95,8 @@
       "Info": "",
       "Name": "oh-my-posh",
       "Source": "https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/oh-my-posh.json",
-      "Updated": "2023-04-23T05:09:26.2860961+09:00",
-      "Version": "14.32.1"
+      "Updated": "2023-04-23T21:04:56.9448765+09:00",
+      "Version": "14.32.2"
     },
     {
       "Info": "",
@@ -139,7 +139,7 @@
       "Manifests": 1858,
       "Name": "extras",
       "Source": "https://github.com/lukesampson/scoop-extras",
-      "Updated": "2023-04-23T05:30:09+09:00"
+      "Updated": "2023-04-23T20:30:32+09:00"
     },
     {
       "Manifests": 0,
@@ -151,7 +151,7 @@
       "Manifests": 1195,
       "Name": "main",
       "Source": "https://github.com/ScoopInstaller/Main",
-      "Updated": "2023-04-23T05:24:25+09:00"
+      "Updated": "2023-04-23T18:32:37+09:00"
     }
   ]
 }

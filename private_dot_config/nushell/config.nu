@@ -4,9 +4,7 @@
 let-env config = {
   edit_mode: vi
   show_banner: false
-}
-
-alias ll = ls -al
+}\
 
 source "~/.config/nushell/completions.nu"
 
@@ -16,3 +14,5 @@ source "~/.config/nushell/fnm.nu"
 source "~/.config/nushell/oh-my-posh.nu"
 source "~/.config/nushell/zoxide.nu"
 
+alias ll = ls -al
+alias cdr = cd (ghq list --full-path | fzf | decode utf-8 | str trim )

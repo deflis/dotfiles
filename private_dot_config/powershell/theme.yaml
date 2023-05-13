@@ -106,7 +106,7 @@ blocks:
           fetch_status: true
           fetch_upstream_icon: true
           fetch_worktree_count: true
-        template: "{{ .UpstreamIcon }} {{ .HEAD }} {{ .BranchStatus }}{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }}  {{ .StashCount }}{{ end }}"
+        template: "{{ .UpstreamIcon }}{{ .HEAD }}{{ .BranchStatus }}{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }}  {{ .StashCount }}{{ end }}"
         style: powerline
         powerline_symbol: 
         invert_powerline: true
@@ -128,9 +128,7 @@ blocks:
           fetch_package_manager: true
           npm_icon: "<#cc3a3a></>"
           yarn_icon: "<#348cba></>"
-        template: "\
-           {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }}\
-          "
+        template:  {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }}
         style: powerline
         powerline_symbol: 
         invert_powerline: true

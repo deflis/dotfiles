@@ -4,8 +4,8 @@
       "Info": "",
       "Name": "1password-cli",
       "Source": "main",
-      "Updated": "2023-04-16T20:19:23.9850649+09:00",
-      "Version": "2.16.1"
+      "Updated": "2023-05-13T01:15:46.2721631+09:00",
+      "Version": "2.17.0"
     },
     {
       "Info": "",
@@ -46,15 +46,15 @@
       "Info": "",
       "Name": "fzf",
       "Source": "main",
-      "Updated": "2023-04-16T20:19:28.5338776+09:00",
-      "Version": "0.39.0"
+      "Updated": "2023-05-13T01:15:49.5478034+09:00",
+      "Version": "0.40.0"
     },
     {
       "Info": "",
       "Name": "gh",
       "Source": "main",
-      "Updated": "2023-04-16T20:19:30.9756852+09:00",
-      "Version": "2.27.0"
+      "Updated": "2023-05-13T01:15:51.2775526+09:00",
+      "Version": "2.29.0"
     },
     {
       "Info": "",
@@ -67,15 +67,22 @@
       "Info": "",
       "Name": "git",
       "Source": "main",
-      "Updated": "2023-04-16T20:19:51.5873569+09:00",
-      "Version": "2.40.0.windows.1"
+      "Updated": "2023-05-13T01:16:01.4813169+09:00",
+      "Version": "2.40.1.windows.1"
+    },
+    {
+      "Info": "",
+      "Name": "jpegview",
+      "Source": "extras",
+      "Updated": "2023-04-23T22:57:55.3199031+09:00",
+      "Version": "1.0.37"
     },
     {
       "Info": "",
       "Name": "ngrok",
       "Source": "main",
-      "Updated": "2023-04-16T20:19:55.0710449+09:00",
-      "Version": "3.2.2"
+      "Updated": "2023-05-13T01:16:06.7877291+09:00",
+      "Version": "3.3.0"
     },
     {
       "Info": "",
@@ -95,8 +102,8 @@
       "Info": "",
       "Name": "oh-my-posh",
       "Source": "https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/oh-my-posh.json",
-      "Updated": "2023-04-23T21:04:56.9448765+09:00",
-      "Version": "14.32.2"
+      "Updated": "2023-05-13T01:16:14.3465318+09:00",
+      "Version": "16.4.0"
     },
     {
       "Info": "",
@@ -130,28 +137,28 @@
       "Info": "",
       "Name": "zoxide",
       "Source": "main",
-      "Updated": "2023-02-27T00:57:40.8187623+09:00",
-      "Version": "0.9.0"
+      "Updated": "2023-05-13T01:16:15.4803086+09:00",
+      "Version": "0.9.1"
     }
   ],
   "buckets": [
     {
-      "Manifests": 1858,
+      "Manifests": 1865,
       "Name": "extras",
       "Source": "https://github.com/lukesampson/scoop-extras",
-      "Updated": "2023-04-23T20:30:32+09:00"
+      "Updated": "2023-05-12T21:29:41+09:00"
     },
     {
       "Manifests": 0,
       "Name": "github-gh",
       "Source": "https://github.com/cli/scoop-gh.git",
-      "Updated": "2023-04-08T04:45:34+09:00"
+      "Updated": "2023-05-04T21:33:48+09:00"
     },
     {
-      "Manifests": 1195,
+      "Manifests": 1197,
       "Name": "main",
       "Source": "https://github.com/ScoopInstaller/Main",
-      "Updated": "2023-04-23T18:32:37+09:00"
+      "Updated": "2023-05-12T21:31:24+09:00"
     }
   ]
 }

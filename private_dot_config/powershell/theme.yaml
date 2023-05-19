@@ -223,4 +223,8 @@ blocks:
         style: plain
 console_title_template: "[{{.UserName}}@{{.HostName}} {{.PWD}}] {{ if .Root }}#{{ else }}${{ end }} {{.Shell}}"
 osc99: true
+transient_prompt:
+  background: transparent
+  foreground: "p:white"
+  template: "[{{.UserName}}@{{.HostName}} {{.PWD}}] {{ if .Root }}#{{ else }}${{ end }} "
 version: 2

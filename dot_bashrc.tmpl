@@ -123,7 +123,9 @@ elif type vim >/dev/null 2>&1; then
 fi
 
 {{ if (eq .chezmoi.os "linux") -}}
+{{   if lookPath "/home/linuxbrew/.linuxbrew/bin/brew" -}}
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+{{   end -}}
 {{   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
 # WSL-specific code
 export SSH_AUTH_SOCK=$HOME/.ssh/agent.sock
@@ -146,3 +148,29 @@ eval "$(oh-my-posh --init --shell bash --config ~/.config/powershell/theme.yaml)
 if [ -f ${HOME}/.bashrc.mine ]; then
     source ${HOME}/.bashrc.mine
 fi
+
+{{ if lookPath "fzf" -}}
+# re-wrote the script above
+bind '"\C-r": "\C-x1\e^\er"'
+bind -x '"\C-x1": __fzf_history';
+
+__fzf_history ()
+{
+__ehc $(history | fzf --tac --tiebreak=index | perl -ne 'm/^\s*([0-9]+)/ and print "!$1"')
+}
+
+__ehc()
+{
+if
+  [[ -n $1 ]]
+then
+  bind '"\er": redraw-current-line'
+  bind '"\e^": magic-space'
+  READLINE_LINE=${READLINE_LINE:+${READLINE_LINE:0:READLINE_POINT}}${1}${READLINE_LINE:+${READLINE_LINE:READLINE_POINT}}
+  READLINE_POINT=$(( READLINE_POINT + ${#1} ))
+else
+  bind '"\er":'
+  bind '"\e^":'
+fi
+}
+{{ end -}}

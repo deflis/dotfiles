@@ -4,15 +4,15 @@
       "Info": "",
       "Name": "1password-cli",
       "Source": "main",
-      "Updated": "2023-06-24T20:31:37.0894513+09:00",
-      "Version": "2.18.0"
+      "Updated": "2023-07-12T02:22:09.9384254+09:00",
+      "Version": "2.19.0"
     },
     {
       "Info": "",
       "Name": "7zip",
       "Source": "main",
-      "Updated": "2022-11-15T16:29:22.096394+09:00",
-      "Version": "22.01"
+      "Updated": "2023-07-12T02:22:15.5868256+09:00",
+      "Version": "23.01"
     },
     {
       "Info": "",
@@ -32,15 +32,15 @@
       "Info": "",
       "Name": "chezmoi",
       "Source": "main",
-      "Updated": "2023-06-24T20:31:39.1596216+09:00",
-      "Version": "2.34.2"
+      "Updated": "2023-07-24T01:09:45.7445742+09:00",
+      "Version": "2.35.2"
     },
     {
       "Info": "",
       "Name": "fnm",
       "Source": "main",
-      "Updated": "2023-04-23T04:19:10.2413005+09:00",
-      "Version": "1.33.1"
+      "Updated": "2023-07-24T01:09:48.5402767+09:00",
+      "Version": "1.35.0"
     },
     {
       "Info": "",
@@ -53,8 +53,8 @@
       "Info": "",
       "Name": "gh",
       "Source": "main",
-      "Updated": "2023-06-24T20:31:43.4173363+09:00",
-      "Version": "2.31.0"
+      "Updated": "2023-07-24T01:09:50.1244717+09:00",
+      "Version": "2.32.0"
     },
     {
       "Info": "",
@@ -67,8 +67,8 @@
       "Info": "",
       "Name": "git",
       "Source": "main",
-      "Updated": "2023-06-24T20:32:01.0547834+09:00",
-      "Version": "2.41.0.windows.1"
+      "Updated": "2023-07-24T01:10:04.6744569+09:00",
+      "Version": "2.41.0.3"
     },
     {
       "Info": "",
@@ -102,15 +102,15 @@
       "Info": "",
       "Name": "oh-my-posh",
       "Source": "https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/oh-my-posh.json",
-      "Updated": "2023-06-24T20:32:14.8713245+09:00",
-      "Version": "17.4.0"
+      "Updated": "2023-07-24T01:10:12.3172217+09:00",
+      "Version": "17.12.1"
     },
     {
       "Info": "",
       "Name": "pandoc",
       "Source": "main",
-      "Updated": "2023-06-24T20:32:17.6425751+09:00",
-      "Version": "3.1.3"
+      "Updated": "2023-07-24T01:10:16.4633754+09:00",
+      "Version": "3.1.6"
     },
     {
       "Info": "",
@@ -130,8 +130,8 @@
       "Info": "",
       "Name": "wezterm",
       "Source": "extras",
-      "Updated": "2023-04-16T18:31:22.0024457+09:00",
-      "Version": "20230408-112425-69ae8472"
+      "Updated": "2023-07-24T01:10:21.6648772+09:00",
+      "Version": "20230712-072601-f4abf8fd"
     },
     {
       "Info": "",
@@ -143,10 +143,10 @@
   ],
   "buckets": [
     {
-      "Manifests": 1881,
+      "Manifests": 1884,
       "Name": "extras",
       "Source": "https://github.com/lukesampson/scoop-extras",
-      "Updated": "2023-06-24T17:27:44+09:00"
+      "Updated": "2023-07-23T21:29:10+09:00"
     },
     {
       "Manifests": 0,
@@ -155,10 +155,10 @@
       "Updated": "2023-05-04T21:33:48+09:00"
     },
     {
-      "Manifests": 1207,
+      "Manifests": 1213,
       "Name": "main",
       "Source": "https://github.com/ScoopInstaller/Main",
-      "Updated": "2023-06-24T17:28:26+09:00"
+      "Updated": "2023-07-23T21:30:29+09:00"
     }
   ]
 }

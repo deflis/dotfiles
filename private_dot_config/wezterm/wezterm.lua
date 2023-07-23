@@ -44,7 +44,13 @@ config.window_frame = {
   inactive_titlebar_bg = '#333333',
 }
 config.window_decorations = "RESIZE"
-config.font = wezterm.font 'HackGen Console NFJ'
-
+config.font = wezterm.font_with_fallback [
+  'HackGen Console NFJ',
+  'HackGen Console NF',
+  'HackGen Console',
+  'JetBrains Mono',
+  'Consolas',
+  'SF Mono',
+  'Noto Color Emoji']
 -- and finally, return the configuration to wezterm
 return config

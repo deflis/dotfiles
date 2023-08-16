@@ -1,7 +1,7 @@
 # Nushell Config File
 
 # The default config record. This is where much of your global configuration is setup.
-let-env config = {
+$env.config = {
   edit_mode: vi
   show_banner: false
 }

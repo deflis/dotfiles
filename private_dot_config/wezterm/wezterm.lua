@@ -51,6 +51,8 @@ config.font = wezterm.font_with_fallback [
   'JetBrains Mono',
   'Consolas',
   'SF Mono',
-  'Noto Color Emoji']
+  'Noto Color Emoji'
+]
+
 -- and finally, return the configuration to wezterm
 return config

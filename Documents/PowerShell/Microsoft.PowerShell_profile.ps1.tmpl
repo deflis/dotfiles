@@ -2,9 +2,9 @@
 # oh-my-posh --init --shell pwsh --config "~/.config/powershell/theme.yaml" | Invoke-Expression
 {{ output "oh-my-posh" "init" "pwsh" "--config=~/.config/powershell/theme.yaml" }}
 
-Import-Module posh-git
+# Import-Module posh-git
 Import-Module PSFzf
-$env:POSH_GIT_ENABLED = $true
+# $env:POSH_GIT_ENABLED = $true
 
 # タブ補完のやり方を変更
 Set-PSReadLineKeyHandler -Key Tab -Function Complete
@@ -19,7 +19,7 @@ Set-Alias ll CustomListChildItems
 
 {{ output "chezmoi" "completion" "powershell" }}
 {{ output "zoxide" "init" "--hook" "pwd" "powershell" }}
-{{ output "fnm" "env" "--use-on-cd" "--shell" "powershell" }}
+{{ output "fnm" "env" "--use-on-cd" "--shell" "power-shell" }}
 
 Set-Alias -Name cd -Value z -Option AllScope -Scope Global -Force
 Set-Alias -Name cdi -Value zi -Option AllScope -Scope Global -Force

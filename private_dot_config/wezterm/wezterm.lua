@@ -45,7 +45,6 @@ config.window_frame = {
 }
 config.window_decorations = "RESIZE"
 config.font = wezterm.font_with_fallback {
-  'HackGen Console NFJ',
   'HackGen Console NF',
   'HackGen Console',
   'JetBrains Mono',

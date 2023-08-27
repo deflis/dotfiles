@@ -18,6 +18,7 @@ script_*
 {{ if ne .chezmoi.os "windows" }}
 Documents
 AppData
+.config/powershell/*.d
 {{ end }}
 
 {{ if ne .chezmoi.os "darwin" }}

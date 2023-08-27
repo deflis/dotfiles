@@ -114,9 +114,9 @@ blocks:
         background: "#8f43f3"
         foreground: "#ffffff"
         properties:
-          discharging_icon: " "
-          charging_icon: " "
-          charged_icon: " "
+          discharging_icon: "󰁾 "
+          charging_icon: "󰂅 "
+          charged_icon: "󰁹 "
         template: "{{ if not .Error }} {{ .Icon }} {{ .Percentage }}\uF295 {{ end }}"
         style: powerline
         powerline_symbol: 

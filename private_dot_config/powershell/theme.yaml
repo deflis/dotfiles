@@ -65,13 +65,23 @@ blocks:
         background: "p:black"
         background_templates:
           - '{{ if eq .OS "windows" }}p:blue{{ end }}'
+          - '{{ if eq .OS "macos" }}p:black{{ end }}'
           - '{{ if eq .OS "ubuntu" }}p:orange{{ end }}'
           - '{{ if eq .OS "centos" }}p:yelloworange{{ end }}'
+          - '{{ if eq .OS "manjaro" }}p:dark-green{{ end }}'
+          - '{{ if eq .OS "arch" }}p:blue{{ end }}'
+          - '{{ if eq .OS "debian" }}p:magenta{{ end }}'
+          - '{{ if eq .OS "raspbian" }}p:magenta{{ end }}'
         foreground: "p:white"
         foreground_templates:
           - '{{ if eq .OS "windows" }}p:white{{ end }}'
+          - '{{ if eq .OS "macos" }}p:white{{ end }}'
           - '{{ if eq .OS "ubuntu" }}p:white{{ end }}'
           - '{{ if eq .OS "centos" }}p:black{{ end }}'
+          - '{{ if eq .OS "manjaro" }}p:green{{ end }}'
+          - '{{ if eq .OS "arch" }}p:white{{ end }}'
+          - '{{ if eq .OS "debian" }}p:white{{ end }}'
+          - '{{ if eq .OS "raspbian" }}p:white{{ end }}'
         template: "{{ if .SSHSession }}{{ .HostName }}{{ end }}"
         style: powerline
       - type: path
@@ -219,6 +229,6 @@ blocks:
           postfix: ""
         template: "{{ if .Root }}#{{ else }}${{ end }} "
         style: plain
-console_title_template: "[{{.UserName}}@{{.HostName}} {{.PWD}}] {{ if .Root }}#{{ else }}${{ end }} {{.Shell}}"
+console_title_template: "{{ if .Segments.Session.SSHSession }}[{{.UserName}}@{{.HostName}}] {{ end }}{{ .PWD }} {{ if .Root }}#{{ else }}${{ end }}"
 osc99: true
 version: 2

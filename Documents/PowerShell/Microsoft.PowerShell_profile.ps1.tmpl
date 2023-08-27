@@ -1,10 +1,26 @@
 # oh-my-posh --init --shell pwsh --config "$(scoop prefix oh-my-posh)/themes/night-owl.omp.json" | Invoke-Expression
 # oh-my-posh --init --shell pwsh --config "~/.config/powershell/theme.yaml" | Invoke-Expression
-{{ output "oh-my-posh" "init" "pwsh" "--config=~/.config/powershell/theme.yaml" }}
+# output "oh-my-posh" "init" "pwsh" "--config=~/.config/powershell/theme.yaml"
 
-# Import-Module posh-git
-Import-Module PSFzf
-# $env:POSH_GIT_ENABLED = $true
+Get-ChildItem -Path "$HOME\.config\powershell\profile.d" -Filter *.ps1 | ForEach-Object {
+  . $_.FullName
+}
+
+Get-ChildItem -Path "$HOME\.config\powershell\defer.d" -Filter *.ps1 | ForEach-Object {
+  $LazyLoadProfile = [PowerShell]::Create()
+  [void]$LazyLoadProfile.AddScript('. $_.FullName')
+  $LazyLoadProfileRunspace = [RunspaceFactory]::CreateRunspace()
+  $LazyLoadProfile.Runspace = $LazyLoadProfileRunspace
+  $LazyLoadProfileRunspace.Open()
+  [void]$LazyLoadProfile.BeginInvoke()
+
+  $null = Register-ObjectEvent -InputObject $LazyLoadProfile -EventName InvocationStateChanged -Action {
+      . $_.FullName
+      $LazyLoadProfile.Dispose()
+      $LazyLoadProfileRunspace.Close()
+      $LazyLoadProfileRunspace.Dispose()
+  }
+}
 
 # タブ補完のやり方を変更
 Set-PSReadLineKeyHandler -Key Tab -Function Complete
@@ -16,15 +32,6 @@ $env:FZF_DEFAULT_OPTS = "--height 40% --layout=reverse"
 # https://qiita.com/mu_sette/items/3954759daee8ae9ad26f
 function CustomListChildItems { Get-ChildItem $args[0] -force | Sort-Object -Property @{ Expression = 'LastWriteTime'; Descending = $true }, @{ Expression = 'Name'; Ascending = $true } | Format-Table -AutoSize -Property Mode, Length, LastWriteTime, Name }
 Set-Alias ll CustomListChildItems
-
-{{ output "chezmoi" "completion" "powershell" }}
-{{ output "zoxide" "init" "--hook" "pwd" "powershell" }}
-{{ output "fnm" "env" "--use-on-cd" "--shell" "power-shell" }}
-
-Set-Alias -Name cd -Value z -Option AllScope -Scope Global -Force
-Set-Alias -Name cdi -Value zi -Option AllScope -Scope Global -Force
-
-Set-PsFzfOption -PSReadlineChordReverseHistory 'Ctrl+r'
 
 function cdr {
     cd $(ghq list -p | fzf)

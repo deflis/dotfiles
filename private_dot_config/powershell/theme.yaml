@@ -59,7 +59,7 @@ blocks:
           - '{{ if eq .OS "arch" }}p:white{{ end }}'
           - '{{ if eq .OS "debian" }}p:white{{ end }}'
           - '{{ if eq .OS "raspbian" }}p:white{{ end }}'
-        template: '{{ if eq .OS "windows" }}{{ else }}{{ .Icon }}{{ end }} {{ if .WSL }} {{ end }}'
+        template: '{{ if eq .OS "windows" }}󰍲{{ else }}{{ .Icon }}{{ end }} {{ if .WSL }}󰍲 {{ end }}'
         style: powerline
       - type: session
         background: "p:black"
@@ -191,7 +191,7 @@ blocks:
         foreground: "p:white"
         properties:
           time_format: 15:04:05
-        template: ' {{ .CurrentDate | date "15:04:05" }}'
+        template: '󰥔 {{ .CurrentDate | date "15:04:05" }}'
         style: diamond
         leading_diamond: ""
         trailing_diamond: "<p:blue,transparent></>"

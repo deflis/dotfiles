@@ -127,7 +127,7 @@ blocks:
         properties:
           fetch_package_manager: true
           npm_icon: "<#cc3a3a></>"
-          yarn_icon: "<#348cba></>"
+          yarn_icon: "<#348cba>󰄛</>"
         template:  {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }}
         style: powerline
         powerline_symbol: 
@@ -221,8 +221,4 @@ blocks:
         style: plain
 console_title_template: "[{{.UserName}}@{{.HostName}} {{.PWD}}] {{ if .Root }}#{{ else }}${{ end }} {{.Shell}}"
 osc99: true
-transient_prompt:
-  background: transparent
-  foreground: "p:white"
-  template: "[{{.UserName}}@{{.HostName}} {{.PWD}}] {{ if .Root }}#{{ else }}${{ end }} "
 version: 2

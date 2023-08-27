@@ -8,7 +8,7 @@ palette:
   white: "#d6deeb"
   black: "#111111"
   blue: "#3261ab"
-  cian: "#007fb1"
+  cyan: "#007fb1"
   green: "#23ac0e"
   lime: "#a4c520"
   yellow: "#ffe600"
@@ -17,7 +17,7 @@ palette:
   red: "#c7243a"
   magenta: "#bf1e56"
   light-blue: "#d5e0f1"
-  light-cian: "#cae7f2"
+  light-cyan: "#cae7f2"
   light-green: "#d1f1cc"
   light-lime: "#eef5d3"
   light-yellow: "#fffbd5"
@@ -26,7 +26,7 @@ palette:
   light-red: "#f6d4d8"
   light-magenta: "#f4d2de"
   dark-blue: "#142744"
-  dark-cian: "#003347"
+  dark-cyan: "#003347"
   dark-green: "#0e4506"
   dark-lime: "#565a07"
   dark-yellow: "#665c00"
@@ -46,7 +46,7 @@ blocks:
           - '{{ if eq .OS "ubuntu" }}p:orange{{ end }}'
           - '{{ if eq .OS "centos" }}p:yelloworange{{ end }}'
           - '{{ if eq .OS "manjaro" }}p:dark-green{{ end }}'
-          - '{{ if eq .OS "arch" }}p:blue{{ end }}'
+          - '{{ if eq .OS "arch" }}p:cyan{{ end }}'
           - '{{ if eq .OS "debian" }}p:magenta{{ end }}'
           - '{{ if eq .OS "raspbian" }}p:magenta{{ end }}'
         foreground: "p:white"
@@ -69,7 +69,7 @@ blocks:
           - '{{ if eq .OS "ubuntu" }}p:orange{{ end }}'
           - '{{ if eq .OS "centos" }}p:yelloworange{{ end }}'
           - '{{ if eq .OS "manjaro" }}p:dark-green{{ end }}'
-          - '{{ if eq .OS "arch" }}p:blue{{ end }}'
+          - '{{ if eq .OS "arch" }}p:cyan{{ end }}'
           - '{{ if eq .OS "debian" }}p:magenta{{ end }}'
           - '{{ if eq .OS "raspbian" }}p:magenta{{ end }}'
         foreground: "p:white"
@@ -103,7 +103,7 @@ blocks:
           - "{{ if or (.Working.Changed) (.Staging.Changed) }}p:lime{{ end }}"
           - "{{ if and (gt .Ahead 0) (gt .Behind 0) }}p:magenta{{ end }}"
           - "{{ if gt .Ahead 0 }}p:yelloworange{{ end }}"
-          - "{{ if gt .Behind 0 }}p:cian{{ end }}"
+          - "{{ if gt .Behind 0 }}p:cyan{{ end }}"
         foreground: "p:black"
         foreground_templates:
           - "{{ if or (.Working.Changed) (.Staging.Changed) }}p:black{{ end }}"

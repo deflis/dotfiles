@@ -44,24 +44,14 @@ config.window_frame = {
   inactive_titlebar_bg = '#333333',
 }
 config.window_decorations = "RESIZE"
-<<<<<<< Updated upstream
 config.font = wezterm.font_with_fallback {
-  'HackGen Console NF',
-  'HackGen Console',
-  'JetBrains Mono',
-  'Consolas',
-  'SF Mono',
+    'HackGen Console NF',
+    'HackGen Console NFJ', 
+    'HackGen Console',
+    'Consolas',
+    'Arial',
   'Noto Color Emoji',
 }
-=======
-config.font = wezterm.font_with_fallback({
-  'HackGen Console NF',
-  'HackGen Console NFJ', 
-  'HackGen Console',
-  'Consolas',
-  'Arial',
-})
->>>>>>> Stashed changes
 
 -- and finally, return the configuration to wezterm
 return config

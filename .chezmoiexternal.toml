@@ -57,3 +57,7 @@
   url = "https://raw.githubusercontent.com/aws/aws-cli/v2/bin/aws_zsh_completer.sh"
   refreshPeriod = "168h"
 
+[".config/zsh/plugins/ni.zsh"]
+  type = "file"
+  url = "https://raw.githubusercontent.com/azu/ni.zsh/main/ni.zsh"
+  refreshPeriod = "168h"

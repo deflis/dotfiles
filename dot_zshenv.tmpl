@@ -50,11 +50,6 @@ export path=(~/go/bin $path)
   {{ end -}}
 {{ end -}}
 
-{{ if eq .chezmoi.hostname "deflisnohatenaMBP" -}}
-export path=(~/.plenv/bin $path);
-eval "$(plenv init -)"
-{{ end -}}
-
 {{ if stat "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock" -}}
 export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
 {{ end -}}

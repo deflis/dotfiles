@@ -7,7 +7,7 @@ set -g @plugin 'yardnsm/tmux-1password'
 set -g @plugin 'tmux-plugins/tmux-yank'
 
 set -g @continuum-restore 'on'
-set -g @continuum-boot 'on'
+set -g @continuum-boot 'off'
 set -g @continuum-boot-options 'kitty'
 
 set -g @batt_icon_status_discharging ''

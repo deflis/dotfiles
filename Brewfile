@@ -21,7 +21,7 @@ brew "tree"
 brew "zoxide"
 brew "zsh"
 brew "chezmoi"
-brew "rtx"
+brew "mise"
 if OS.mac?
   brew "awscli"
 

@@ -61,3 +61,7 @@ export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agen
 {{ if stat "~/.1password/agent.sock" -}}
 export SSH_AUTH_SOCK=~/.1password/agent.sock
 {{ end -}}
+
+{{ if stat "~/.local/share/mise/shims" -}}
+export PATH="$HOME/.local/share/mise/shims:$PATH"
+{{ end -}}

@@ -11,8 +11,8 @@
       "Info": "",
       "Name": "7zip",
       "Source": "main",
-      "Updated": "2023-08-23T04:42:33.8019971+09:00",
-      "Version": "23.01"
+      "Updated": "2024-06-09T20:10:18.8731423+09:00",
+      "Version": "24.06"
     },
     {
       "Info": "",
@@ -32,8 +32,8 @@
       "Info": "",
       "Name": "chezmoi",
       "Source": "main",
-      "Updated": "2023-08-23T04:43:56.1540191+09:00",
-      "Version": "2.38.0"
+      "Updated": "2024-05-16T03:34:31.0768795+09:00",
+      "Version": "2.48.1"
     },
     {
       "Info": "",
@@ -46,29 +46,29 @@
       "Info": "",
       "Name": "fanctrl",
       "Source": "lemon",
-      "Updated": "2024-02-27T20:32:15.112682+09:00",
-      "Version": "1.6.9"
+      "Updated": "2024-06-09T20:10:29.0646479+09:00",
+      "Version": "1.7.0"
     },
     {
       "Info": "",
       "Name": "fnm",
       "Source": "main",
-      "Updated": "2023-08-23T04:51:02.1896298+09:00",
-      "Version": "1.35.1"
+      "Updated": "2024-06-09T20:10:34.771522+09:00",
+      "Version": "1.37.0"
     },
     {
       "Info": "",
       "Name": "fzf",
       "Source": "main",
-      "Updated": "2024-05-03T22:19:18.5713226+09:00",
-      "Version": "0.51.0"
+      "Updated": "2024-06-09T20:10:36.9555241+09:00",
+      "Version": "0.53.0"
     },
     {
       "Info": "",
       "Name": "gh",
       "Source": "main",
-      "Updated": "2024-05-03T22:19:20.9857648+09:00",
-      "Version": "2.49.0"
+      "Updated": "2024-06-09T20:10:45.4729361+09:00",
+      "Version": "2.50.0"
     },
     {
       "Info": "",
@@ -81,8 +81,8 @@
       "Info": "",
       "Name": "git",
       "Source": "main",
-      "Updated": "2024-05-03T22:19:31.4776335+09:00",
-      "Version": "2.45.0"
+      "Updated": "2024-05-16T03:35:42.6369724+09:00",
+      "Version": "2.45.1"
     },
     {
       "Info": "",
@@ -102,8 +102,8 @@
       "Info": "",
       "Name": "ngrok",
       "Source": "main",
-      "Updated": "2024-05-03T22:19:49.0741696+09:00",
-      "Version": "3.9.0"
+      "Updated": "2024-06-09T20:12:22.3403088+09:00",
+      "Version": "3.10.1"
     },
     {
       "Info": "",
@@ -123,22 +123,22 @@
       "Info": "",
       "Name": "obsidian",
       "Source": "extras",
-      "Updated": "2024-04-20T01:40:00.4291791+09:00",
-      "Version": "1.5.12"
+      "Updated": "2024-06-09T20:12:45.6251845+09:00",
+      "Version": "1.6.3"
     },
     {
       "Info": "",
       "Name": "oh-my-posh",
       "Source": "https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/oh-my-posh.json",
-      "Updated": "2024-05-03T22:19:58.412116+09:00",
-      "Version": "19.25.0"
+      "Updated": "2024-06-09T20:13:08.624145+09:00",
+      "Version": "21.3.0"
     },
     {
       "Info": "",
       "Name": "pandoc",
       "Source": "main",
-      "Updated": "2024-04-20T01:41:06.5587901+09:00",
-      "Version": "3.1.13"
+      "Updated": "2024-05-16T03:36:02.3173896+09:00",
+      "Version": "3.2"
     },
     {
       "Info": "",
@@ -151,8 +151,8 @@
       "Info": "",
       "Name": "starship",
       "Source": "main",
-      "Updated": "2024-04-20T01:41:09.1296196+09:00",
-      "Version": "1.18.2"
+      "Updated": "2024-06-09T20:13:12.1500632+09:00",
+      "Version": "1.19.0"
     },
     {
       "Info": "",
@@ -163,9 +163,16 @@
     },
     {
       "Info": "",
+      "Name": "vfox",
+      "Source": "main",
+      "Updated": "2024-06-09T20:13:15.7485817+09:00",
+      "Version": "0.5.3"
+    },
+    {
+      "Info": "",
       "Name": "wezterm",
       "Source": "extras",
-      "Updated": "2024-02-27T20:37:38.8101319+09:00",
+      "Updated": "2024-05-16T03:40:25.4025984+09:00",
       "Version": "20240203-110809-5046fc22"
     },
     {
@@ -178,10 +185,10 @@
   ],
   "buckets": [
     {
-      "Manifests": 2016,
+      "Manifests": 2034,
       "Name": "extras",
       "Source": "https://github.com/lukesampson/scoop-extras",
-      "Updated": "2024-05-03T21:32:38+09:00"
+      "Updated": "2024-06-09T17:29:32+09:00"
     },
     {
       "Manifests": 0,
@@ -190,22 +197,22 @@
       "Updated": "2023-05-04T21:33:48+09:00"
     },
     {
-      "Manifests": 1095,
+      "Manifests": 1124,
       "Name": "lemon",
       "Source": "https://github.com/hoilc/scoop-lemon",
-      "Updated": "2024-05-03T21:27:22+09:00"
+      "Updated": "2024-06-09T18:17:23+09:00"
     },
     {
-      "Manifests": 1321,
+      "Manifests": 1327,
       "Name": "main",
       "Source": "https://github.com/ScoopInstaller/Main",
-      "Updated": "2024-05-03T21:30:53+09:00"
+      "Updated": "2024-06-09T13:27:26+09:00"
     },
     {
       "Manifests": 75,
       "Name": "sysinternals",
       "Source": "https://github.com/niheaven/scoop-sysinternals",
-      "Updated": "2024-02-21T19:02:04+09:00"
+      "Updated": "2024-05-29T17:11:09+09:00"
     }
   ]
 }

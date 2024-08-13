@@ -1,0 +1,4 @@
+ghq-bin
+oh-my-posh-bin
+paru-bin
+rtx-bin

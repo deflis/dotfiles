@@ -11,8 +11,8 @@
       "Info": "",
       "Name": "7zip",
       "Source": "main",
-      "Updated": "2024-06-09T20:10:18.8731423+09:00",
-      "Version": "24.06"
+      "Updated": "2024-08-10T20:30:50.0761185+09:00",
+      "Version": "24.07"
     },
     {
       "Info": "",
@@ -32,8 +32,8 @@
       "Info": "",
       "Name": "chezmoi",
       "Source": "main",
-      "Updated": "2024-05-16T03:34:31.0768795+09:00",
-      "Version": "2.48.1"
+      "Updated": "2024-08-10T20:31:16.5434107+09:00",
+      "Version": "2.52.0"
     },
     {
       "Info": "",
@@ -53,36 +53,36 @@
       "Info": "",
       "Name": "fnm",
       "Source": "main",
-      "Updated": "2024-06-09T20:10:34.771522+09:00",
-      "Version": "1.37.0"
+      "Updated": "2024-08-10T20:31:19.6584506+09:00",
+      "Version": "1.37.1"
     },
     {
       "Info": "",
       "Name": "fzf",
       "Source": "main",
-      "Updated": "2024-06-09T20:10:36.9555241+09:00",
-      "Version": "0.53.0"
+      "Updated": "2024-08-10T20:31:24.4169005+09:00",
+      "Version": "0.54.3"
     },
     {
       "Info": "",
       "Name": "gh",
       "Source": "main",
-      "Updated": "2024-06-09T20:10:45.4729361+09:00",
-      "Version": "2.50.0"
+      "Updated": "2024-08-10T20:31:38.8719773+09:00",
+      "Version": "2.54.0"
     },
     {
       "Info": "",
       "Name": "ghq",
       "Source": "main",
-      "Updated": "2024-04-20T01:39:40.8805289+09:00",
-      "Version": "1.6.1"
+      "Updated": "2024-08-10T20:31:43.4333041+09:00",
+      "Version": "1.6.2"
     },
     {
       "Info": "",
       "Name": "git",
       "Source": "main",
-      "Updated": "2024-05-16T03:35:42.6369724+09:00",
-      "Version": "2.45.1"
+      "Updated": "2024-08-10T20:33:56.2578638+09:00",
+      "Version": "2.46.0"
     },
     {
       "Info": "",
@@ -95,15 +95,15 @@
       "Info": "",
       "Name": "mysql-workbench",
       "Source": "main",
-      "Updated": "2024-01-30T01:16:12.7757862+09:00",
-      "Version": "8.0.36"
+      "Updated": "2024-08-10T20:35:11.7498375+09:00",
+      "Version": "8.0.38"
     },
     {
       "Info": "",
       "Name": "ngrok",
       "Source": "main",
-      "Updated": "2024-06-09T20:12:22.3403088+09:00",
-      "Version": "3.10.1"
+      "Updated": "2024-08-10T20:36:46.0458272+09:00",
+      "Version": "3.14.0"
     },
     {
       "Info": "",
@@ -123,22 +123,22 @@
       "Info": "",
       "Name": "obsidian",
       "Source": "extras",
-      "Updated": "2024-06-09T20:12:45.6251845+09:00",
-      "Version": "1.6.3"
+      "Updated": "2024-08-10T20:37:40.9358795+09:00",
+      "Version": "1.6.7"
     },
     {
       "Info": "",
       "Name": "oh-my-posh",
       "Source": "https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/oh-my-posh.json",
-      "Updated": "2024-06-09T20:13:08.624145+09:00",
-      "Version": "21.3.0"
+      "Updated": "2024-08-10T20:37:53.1282608+09:00",
+      "Version": "23.6.2"
     },
     {
       "Info": "",
       "Name": "pandoc",
       "Source": "main",
-      "Updated": "2024-05-16T03:36:02.3173896+09:00",
-      "Version": "3.2"
+      "Updated": "2024-08-10T20:38:04.4126065+09:00",
+      "Version": "3.3"
     },
     {
       "Info": "",
@@ -151,8 +151,8 @@
       "Info": "",
       "Name": "starship",
       "Source": "main",
-      "Updated": "2024-06-09T20:13:12.1500632+09:00",
-      "Version": "1.19.0"
+      "Updated": "2024-08-10T20:38:08.3818444+09:00",
+      "Version": "1.20.1"
     },
     {
       "Info": "",
@@ -165,8 +165,8 @@
       "Info": "",
       "Name": "vfox",
       "Source": "main",
-      "Updated": "2024-06-09T20:13:15.7485817+09:00",
-      "Version": "0.5.3"
+      "Updated": "2024-08-10T20:38:10.9748326+09:00",
+      "Version": "0.5.4"
     },
     {
       "Info": "",
@@ -185,10 +185,10 @@
   ],
   "buckets": [
     {
-      "Manifests": 2034,
+      "Manifests": 2054,
       "Name": "extras",
       "Source": "https://github.com/lukesampson/scoop-extras",
-      "Updated": "2024-06-09T17:29:32+09:00"
+      "Updated": "2024-08-10T18:54:10+09:00"
     },
     {
       "Manifests": 0,
@@ -197,22 +197,22 @@
       "Updated": "2023-05-04T21:33:48+09:00"
     },
     {
-      "Manifests": 1124,
+      "Manifests": 1175,
       "Name": "lemon",
       "Source": "https://github.com/hoilc/scoop-lemon",
-      "Updated": "2024-06-09T18:17:23+09:00"
+      "Updated": "2024-08-10T18:17:32+09:00"
     },
     {
-      "Manifests": 1327,
+      "Manifests": 1337,
       "Name": "main",
       "Source": "https://github.com/ScoopInstaller/Main",
-      "Updated": "2024-06-09T13:27:26+09:00"
+      "Updated": "2024-08-10T13:28:46+09:00"
     },
     {
       "Manifests": 75,
       "Name": "sysinternals",
       "Source": "https://github.com/niheaven/scoop-sysinternals",
-      "Updated": "2024-05-29T17:11:09+09:00"
+      "Updated": "2024-07-24T01:37:20+09:00"
     }
   ]
 }

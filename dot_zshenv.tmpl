@@ -43,16 +43,15 @@ export path=(~/go/bin $path)
   {{ output "brew" "shellenv" }}
 {{ else -}}
   {{ if (eq .chezmoi.os "darwin") -}}
-    [ /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
+if [[ -x /opt/homebrew/bin/brew ]] then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
   {{ end -}}
   {{ if (eq .chezmoi.os "linux") -}}
-    [ /home/linuxbrew/.linuxbrew/bin/brew ] && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+if [[ -x /home/linuxbrew/.linuxbrew/bin/brew ]] then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
   {{ end -}}
-{{ end -}}
-
-{{ if eq .chezmoi.hostname "deflisnohatenaMBP" -}}
-export path=(~/.plenv/bin $path);
-eval "$(plenv init -)"
 {{ end -}}
 
 {{ if stat "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock" -}}
@@ -61,4 +60,8 @@ export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agen
 
 {{ if stat "~/.1password/agent.sock" -}}
 export SSH_AUTH_SOCK=~/.1password/agent.sock
+{{ end -}}
+
+{{ if stat "~/.local/share/mise/shims" -}}
+export PATH="$HOME/.local/share/mise/shims:$PATH"
 {{ end -}}

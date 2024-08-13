@@ -1,0 +1,15 @@
+aws-cli
+base
+base-devel
+chezmoi
+fzf
+git
+github-cli
+jq
+nushell
+reflector
+ripgrep
+vim
+wget
+zoxide
+zsh

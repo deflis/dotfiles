@@ -15,6 +15,10 @@ script_*
 # 環境ごとの差異が大きいので、備忘録として入れている。なので実体ではない。
 .config/windows_terminal
 
+# arch linuxのインストールパッケージリスト
+arch.txt
+arch_aur.txt
+
 {{ if ne .chezmoi.os "windows" }}
 Documents
 AppData

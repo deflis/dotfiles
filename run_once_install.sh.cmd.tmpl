@@ -10,16 +10,6 @@
 {{    end }}
 {{  end }}
 
-if [ ! -e ~/.asdf ] ; then
-  git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.11.2
-  . "$HOME/.asdf/asdf.sh"
-fi
-
-if (type "asdf" > /dev/null 2>&1) ; then
-  asdf update
-  asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
-fi
-
 {{ if eq .chezmoi.hostname "deflisnohatenaMBP" -}}
 if [ ! -e ~/.plenv ] ; then
   git clone https://github.com/tokuhirom/plenv.git ~/.plenv

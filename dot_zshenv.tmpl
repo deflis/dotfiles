@@ -65,3 +65,9 @@ export SSH_AUTH_SOCK=~/.1password/agent.sock
 {{ if stat "~/.local/share/mise/shims" -}}
 export PATH="$HOME/.local/share/mise/shims:$PATH"
 {{ end -}}
+
+{{ if stat "~/.rd/bin" -}}
+# Rancher Desktopのパスを通す
+export PATH="$HOME/.rd/bin:$PATH"
+{{ end -}}
+

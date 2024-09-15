@@ -32,8 +32,15 @@
       "Info": "",
       "Name": "chezmoi",
       "Source": "main",
-      "Updated": "2023-07-24T01:09:45.7445742+09:00",
-      "Version": "2.35.2"
+      "Updated": "2024-09-16T04:34:43.0615302+09:00",
+      "Version": "2.52.2"
+    },
+    {
+      "Info": "",
+      "Name": "espanso",
+      "Source": "main",
+      "Updated": "2024-09-16T04:33:35.046769+09:00",
+      "Version": "2.2.1"
     },
     {
       "Info": "",
@@ -69,6 +76,13 @@
       "Source": "main",
       "Updated": "2024-09-15T14:17:38.1710605+09:00",
       "Version": "2.46.0"
+    },
+    {
+      "Info": "",
+      "Name": "innounp",
+      "Source": "main",
+      "Updated": "2024-09-16T04:33:31.4882116+09:00",
+      "Version": "0.50"
     },
     {
       "Info": "",

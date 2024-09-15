@@ -26,7 +26,7 @@ if OS.mac?
   brew "awscli"
 
   cask "1password-cli"
-  cask "docker"
+  cask "rancher"
   cask "font-hackgen"
   cask "font-hackgen-nerd"
   cask "font-hasklig"

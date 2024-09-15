@@ -34,9 +34,11 @@ if OS.mac?
   cask "rectangle"
   cask "scroll-reverser"
   cask "session-manager-plugin"
-  cask "ueli"
+  # cask "ueli"
   cask "visual-studio-code"
   cask "wezterm"
+  cask "raycast"
+  cask "espanso"
 end
 
 if OS.linux?

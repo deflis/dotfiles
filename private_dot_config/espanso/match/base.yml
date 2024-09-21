@@ -27,3 +27,6 @@ matches:
         type: date
         params:
           format: "%Y/%m/%d"
+
+  - trigger: "deflis@"
+    replace: "deflis@gmail.com"

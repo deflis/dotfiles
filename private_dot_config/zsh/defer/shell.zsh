@@ -43,8 +43,10 @@ bindkey "^[[B" down-line-or-beginning-search # Down
 # Ctrl+X でCopilotのexplain機能を呼び出す
 # 関数定義
 ghce_bindkey() {
-  local cmd=$(fc -ln -1)
+local cmd=$(fc -ln -1)
   gh copilot explain "$cmd"
+  echo "\n"
+  zle reset-prompt
 }
 
 # Create the widget

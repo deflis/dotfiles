@@ -40,3 +40,11 @@ zle -N down-line-or-beginning-search
 bindkey "^[[A" up-line-or-beginning-search # Up
 bindkey "^[[B" down-line-or-beginning-search # Down
 
+# Ctrl+X でCopilotのexplain機能を呼び出す
+bindkey '^X' __ghce_bindkey
+
+# 関数定義
+__ghce_bindkey() {
+    local cmd=$(fc -ln -1)
+    gh copilot explain "$cmd"
+}

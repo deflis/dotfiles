@@ -1,0 +1,7 @@
+{{ if eq .chezmoi.os "windows" -}}
+
+winget import {{.chezmoi.sourceDir}}/winget.json --accept-source-agreements --accept-package-agreements
+
+# コメントでファイルをインクルードして変更検知させるハック
+{{ include "winget.json"| comment "# " }}
+{{ end -}}

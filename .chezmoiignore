@@ -9,6 +9,7 @@ theme.png
 Brewfile
 Brewfile.lock.json
 scoop.json
+winget.json
 bootstrap.sh
 script_*
 

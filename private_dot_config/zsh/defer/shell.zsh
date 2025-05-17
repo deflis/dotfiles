@@ -40,3 +40,17 @@ zle -N down-line-or-beginning-search
 bindkey "^[[A" up-line-or-beginning-search # Up
 bindkey "^[[B" down-line-or-beginning-search # Down
 
+# Ctrl+X でCopilotのexplain機能を呼び出す
+# 関数定義
+ghce_bindkey() {
+local cmd=$(fc -ln -1)
+  gh copilot explain "$cmd"
+  echo "\n"
+  zle reset-prompt
+}
+
+# Create the widget
+zle -N ghce_bindkey
+
+# Bind the widget to Ctrl+X
+bindkey '^X' ghce_bindkey

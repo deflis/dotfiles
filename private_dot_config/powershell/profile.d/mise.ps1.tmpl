@@ -1,3 +1,10 @@
 {{ if lookPath "mise" -}}
 {{ output "mise" "activate" "pwsh" }}
+
+# bunのglobalインストール先をPATHに追加
+if ($env:PATH -notlike "*$($env:HOME)/.bun/bin*") {
+    $env:PATH += ";$env:HOME/.bun/bin"
+}
+
 {{ end -}}
+

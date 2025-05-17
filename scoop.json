@@ -37,13 +37,6 @@
     },
     {
       "Info": "",
-      "Name": "espanso",
-      "Source": "main",
-      "Updated": "2025-05-17T21:54:54.4623516+09:00",
-      "Version": "2.2.3"
-    },
-    {
-      "Info": "",
       "Name": "fnm",
       "Source": "main",
       "Updated": "2025-01-11T01:50:55.4890001+09:00",
@@ -90,13 +83,6 @@
       "Source": "extras",
       "Updated": "2023-04-23T22:57:55.3199031+09:00",
       "Version": "1.0.37"
-    },
-    {
-      "Info": "",
-      "Name": "ngrok",
-      "Source": "main",
-      "Updated": "2025-05-17T21:53:04.5882359+09:00",
-      "Version": "3.22.1"
     },
     {
       "Info": "",
@@ -172,7 +158,7 @@
       "Manifests": 1385,
       "Name": "main",
       "Source": "https://github.com/ScoopInstaller/Main",
-      "Updated": "2025-05-17T21:31:10+09:00"
+      "Updated": "2025-05-17T21:56:48+09:00"
     }
   ]
 }

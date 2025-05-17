@@ -4,15 +4,15 @@
       "Info": "",
       "Name": "1password-cli",
       "Source": "main",
-      "Updated": "2024-09-15T14:17:11.5530844+09:00",
-      "Version": "2.30.0"
+      "Updated": "2025-05-17T21:52:27.8530198+09:00",
+      "Version": "2.31.0"
     },
     {
       "Info": "",
       "Name": "7zip",
       "Source": "main",
-      "Updated": "2024-09-15T14:17:15.5560855+09:00",
-      "Version": "24.08"
+      "Updated": "2025-01-11T01:50:53.3766539+09:00",
+      "Version": "24.09"
     },
     {
       "Info": "",
@@ -25,64 +25,64 @@
       "Info": "",
       "Name": "bfg",
       "Source": "main",
-      "Updated": "2022-11-15T16:37:25.0128306+09:00",
-      "Version": "1.14.0"
+      "Updated": "2025-05-17T21:52:30.555558+09:00",
+      "Version": "1.15.0"
     },
     {
       "Info": "",
       "Name": "chezmoi",
       "Source": "main",
-      "Updated": "2024-09-16T04:34:43.0615302+09:00",
-      "Version": "2.52.2"
+      "Updated": "2025-05-17T21:55:48.9030205+09:00",
+      "Version": "2.62.4"
     },
     {
       "Info": "",
       "Name": "espanso",
       "Source": "main",
-      "Updated": "2024-09-16T04:33:35.046769+09:00",
-      "Version": "2.2.1"
+      "Updated": "2025-05-17T21:54:54.4623516+09:00",
+      "Version": "2.2.3"
     },
     {
       "Info": "",
       "Name": "fnm",
       "Source": "main",
-      "Updated": "2024-09-15T14:17:17.3208472+09:00",
-      "Version": "1.37.1"
+      "Updated": "2025-01-11T01:50:55.4890001+09:00",
+      "Version": "1.38.1"
     },
     {
       "Info": "",
       "Name": "fzf",
       "Source": "main",
-      "Updated": "2024-09-15T14:17:18.6283171+09:00",
-      "Version": "0.55.0"
+      "Updated": "2025-05-17T21:52:32.9643413+09:00",
+      "Version": "0.62.0"
     },
     {
       "Info": "",
       "Name": "gh",
       "Source": "main",
-      "Updated": "2024-09-15T14:17:20.4154262+09:00",
-      "Version": "2.56.0"
+      "Updated": "2025-05-17T21:52:35.5921023+09:00",
+      "Version": "2.72.0"
     },
     {
       "Info": "",
       "Name": "ghq",
       "Source": "main",
-      "Updated": "2024-09-15T14:17:22.1428835+09:00",
-      "Version": "1.6.2"
+      "Updated": "2025-05-17T21:52:38.223089+09:00",
+      "Version": "1.8.0"
     },
     {
       "Info": "",
       "Name": "git",
       "Source": "main",
-      "Updated": "2024-09-15T14:17:38.1710605+09:00",
-      "Version": "2.46.0"
+      "Updated": "2025-05-17T21:52:59.4108324+09:00",
+      "Version": "2.49.0"
     },
     {
       "Info": "",
       "Name": "innounp",
       "Source": "main",
-      "Updated": "2024-09-16T04:33:31.4882116+09:00",
-      "Version": "0.50"
+      "Updated": "2025-05-17T21:53:01.0896668+09:00",
+      "Version": "2.64.4"
     },
     {
       "Info": "",
@@ -95,8 +95,8 @@
       "Info": "",
       "Name": "ngrok",
       "Source": "main",
-      "Updated": "2024-09-15T14:17:42.0915922+09:00",
-      "Version": "3.16.0"
+      "Updated": "2025-05-17T21:53:04.5882359+09:00",
+      "Version": "3.22.1"
     },
     {
       "Info": "",
@@ -109,8 +109,8 @@
       "Info": "",
       "Name": "nu",
       "Source": "main",
-      "Updated": "2024-09-15T14:17:45.1047504+09:00",
-      "Version": "0.97.1"
+      "Updated": "2025-05-17T21:53:09.4269831+09:00",
+      "Version": "0.104.0"
     },
     {
       "Info": "",
@@ -123,8 +123,8 @@
       "Info": "",
       "Name": "pandoc",
       "Source": "main",
-      "Updated": "2024-09-15T14:17:54.8796831+09:00",
-      "Version": "3.4"
+      "Updated": "2025-05-17T21:53:14.1678524+09:00",
+      "Version": "3.7"
     },
     {
       "Info": "",
@@ -144,23 +144,23 @@
       "Info": "",
       "Name": "vfox",
       "Source": "main",
-      "Updated": "2024-09-15T14:54:50.6807862+09:00",
-      "Version": "0.5.4"
+      "Updated": "2025-05-17T21:53:16.8164848+09:00",
+      "Version": "0.6.6"
     },
     {
       "Info": "",
       "Name": "zoxide",
       "Source": "main",
-      "Updated": "2024-09-15T14:17:56.3089068+09:00",
-      "Version": "0.9.5"
+      "Updated": "2025-05-17T21:53:18.6435395+09:00",
+      "Version": "0.9.7"
     }
   ],
   "buckets": [
     {
-      "Manifests": 2071,
+      "Manifests": 2165,
       "Name": "extras",
       "Source": "https://github.com/lukesampson/scoop-extras",
-      "Updated": "2024-09-16T01:32:14+09:00"
+      "Updated": "2025-05-17T21:30:47+09:00"
     },
     {
       "Manifests": 0,
@@ -169,10 +169,10 @@
       "Updated": "2023-05-04T21:33:48+09:00"
     },
     {
-      "Manifests": 1340,
+      "Manifests": 1385,
       "Name": "main",
       "Source": "https://github.com/ScoopInstaller/Main",
-      "Updated": "2024-09-16T01:29:29+09:00"
+      "Updated": "2025-05-17T21:31:10+09:00"
     }
   ]
 }

@@ -23,13 +23,6 @@
     },
     {
       "Info": "",
-      "Name": "bfg",
-      "Source": "main",
-      "Updated": "2025-05-17T21:52:30.555558+09:00",
-      "Version": "1.15.0"
-    },
-    {
-      "Info": "",
       "Name": "chezmoi",
       "Source": "main",
       "Updated": "2025-05-17T21:55:48.9030205+09:00",

@@ -2,8 +2,9 @@
 {{ output "mise" "activate" "pwsh" }}
 
 # bunのglobalインストール先をPATHに追加
-if ($env:PATH -notlike "*$($env:HOME)/.bun/bin*") {
-    $env:PATH += ";$env:HOME/.bun/bin"
+$bunBinPath = "{{ joinPath .chezmoi.homeDir ".bun" "bin" }}"
+if ($env:PATH -notlike "*$bunBinPath*") {
+    $env:PATH += ";$bunBinPath"
 }
 
 {{ end -}}

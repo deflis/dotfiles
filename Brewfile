@@ -1,11 +1,11 @@
 if OS.mac?
   tap "1password/tap"
   #tap "homebrew/cask"
-  tap "homebrew/cask-fonts"
+#  tap "homebrew/cask-fonts"
 end
-tap "homebrew/bundle"
+#tap "homebrew/bundle"
 #tap "homebrew/core"
-tap "jandedobbeleer/oh-my-posh"
+#tap "jandedobbeleer/oh-my-posh"
 
 brew "chezmoi"
 brew "fzf"
@@ -37,7 +37,7 @@ if OS.mac?
   cask "alt-tab"
   # cask "ueli"
   cask "visual-studio-code"
-  cask "charles"
+  #cask "charles"
   cask "wezterm"
   cask "raycast"
   cask "espanso"

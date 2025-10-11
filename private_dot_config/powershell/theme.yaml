@@ -1,78 +1,51 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
-
 # oh-my-posh --config private_dot_config\powershell\theme.yaml --debug --shell uni
 # night-owlベースだけど、もう跡形もない
 # https://ohmyposh.dev/docs/config-overview
+
+$schema: https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
 palette:
   # [Hue 360](https://hue360.herokuapp.com/) で作成
-  white: "#d6deeb"
   black: "#111111"
   blue: "#3261ab"
   cyan: "#007fb1"
-  green: "#23ac0e"
-  lime: "#a4c520"
-  yellow: "#ffe600"
-  yelloworange: "#edad0b"
-  orange: "#da5019"
-  red: "#c7243a"
-  magenta: "#bf1e56"
-  light-blue: "#d5e0f1"
-  light-cyan: "#cae7f2"
-  light-green: "#d1f1cc"
-  light-lime: "#eef5d3"
-  light-yellow: "#fffbd5"
-  light-yelloworange: "#fcf1d3"
-  light-orange: "#f9dfd5"
-  light-red: "#f6d4d8"
-  light-magenta: "#f4d2de"
   dark-blue: "#142744"
   dark-cyan: "#003347"
   dark-green: "#0e4506"
   dark-lime: "#565a07"
-  dark-yellow: "#665c00"
-  dark-yelloworange: "#625002"
+  dark-magenta: "#4c0c23"
   dark-orange: "#5f4504"
   dark-red: "#500e17"
-  dark-magenta: "#4c0c23"
+  dark-yellow: "#665c00"
+  dark-yelloworange: "#625002"
+  green: "#23ac0e"
+  light-blue: "#d5e0f1"
+  light-cyan: "#cae7f2"
+  light-green: "#d1f1cc"
+  light-lime: "#eef5d3"
+  light-magenta: "#f4d2de"
+  light-orange: "#f9dfd5"
+  light-red: "#f6d4d8"
+  light-yellow: "#fffbd5"
+  light-yelloworange: "#fcf1d3"
+  lime: "#a4c520"
+  magenta: "#bf1e56"
+  orange: "#da5019"
+  red: "#c7243a"
+  white: "#d6deeb"
+  yellow: "#ffe600"
+  yelloworange: "#edad0b"
+console_title_template: "{{ if .Segments.Session.SSHSession }}[{{.UserName}}@{{.HostName}}] {{ end }}{{ .PWD }} {{ if .Root }}#{{ else }}${{ end }}"
 blocks:
-  - alignment: left
-    type: prompt
+  - type: prompt
+    alignment: left
     segments:
-      - type: os
-        background: "p:black"
-        background_templates:
-          - '{{ if eq .OS "windows" }}p:blue{{ end }}'
-          - '{{ if eq .OS "macos" }}p:black{{ end }}'
-          - '{{ if eq .OS "ubuntu" }}p:orange{{ end }}'
-          - '{{ if eq .OS "centos" }}p:yelloworange{{ end }}'
-          - '{{ if eq .OS "manjaro" }}p:dark-green{{ end }}'
-          - '{{ if eq .OS "arch" }}p:cyan{{ end }}'
-          - '{{ if eq .OS "debian" }}p:magenta{{ end }}'
-          - '{{ if eq .OS "raspbian" }}p:magenta{{ end }}'
-        foreground: "p:white"
-        foreground_templates:
-          - '{{ if eq .OS "windows" }}p:white{{ end }}'
-          - '{{ if eq .OS "macos" }}p:white{{ end }}'
-          - '{{ if eq .OS "ubuntu" }}p:white{{ end }}'
-          - '{{ if eq .OS "centos" }}p:black{{ end }}'
-          - '{{ if eq .OS "manjaro" }}p:green{{ end }}'
-          - '{{ if eq .OS "arch" }}p:white{{ end }}'
-          - '{{ if eq .OS "debian" }}p:white{{ end }}'
-          - '{{ if eq .OS "raspbian" }}p:white{{ end }}'
-        template: '{{ if eq .OS "windows" }}󰍲{{ else }}{{ .Icon }}{{ end }} {{ if .WSL }}󰍲 {{ end }}'
+      - properties:
+          cache_duration: none
+        template: "{{ if eq .OS \"windows\" }}\U000F0372{{ else }}{{ .Icon }}{{ end }} {{ if .WSL }}\U000F0372 {{ end }}"
+        foreground: p:white
+        background: p:black
+        type: os
         style: powerline
-      - type: session
-        background: "p:black"
-        background_templates:
-          - '{{ if eq .OS "windows" }}p:blue{{ end }}'
-          - '{{ if eq .OS "macos" }}p:black{{ end }}'
-          - '{{ if eq .OS "ubuntu" }}p:orange{{ end }}'
-          - '{{ if eq .OS "centos" }}p:yelloworange{{ end }}'
-          - '{{ if eq .OS "manjaro" }}p:dark-green{{ end }}'
-          - '{{ if eq .OS "arch" }}p:cyan{{ end }}'
-          - '{{ if eq .OS "debian" }}p:magenta{{ end }}'
-          - '{{ if eq .OS "raspbian" }}p:magenta{{ end }}'
-        foreground: "p:white"
         foreground_templates:
           - '{{ if eq .OS "windows" }}p:white{{ end }}'
           - '{{ if eq .OS "macos" }}p:white{{ end }}'
@@ -82,153 +55,202 @@ blocks:
           - '{{ if eq .OS "arch" }}p:white{{ end }}'
           - '{{ if eq .OS "debian" }}p:white{{ end }}'
           - '{{ if eq .OS "raspbian" }}p:white{{ end }}'
+        background_templates:
+          - '{{ if eq .OS "windows" }}p:blue{{ end }}'
+          - '{{ if eq .OS "macos" }}p:black{{ end }}'
+          - '{{ if eq .OS "ubuntu" }}p:orange{{ end }}'
+          - '{{ if eq .OS "centos" }}p:yelloworange{{ end }}'
+          - '{{ if eq .OS "manjaro" }}p:dark-green{{ end }}'
+          - '{{ if eq .OS "arch" }}p:cyan{{ end }}'
+          - '{{ if eq .OS "debian" }}p:magenta{{ end }}'
+          - '{{ if eq .OS "raspbian" }}p:magenta{{ end }}'
+      - properties:
+          cache_duration: none
         template: "{{ if .SSHSession }}{{ .HostName }}{{ end }}"
+        foreground: p:white
+        background: p:black
+        type: session
         style: powerline
-      - type: path
-        background: "p:light-blue"
-        foreground: "p:dark-blue"
-        properties:
-          folder_separator_icon: "<p:blue>  </>"
+        foreground_templates:
+          - '{{ if eq .OS "windows" }}p:white{{ end }}'
+          - '{{ if eq .OS "macos" }}p:white{{ end }}'
+          - '{{ if eq .OS "ubuntu" }}p:white{{ end }}'
+          - '{{ if eq .OS "centos" }}p:black{{ end }}'
+          - '{{ if eq .OS "manjaro" }}p:green{{ end }}'
+          - '{{ if eq .OS "arch" }}p:white{{ end }}'
+          - '{{ if eq .OS "debian" }}p:white{{ end }}'
+          - '{{ if eq .OS "raspbian" }}p:white{{ end }}'
+        background_templates:
+          - '{{ if eq .OS "windows" }}p:blue{{ end }}'
+          - '{{ if eq .OS "macos" }}p:black{{ end }}'
+          - '{{ if eq .OS "ubuntu" }}p:orange{{ end }}'
+          - '{{ if eq .OS "centos" }}p:yelloworange{{ end }}'
+          - '{{ if eq .OS "manjaro" }}p:dark-green{{ end }}'
+          - '{{ if eq .OS "arch" }}p:cyan{{ end }}'
+          - '{{ if eq .OS "debian" }}p:magenta{{ end }}'
+          - '{{ if eq .OS "raspbian" }}p:magenta{{ end }}'
+      - properties:
+          cache_duration: none
+          folder_separator_icon: <p:blue>  </>
           home_icon: "~"
           style: agnoster_full
         template: " {{ .Path }} "
+        foreground: p:dark-blue
+        powerline_symbol: 
+        background: p:light-blue
+        type: path
         style: powerline
-        powerline_symbol: ""
-  - alignment: right
-    type: prompt
+  - type: prompt
+    alignment: right
     segments:
-      - type: git
-        background: "p:green"
-        background_templates:
-          - "{{ if or (.Working.Changed) (.Staging.Changed) }}p:lime{{ end }}"
-          - "{{ if and (gt .Ahead 0) (gt .Behind 0) }}p:magenta{{ end }}"
-          - "{{ if gt .Ahead 0 }}p:yelloworange{{ end }}"
-          - "{{ if gt .Behind 0 }}p:cyan{{ end }}"
-        foreground: "p:black"
-        foreground_templates:
-          - "{{ if or (.Working.Changed) (.Staging.Changed) }}p:black{{ end }}"
-          - "{{ if and (gt .Ahead 0) (gt .Behind 0) }}p:white{{  }}"
-          - "{{ if gt .Ahead 0 }}p:black{{ end }}"
-          - "{{ if gt .Behind 0 }}p:white{{ end }}"
-        properties:
+      - properties:
           branch_icon: " "
+          cache_duration: none
           fetch_stash_count: true
           fetch_status: true
           fetch_upstream_icon: true
           fetch_worktree_count: true
         template: "{{ .UpstreamIcon }}{{ .HEAD }}{{ .BranchStatus }}{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }}  {{ .StashCount }}{{ end }}"
-        style: powerline
+        foreground: p:black
         powerline_symbol: 
+        background: p:green
+        type: git
+        style: powerline
+        foreground_templates:
+          - "{{ if or (.Working.Changed) (.Staging.Changed) }}p:black{{ end }}"
+          - "{{ if and (gt .Ahead 0) (gt .Behind 0) }}p:white{{  }}"
+          - "{{ if gt .Ahead 0 }}p:black{{ end }}"
+          - "{{ if gt .Behind 0 }}p:white{{ end }}"
+        background_templates:
+          - "{{ if or (.Working.Changed) (.Staging.Changed) }}p:lime{{ end }}"
+          - "{{ if and (gt .Ahead 0) (gt .Behind 0) }}p:magenta{{ end }}"
+          - "{{ if gt .Ahead 0 }}p:yelloworange{{ end }}"
+          - "{{ if gt .Behind 0 }}p:cyan{{ end }}"
         invert_powerline: true
-      - type: battery
-        background: "#8f43f3"
+      - properties:
+          cache_duration: none
+          charged_icon: "\U000F0079 "
+          charging_icon: "\U000F0085 "
+          discharging_icon: "\U000F007E "
+        template: "{{ if not .Error }} {{ .Icon }} {{ .Percentage }} {{ end }}"
         foreground: "#ffffff"
-        properties:
-          discharging_icon: "󰁾 "
-          charging_icon: "󰂅 "
-          charged_icon: "󰁹 "
-        template: "{{ if not .Error }} {{ .Icon }} {{ .Percentage }}\uF295 {{ end }}"
-        style: powerline
         powerline_symbol: 
+        background: "#8f43f3"
+        type: battery
+        style: powerline
         invert_powerline: true
-      - type: node
-        background: "#303030"
-        foreground: "#3C873A"
-        properties:
+      - properties:
+          cache_duration: none
           fetch_package_manager: true
-          npm_icon: "<#cc3a3a></>"
-          yarn_icon: "<#348cba>󰄛</>"
+          npm_icon: <#cc3a3a></>
+          yarn_icon: "<#348cba>\U000F011B</>"
         template:  {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }}
-        style: powerline
+        foreground: "#3C873A"
         powerline_symbol: 
+        background: "#303030"
+        type: node
+        style: powerline
         invert_powerline: true
-      - type: php
-        background: "#787CB5"
-        foreground: "#000000"
+      - properties:
+          cache_duration: none
         template:  {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}
-        style: powerline
-        powerline_symbol: 
-        invert_powerline: true
-      - type: perl
-        background: "#5F8CC2"
         foreground: "#000000"
+        powerline_symbol: 
+        background: "#787CB5"
+        type: php
+        style: powerline
+        invert_powerline: true
+      - properties:
+          cache_duration: none
         template:  {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}
-        style: powerline
+        foreground: "#000000"
         powerline_symbol: 
+        background: "#5F8CC2"
+        type: perl
+        style: powerline
         invert_powerline: true
-      - type: dotnet
-        background: "#0e0e0e"
+      - properties:
+          cache_duration: none
+        template:  {{ if .Unsupported }}{{ else }}{{ .Full }}{{ end }}
         foreground: "#0d6da8"
-        template: " {{ if .Unsupported }}{{ else }}{{ .Full }}{{ end }}"
-        style: powerline
         powerline_symbol: 
+        background: "#0e0e0e"
+        type: dotnet
+        style: powerline
         invert_powerline: true
-      - type: go
-        background: "#ffffff"
+      - properties:
+          cache_duration: none
+        template: ﳑ {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}
         foreground: "#06aad5"
-        template: "ﳑ {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
-        style: powerline
         powerline_symbol: 
-        invert_powerline: true
-      - type: ruby
         background: "#ffffff"
-        foreground: "#9c1006"
-        template: " {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
+        type: go
         style: powerline
-        powerline_symbol: 
         invert_powerline: true
-      - type: executiontime
-        background: "p:dark-blue"
-        foreground: "p:white"
-        leading_diamond: 
-        trailing_diamond: <transparent,p:dark-blue></>
-        properties:
+      - properties:
+          cache_duration: none
+        template:  {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}
+        foreground: "#9c1006"
+        powerline_symbol: 
+        background: "#ffffff"
+        type: ruby
+        style: powerline
+        invert_powerline: true
+      - properties:
+          cache_duration: none
           style: roundrock
           threshold: 0
+        leading_diamond: 
+        trailing_diamond: <transparent,p:dark-blue></>
         template: "{{ .FormattedMs }}"
-        style: powerline
+        foreground: p:white
         powerline_symbol: 
+        background: p:dark-blue
+        type: executiontime
+        style: powerline
         invert_powerline: true
-      - type: shell
-        background: "#d6deeb"
+      - properties:
+          cache_duration: none
+        template:  {{ .Name }}
         foreground: "#011627"
-        template: " {{ .Name }}"
-        style: powerline
         powerline_symbol: 
+        background: "#d6deeb"
+        type: shell
+        style: powerline
         invert_powerline: true
-      - type: time
-        background: "p:blue"
-        foreground: "p:white"
-        properties:
-          time_format: 15:04:05
-        template: '󰥔 {{ .CurrentDate | date "15:04:05" }}'
+      - properties:
+          cache_duration: none
+          time_format: "15:04:05"
+        trailing_diamond: <p:blue,transparent></>
+        template: "\U000F0954 {{ .CurrentDate | date \"15:04:05\" }}"
+        foreground: p:white
+        background: p:blue
+        type: time
         style: diamond
-        leading_diamond: ""
-        trailing_diamond: "<p:blue,transparent></>"
         invert_powerline: true
-  - alignment: left
-    type: prompt
-    newline: true
+  - type: prompt
+    alignment: left
     segments:
-      - type: exit
-        foreground: "p:green"
+      - properties:
+          always_enabled: true
+          cache_duration: none
+          postfix: " "
+          prefix: ""
+        template: 
+        foreground: p:green
+        type: exit
+        style: plain
         foreground_templates:
           - "{{ if gt .Code 0 }}p:red{{ end }}"
-        properties:
-          always_enabled: true
+      - properties:
+          cache_duration: none
+          postfix: ""
           prefix: ""
-          postfix: " "
-        template: ""
+        template: "{{ if .Root }}#{{ else }}${{ end }} "
+        foreground: p:white
+        type: text
         style: plain
-      - type: text
-        foreground: "p:white"
         foreground_templates:
           - "{{ if .Root }}p:light-red{{ end }}"
-        properties:
-          prefix: ""
-          postfix: ""
-        template: "{{ if .Root }}#{{ else }}${{ end }} "
-        style: plain
-console_title_template: "{{ if .Segments.Session.SSHSession }}[{{.UserName}}@{{.HostName}}] {{ end }}{{ .PWD }} {{ if .Root }}#{{ else }}${{ end }}"
-osc99: true
-version: 2
+    newline: true
+version: 3

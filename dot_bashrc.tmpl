@@ -174,3 +174,10 @@ else
 fi
 }
 {{ end -}}
+
+# Load user ~/.bashrc.mine early so it's available even for non-interactive shells
+if [ -f "${HOME}/.bashrc.mine" ]; then
+    # suppress shellcheck warning about dynamic source path
+    # shellcheck source=/dev/null
+    source "${HOME}/.bashrc.mine"
+fi

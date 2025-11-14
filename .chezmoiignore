@@ -3,6 +3,7 @@ theme.png
 
 .vscode
 .github
+.serena
 .editorconfig
 *.md
 

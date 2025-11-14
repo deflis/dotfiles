@@ -1,0 +1,11 @@
+theme = "One Half Dark"
+background-opacity = 0.8
+
+font-family = "HackGen Console NF"
+font-family = "HackGen Console NFJ"
+font-family = "HackGen Console"
+font-family = "Consolas"
+font-family = "Arial"
+font-family = "Noto Color Emoji"
+
+font-size = 12

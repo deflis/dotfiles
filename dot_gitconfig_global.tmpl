@@ -5,3 +5,19 @@ email = deflis@gmail.com
 [alias]
 # https://qiita.com/kyanny/items/10a57a4f1d2806e3a3b8
 delete-merged-branches = !git branch --merged | grep -v \\* | xargs -I % git branch -d %
+
+{{- $opSign := joinPath .chezmoi.homeDir "AppData/Local/Microsoft/WindowsApps/op-ssh-sign.exe" -}}
+{{- if and (eq .chezmoi.os "windows") (stat $opSign) }}
+
+[user]
+  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHrqvDj/8/oROKHVIHBGT/z0Kh5ys1jD3StKIv1fONle
+
+[gpg]
+  format = ssh
+
+[gpg "ssh"]
+  program = {{ $opSign | quote }}
+
+[commit]
+  gpgsign = true
+{{- end }}

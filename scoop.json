@@ -4,15 +4,15 @@
       "Info": "",
       "Name": "1password-cli",
       "Source": "main",
-      "Updated": "2025-05-17T21:52:27.8530198+09:00",
-      "Version": "2.31.0"
+      "Updated": "2025-12-19T03:29:08.3898178+09:00",
+      "Version": "2.32.0"
     },
     {
       "Info": "",
       "Name": "7zip",
       "Source": "main",
-      "Updated": "2025-01-11T01:50:53.3766539+09:00",
-      "Version": "24.09"
+      "Updated": "2025-12-19T03:29:13.9891031+09:00",
+      "Version": "25.01"
     },
     {
       "Info": "",
@@ -39,15 +39,15 @@
       "Info": "",
       "Name": "fzf",
       "Source": "main",
-      "Updated": "2025-05-17T21:52:32.9643413+09:00",
-      "Version": "0.62.0"
+      "Updated": "2025-12-19T03:29:15.9762317+09:00",
+      "Version": "0.67.0"
     },
     {
       "Info": "",
       "Name": "gh",
       "Source": "main",
-      "Updated": "2025-05-17T21:52:35.5921023+09:00",
-      "Version": "2.72.0"
+      "Updated": "2025-12-19T03:29:18.3014038+09:00",
+      "Version": "2.83.2"
     },
     {
       "Info": "",
@@ -60,15 +60,15 @@
       "Info": "",
       "Name": "git",
       "Source": "main",
-      "Updated": "2025-05-17T21:52:59.4108324+09:00",
-      "Version": "2.49.0"
+      "Updated": "2025-12-19T03:29:41.3339316+09:00",
+      "Version": "2.52.0"
     },
     {
       "Info": "",
       "Name": "innounp",
       "Source": "main",
-      "Updated": "2025-05-17T21:53:01.0896668+09:00",
-      "Version": "2.64.4"
+      "Updated": "2025-12-19T03:29:43.1990587+09:00",
+      "Version": "2.66.1"
     },
     {
       "Info": "",
@@ -88,8 +88,8 @@
       "Info": "",
       "Name": "nu",
       "Source": "main",
-      "Updated": "2025-05-17T21:53:09.4269831+09:00",
-      "Version": "0.104.0"
+      "Updated": "2025-12-19T03:29:47.132+09:00",
+      "Version": "0.109.1"
     },
     {
       "Info": "",
@@ -102,8 +102,8 @@
       "Info": "",
       "Name": "pandoc",
       "Source": "main",
-      "Updated": "2025-05-17T21:53:14.1678524+09:00",
-      "Version": "3.7"
+      "Updated": "2025-12-19T03:29:50.7106139+09:00",
+      "Version": "3.8.3"
     },
     {
       "Info": "",
@@ -123,23 +123,23 @@
       "Info": "",
       "Name": "vfox",
       "Source": "main",
-      "Updated": "2025-05-17T21:53:16.8164848+09:00",
-      "Version": "0.6.6"
+      "Updated": "2025-12-19T03:29:52.4476339+09:00",
+      "Version": "0.9.2"
     },
     {
       "Info": "",
       "Name": "zoxide",
       "Source": "main",
-      "Updated": "2025-05-17T21:53:18.6435395+09:00",
-      "Version": "0.9.7"
+      "Updated": "2025-12-19T03:29:54.0656254+09:00",
+      "Version": "0.9.8"
     }
   ],
   "buckets": [
     {
-      "Manifests": 2165,
+      "Manifests": 2229,
       "Name": "extras",
       "Source": "https://github.com/lukesampson/scoop-extras",
-      "Updated": "2025-05-17T21:30:47+09:00"
+      "Updated": "2025-12-19T01:37:48+09:00"
     },
     {
       "Manifests": 0,
@@ -148,10 +148,10 @@
       "Updated": "2023-05-04T21:33:48+09:00"
     },
     {
-      "Manifests": 1385,
+      "Manifests": 1412,
       "Name": "main",
       "Source": "https://github.com/ScoopInstaller/Main",
-      "Updated": "2025-05-17T21:56:48+09:00"
+      "Updated": "2025-12-19T01:43:06+09:00"
     }
   ]
 }

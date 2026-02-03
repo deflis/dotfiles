@@ -10,7 +10,6 @@ packages:
       - ghq
       - git
       - jq
-      - nushell
       - oh-my-posh
       - ripgrep
       - tree
@@ -44,29 +43,20 @@ packages:
     apps:
       - 1password-cli
       - 7zip
-      - aria2
       - chezmoi
-      - fnm
       - fzf
       - gh
       - ghq
       - git
-      - innounp
       - jpegview
-      - npiperelay
-      - nu
       - oh-my-posh
-      - pandoc
       - posh-git
-      - sudo
-      - vfox
       - zoxide
 
   # Windows (WinGet)
   winget:
     apps:
       - WinMerge.WinMerge
-      - XK72.Charles
       - Tailscale.Tailscale
       - OBSProject.OBSStudio
       - Valve.Steam

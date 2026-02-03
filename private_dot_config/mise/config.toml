@@ -4,6 +4,7 @@ gemini = "latest"
 node = "lts"
 opencode = "latest"
 uv = "latest"
+"npm:@github/copilot" = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = ["ruby", "node", "perl"]

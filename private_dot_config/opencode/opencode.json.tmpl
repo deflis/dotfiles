@@ -1,0 +1,14 @@
+{{/*
+Merge ./opencode.jsonc (source) and ~/.config/opencode/opencode.local.json (user) and
+output the merged JSON. Local file values override the base.
+*/}}
+{{- $base := include "private_dot_config/opencode/opencode.jsonc" | fromJsonc -}}
+{{- $localPath := joinPath .chezmoi.homeDir ".config/opencode/opencode.local.jsonc" -}}
+{{- $local := dict -}}
+{{- if stat $localPath -}}
+{{- $local = include $localPath | fromJsonc  -}}
+{{- end -}}
+
+{{- $merged := merge $base $local -}}
+{{- $merged | toPrettyJson -}}
+

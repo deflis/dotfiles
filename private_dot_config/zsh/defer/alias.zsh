@@ -28,5 +28,10 @@ alias su="su -l"
 
 export LESS='--tabs=4 --no-init --LONG-PROMPT --ignore-case -R'
 
-alias cdr=anyframe-widget-cd-ghq-repository-custom
+cdr() {
+  local dir=$(ghq list -p | fzf)
+  if [[ -n "$dir" ]]; then
+    cd "$dir"
+  fi
+}
 alias tailf="tail -f"

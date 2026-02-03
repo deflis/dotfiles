@@ -2,7 +2,6 @@
 fpath=(
   $ZDOTDIR/fpath(N-/)
   $ZDOTDIR/plugins/zsh-completions/src(N-/)
-  $ZDOTDIR/plugins/anyframe(N-/)
   ~/.asdf/completions(N-/)
 
   $fpath
@@ -23,10 +22,6 @@ zsh-defer source $ZDOTDIR/plugins/autosuggestions/zsh-autosuggestions.zsh
 zsh-defer source $ZDOTDIR/plugins/syntax-highlighting/zsh-syntax-highlighting.zsh
 zsh-defer source $ZDOTDIR/plugins/zsh-better-npm-completion/zsh-better-npm-completion.plugin.zsh
 zsh-defer source $ZDOTDIR/plugins/ni.zsh
-
-# anyframe
-autoload -Uz anyframe-init
-anyframe-init
 
 #eval "$(sheldon source)"
 

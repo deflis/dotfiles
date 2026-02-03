@@ -31,7 +31,13 @@ bindkey '^ ' autosuggest-accept
 
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse'
 
-bindkey '^R' anyframe-widget-put-history
+function fzf-select-history() {
+  BUFFER=$(history -n 1 | tail -r | fzf --no-sort --query="$LBUFFER")
+  CURSOR=$#BUFFER
+  zle reset-prompt
+}
+zle -N fzf-select-history
+bindkey '^R' fzf-select-history
 
 autoload -U up-line-or-beginning-search
 autoload -U down-line-or-beginning-search

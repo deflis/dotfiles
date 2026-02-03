@@ -1,0 +1,9 @@
+{{ if eq .chezmoi.os "windows" -}}
+
+{{ range .packages.winget.apps -}}
+winget install --id {{ . | quote }} --exact --no-upgrade --accept-source-agreements --accept-package-agreements
+{{ end -}}
+
+# コメントでファイルをインクルードして変更検知させるハック
+{{ include ".chezmoidata/packages.yaml"| comment "# " }}
+{{ end -}}

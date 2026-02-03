@@ -34,9 +34,28 @@ if !(type "brew" > /dev/null 2>&1) ; then
 fi
 
 if (type "brew" > /dev/null 2>&1) ; then
-  cd {{.chezmoi.sourceDir}}
-  brew bundle
+  brew bundle --file=/dev/stdin <<EOF
+{{ range .packages.homebrew.taps -}}
+tap {{ . | quote }}
+{{ end -}}
+{{ range .packages.homebrew.brews -}}
+brew {{ . | quote }}
+{{ end -}}
+{{ if eq .chezmoi.os "darwin" -}}
+{{ range .packages.homebrew.darwin_brews -}}
+brew {{ . | quote }}
+{{ end -}}
+{{ range .packages.homebrew.casks -}}
+cask {{ . | quote }}
+{{ end -}}
+{{ end -}}
+{{ if eq .chezmoi.os "linux" -}}
+{{ range .packages.homebrew.linux_brews -}}
+brew {{ . | quote }}
+{{ end -}}
+{{ end -}}
+EOF
 fi
 
 # コメントでファイルをインクルードして変更検知させるハック
-{{ include "Brewfile"| comment "# " }}
+{{ include ".chezmoidata/packages.yaml"| comment "# " }}

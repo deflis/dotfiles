@@ -1,0 +1,76 @@
+packages:
+  # macOS/Linux (Homebrew)
+  homebrew:
+    taps:
+      - 1password/tap
+    brews:
+      - chezmoi
+      - fzf
+      - gh
+      - ghq
+      - git
+      - jq
+      - nushell
+      - oh-my-posh
+      - ripgrep
+      - tree
+      - zoxide
+      - zsh
+      - mise
+    darwin_brews:
+      - awscli
+    linux_brews:
+      - xclip
+    casks:
+      - 1password-cli
+      - font-hackgen
+      - font-hackgen-nerd
+      - font-hasklig
+      - rectangle
+      - scroll-reverser
+      - session-manager-plugin
+      - alt-tab
+      - visual-studio-code
+      - raycast
+      - espanso
+      - ghostty
+
+  # Windows (Scoop)
+  scoop:
+    buckets:
+      - main
+      - extras
+      - github-gh
+    apps:
+      - 1password-cli
+      - 7zip
+      - aria2
+      - chezmoi
+      - fnm
+      - fzf
+      - gh
+      - ghq
+      - git
+      - innounp
+      - jpegview
+      - npiperelay
+      - nu
+      - oh-my-posh
+      - pandoc
+      - posh-git
+      - sudo
+      - vfox
+      - zoxide
+
+  # Windows (WinGet)
+  winget:
+    apps:
+      - WinMerge.WinMerge
+      - XK72.Charles
+      - Tailscale.Tailscale
+      - OBSProject.OBSStudio
+      - Valve.Steam
+      - Iterate.Cyberduck
+      - Microsoft.PowerShell
+      - AgileBits.1Password
+      - jdx.mise

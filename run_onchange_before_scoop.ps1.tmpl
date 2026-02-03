@@ -1,0 +1,20 @@
+{{ if eq .chezmoi.os "windows" -}}
+
+# Buckets
+{{ range .packages.scoop.buckets -}}
+if (!(scoop bucket list | Select-String -SimpleMatch {{ . | quote }})) {
+    scoop bucket add {{ . | quote }}
+}
+{{ end -}}
+
+# Apps
+{{ range .packages.scoop.apps -}}
+if (!(scoop list | Select-String -SimpleMatch {{ . | quote }})) {
+    scoop install {{ . | quote }}
+}
+{{ end -}}
+
+# コメントでファイルをインクルードして変更検知させるハック
+{{ include ".chezmoidata/packages.yaml"| comment "# " }}
+
+{{ end -}}

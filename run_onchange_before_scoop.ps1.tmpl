@@ -14,7 +14,4 @@ if (!(scoop list | Select-String -SimpleMatch {{ . | quote }})) {
 }
 {{ end -}}
 
-# コメントでファイルをインクルードして変更検知させるハック
-{{ include ".chezmoidata/packages.yaml"| comment "# " }}
-
 {{ end -}}

@@ -57,5 +57,3 @@ brew {{ . | quote }}
 EOF
 fi
 
-# コメントでファイルをインクルードして変更検知させるハック
-{{ include ".chezmoidata/packages.yaml"| comment "# " }}

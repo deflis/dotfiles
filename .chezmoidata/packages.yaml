@@ -15,6 +15,7 @@ packages:
       - tree
       - zoxide
       - jj
+      - atuin
       - zsh
       - mise
       - carapace

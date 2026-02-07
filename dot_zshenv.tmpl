@@ -1,6 +1,6 @@
 {{ if (eq .chezmoi.os "darwin") -}}
 # path_helperが悪さをするらしいので対策
-# https://github.com/mizdra/dotfiles/blob/2fadd667a059abae3d7c2c5e05a792569c687865/dot_zshenv#L1-L14
+# https://zenn.dev/enchan1207/articles/7b9d7d397b7d0d
 setopt no_global_rcs
 if [ -x /usr/libexec/path_helper ]; then
     eval `/usr/libexec/path_helper -s`

@@ -1,3 +1,11 @@
+{{ if (eq .chezmoi.os "darwin") -}}
+{{ if stat "/etc/zshrc" -}}
+# path_helperが悪さをするらしいので対策
+# https://zenn.dev/enchan1207/articles/7b9d7d397b7d0d
+. /etc/zshrc
+{{ end -}}
+{{ end -}}
+
 # fpath
 fpath=(
   $ZDOTDIR/fpath(N-/)

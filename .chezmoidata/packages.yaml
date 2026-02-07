@@ -16,6 +16,7 @@ packages:
       - zoxide
       - zsh
       - mise
+      - carapace
     darwin_brews:
       - awscli
     linux_brews:
@@ -53,6 +54,7 @@ packages:
       - oh-my-posh
       - posh-git
       - zoxide
+      - carapace-bin
 
   # Windows (WinGet)
   winget:

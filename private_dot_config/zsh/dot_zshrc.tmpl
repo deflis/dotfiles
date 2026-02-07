@@ -19,8 +19,18 @@ fpath=(
 source $ZDOTDIR/plugins/zsh-defer/zsh-defer.plugin.zsh
 
 # load configs
-for f ($ZDOTDIR/sync/*(N-.)) source $f
-for f ($ZDOTDIR/defer/*(N-.)) zsh-defer source $f
+{{- range (glob (joinPath .chezmoi.sourceDir "private_dot_config/zsh/sync/*")) }}
+{{-   $name := base . }}
+{{-   if not (hasPrefix "." $name) }}
+source $ZDOTDIR/sync/{{ $name | replace "dot_" "." | trimSuffix ".tmpl" }}
+{{-   end }}
+{{- end }}
+{{- range (glob (joinPath .chezmoi.sourceDir "private_dot_config/zsh/defer/*")) }}
+{{-   $name := base . }}
+{{-   if not (hasPrefix "." $name) }}
+zsh-defer source $ZDOTDIR/defer/{{ $name | replace "dot_" "." | trimSuffix ".tmpl" }}
+{{-   end }}
+{{- end }}
 
 # asdf
 # zsh-defer . ~/.asdf/asdf.sh

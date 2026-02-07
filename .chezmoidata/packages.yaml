@@ -33,6 +33,7 @@ packages:
       - raycast
       - espanso
       - ghostty
+      - azookey
 
   # Windows (Scoop)
   scoop:

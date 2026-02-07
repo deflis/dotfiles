@@ -3,6 +3,7 @@ packages:
   homebrew:
     taps:
       - 1password/tap
+      - k1LoW/tap
     brews:
       - chezmoi
       - fzf
@@ -19,6 +20,7 @@ packages:
       - zsh
       - mise
       - carapace
+      - k1LoW/tap/git-wt
     darwin_brews:
       - awscli
     linux_brews:

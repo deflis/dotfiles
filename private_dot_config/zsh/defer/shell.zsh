@@ -31,14 +31,6 @@ bindkey '^ ' autosuggest-accept
 
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse'
 
-function fzf-select-history() {
-  BUFFER=$(history -n 1 | tail -r | fzf --no-sort --query="$LBUFFER")
-  CURSOR=$#BUFFER
-  zle reset-prompt
-}
-zle -N fzf-select-history
-bindkey '^R' fzf-select-history
-
 autoload -U up-line-or-beginning-search
 autoload -U down-line-or-beginning-search
 zle -N up-line-or-beginning-search
@@ -49,7 +41,7 @@ bindkey "^[[B" down-line-or-beginning-search # Down
 # Ctrl+X でCopilotのexplain機能を呼び出す
 # 関数定義
 ghce_bindkey() {
-local cmd=$(fc -ln -1)
+  local cmd=$(fc -ln -1)
   gh copilot explain "$cmd"
   echo "\n"
   zle reset-prompt

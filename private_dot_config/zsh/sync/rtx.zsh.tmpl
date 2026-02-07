@@ -1,0 +1,7 @@
+{{ if lookPath "rtx" -}}
+eval "$(rtx activate zsh)"
+{{- end }}
+{{ if lookPath "mise" -}}
+eval "$(mise activate zsh --shims)" # should be first
+eval "$(mise activate zsh)"
+{{- end }}

@@ -14,6 +14,7 @@ packages:
       - ripgrep
       - tree
       - zoxide
+      - jj
       - zsh
       - mise
       - carapace
@@ -54,6 +55,7 @@ packages:
       - oh-my-posh
       - posh-git
       - zoxide
+      - jj
       - carapace-bin
 
   # Windows (WinGet)

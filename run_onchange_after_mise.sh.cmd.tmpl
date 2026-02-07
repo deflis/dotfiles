@@ -1,0 +1,21 @@
+{{ if eq .chezmoi.os "windows" -}}
+@echo off
+
+REM mise config hash: {{ include "private_dot_config/mise/config.toml" | sha256sum }}
+
+where mise >nul 2>nul
+if %ERRORLEVEL% equ 0 (
+    echo mise config changed, running mise install...
+    mise install
+)
+
+@exit /b
+{{ end -}}
+#!/usr/bin/env bash
+
+# mise config hash: {{ include "private_dot_config/mise/config.toml" | sha256sum }}
+
+if type mise &>/dev/null; then
+  echo "mise config changed, running mise install..."
+  mise install
+fi

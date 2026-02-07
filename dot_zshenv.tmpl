@@ -71,3 +71,10 @@ export PATH="$HOME/.local/share/mise/shims:$PATH"
 export PATH="$HOME/.rd/bin:$PATH"
 {{ end -}}
 
+{{ if stat "~/.lmstudio/bin" -}}
+export PATH="$HOME/.lmstudio/bin:$PATH"
+{{ end -}}
+
+{{ if stat "~/.antigravity/antigravity/bin" -}}
+export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
+{{ end -}}

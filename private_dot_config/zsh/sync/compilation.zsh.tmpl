@@ -3,6 +3,15 @@
 if type brew &>/dev/null; then
 [ -d $(brew --prefix)/share/zsh/site-functions ] && fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
 fi
-source "$(chezmoi completion bash)"
 
-source "$(npm completion)"
+autoload -Uz compinit
+compinit 
+{{ completion "zsh" }}
+
+if (( $+commands[carapace] )); then
+  export CARAPACE_BRIDGES='zsh'
+  zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+  zstyle ':completion:*:git:*' group-order 'main commands' 'alias commands' 'external commands'
+
+  eval "$(carapace _carapace)"
+fi

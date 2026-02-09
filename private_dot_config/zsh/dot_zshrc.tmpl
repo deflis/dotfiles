@@ -28,7 +28,11 @@ source $ZDOTDIR/sync/{{ $name | replace "dot_" "." | trimSuffix ".tmpl" }}
 {{- range (glob (joinPath .chezmoi.sourceDir "private_dot_config/zsh/defer/*")) }}
 {{-   $name := base . }}
 {{-   if not (hasPrefix "." $name) }}
-zsh-defer source $ZDOTDIR/defer/{{ $name | replace "dot_" "." | trimSuffix ".tmpl" }}
+zsh-defer "
+  if [ -f $ZDOTDIR/defer/{{ $name | replace "dot_" "." | trimSuffix ".tmpl" }} ]; then
+    source $ZDOTDIR/defer/{{ $name | replace "dot_" "." | trimSuffix ".tmpl" }}
+  fi
+"
 {{-   end }}
 {{- end }}
 
@@ -48,7 +52,3 @@ zsh-defer source $ZDOTDIR/plugins/ni.zsh
 if [ -f ${HOME}/.zshrc.mine ]; then
     source ${HOME}/.zshrc.mine
 fi
-
-autoload -Uz compinit
-zsh-defer compinit 
-

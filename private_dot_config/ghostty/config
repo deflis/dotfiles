@@ -12,3 +12,5 @@ font-size = 12
 
 copy-on-select = clipboard
 right-click-action = copy-or-paste
+
+window-show-tab-bar = always

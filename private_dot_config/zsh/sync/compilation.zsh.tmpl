@@ -6,11 +6,13 @@ autoload -Uz compinit
 compinit 
 {{ completion "zsh" }}
 
+{{ if lookPath "git-wt" -}}
+  eval "$(git wt --init zsh)"
+{{ - end }}
+
 {{ if lookPath "carapace" -}}
-export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense'
-zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+  export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense'
+  zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
 
-source <(carapace _carapace)
+  source <(carapace _carapace)
 {{- end }}
-
-{{ if lookPath "zsh-autosuggestions" -}}

@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=https://carapace.sh/schemas/command.json
+name: git
+commands:
+  - name: wt
+    completion:
+      positionalany: ["$carapace.bridge.Zsh([git-wt])"]

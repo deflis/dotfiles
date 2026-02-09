@@ -2,7 +2,7 @@ if (( $+commands[git-wt] )); then
   eval "$(git wt --init zsh)"
 
   function cdw() {
-    local selected=$(git-wt | tail -n +2 | fzf --height 40% --reverse --header "Select workspace" | awk '{print $2}')
+    local selected=$(git-wt | fzf --height 40% --header-lines=1 | awk '{if ($1 == "*") print $2; else print $1}')
     if [ -n "$selected" ]; then
       cd "$selected"
     fi

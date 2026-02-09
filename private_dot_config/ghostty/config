@@ -9,3 +9,6 @@ font-family = "Arial"
 font-family = "Noto Color Emoji"
 
 font-size = 12
+
+copy-on-select = clipboard
+right-click-action = copy-or-paste

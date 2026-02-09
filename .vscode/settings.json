@@ -9,5 +9,8 @@
     "dot_bashrc.tmpl": "shellscript",
     "dot_tmux.conf*": "tmux",
     "dot_zsh*": "shellscript"
-  }
+  },
+  "cSpell.words": [
+    "positionalany"
+  ]
 }

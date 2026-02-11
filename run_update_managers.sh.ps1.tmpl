@@ -1,0 +1,28 @@
+{{ if eq .chezmoi.os "windows" -}}
+{{ if lookPath "scoop" }}
+scoop update
+{{ end }}
+
+{{ if lookPath "mise" }}
+mise upgrade
+{{ end }}
+{{ else -}}
+#!/usr/bin/env bash
+
+if [ -e /opt/homebrew/bin/brew ] ; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+if [ -e /home/linuxbrew/.linuxbrew/bin/brew ] ; then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
+if type brew &>/dev/null; then
+  echo "Updating Homebrew..."
+  brew update
+fi
+
+if type mise &>/dev/null; then
+  echo "Updating mise..."
+  mise upgrade
+fi
+{{ end -}}

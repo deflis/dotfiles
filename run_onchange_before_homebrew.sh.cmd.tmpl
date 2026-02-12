@@ -55,5 +55,11 @@ brew {{ . | quote }}
 {{ end -}}
 {{ end -}}
 EOF
+
+  # Start atuin service if installed
+  if brew list | grep -q atuin; then
+    brew services start atuin
+  fi
+
 fi
 

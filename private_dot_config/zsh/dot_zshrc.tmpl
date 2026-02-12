@@ -28,11 +28,7 @@ source $ZDOTDIR/sync/{{ $name | replace "dot_" "." | trimSuffix ".tmpl" }}
 {{- range (glob (joinPath .chezmoi.sourceDir "private_dot_config/zsh/defer/*")) }}
 {{-   $name := base . }}
 {{-   if not (hasPrefix "." $name) }}
-zsh-defer "
-  if [ -f $ZDOTDIR/defer/{{ $name | replace "dot_" "." | trimSuffix ".tmpl" }} ]; then
-    source $ZDOTDIR/defer/{{ $name | replace "dot_" "." | trimSuffix ".tmpl" }}
-  fi
-"
+zsh-defer source $ZDOTDIR/defer/{{ $name | replace "dot_" "." | trimSuffix ".tmpl" }}
 {{-   end }}
 {{- end }}
 

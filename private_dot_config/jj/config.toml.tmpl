@@ -5,6 +5,12 @@ email = "deflis@gmail.com"
 [ui]
 editor = "code --wait"
 default-command = "status"
+merge-editor = "vscode"
 
 [revset-aliases]
 "mine()" = "author(deflis)"
+
+[merge-tools.vscode]
+# VS Codeの3-wayマージエディタを起動する設定
+program = "code"
+args = ["--wait", "--merge", "$left", "$right", "$base", "$output"]

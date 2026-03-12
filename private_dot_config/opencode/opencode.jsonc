@@ -3,7 +3,8 @@
   "agent": {
     "explore": {
       // Copilot の Grok modelを使用する
-      "model": "github-copilot/grok-code-fast-1"
+      // TODO: 無料モデルではなくなったのでほかのモデルを探したい
+      // "model": "github-copilot/grok-code-fast-1"
     }
   }
 }

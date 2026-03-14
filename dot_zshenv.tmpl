@@ -78,3 +78,8 @@ export PATH="$HOME/.lmstudio/bin:$PATH"
 {{ if stat "~/.antigravity/antigravity/bin" -}}
 export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 {{ end -}}
+
+{{- if stat (joinPath .chezmoi.homeDir ".vite-plus/env") }}
+  # Vite+ bin (https://viteplus.dev)
+  . "$HOME/.vite-plus/env"
+{{- end }}

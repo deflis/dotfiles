@@ -1,0 +1,4 @@
+{{- if stat (joinPath .chezmoi.homeDir ".vite-plus/env") }}
+  # Vite+ bin (https://viteplus.dev)
+  . "$HOME/.vite-plus/env"
+{{- end }}

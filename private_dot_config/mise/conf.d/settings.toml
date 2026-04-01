@@ -1,0 +1,3 @@
+[settings]
+# 3日以上たったパッケージのみインストールする
+install_before = "3d"

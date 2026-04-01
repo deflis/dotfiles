@@ -1,12 +1,12 @@
 [tools]
+# coding agents
 codex = "latest"
 gemini = "latest"
-node = "lts"
 opencode = "latest"
-uv = "latest"
 "npm:@github/copilot" = "latest"
-wrangler = "latest"
+
+# tools
 "npm:ccusage" = "latest"
 
-[settings]
-idiomatic_version_file_enable_tools = ["ruby", "node", "perl"]
+# deployment tools
+wrangler = "latest"

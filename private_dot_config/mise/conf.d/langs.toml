@@ -1,6 +1,10 @@
 [tools]
 node = "lts"
 uv = "latest"
+pnpm = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = ["ruby", "node", "perl"]
+
+[settings.npm]
+package_manager = "pnpm"

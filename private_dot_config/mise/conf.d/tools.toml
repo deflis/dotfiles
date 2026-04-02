@@ -3,6 +3,7 @@
 codex = "latest"
 gemini = "latest"
 opencode = "latest"
+claude-code = "latest"
 "npm:@github/copilot" = "latest"
 
 # tools

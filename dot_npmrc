@@ -1,1 +1,2 @@
 min-release-age=3d
+ignore-scripts=true

@@ -1,5 +1,7 @@
+// 1日(1440分)経過したパッケージは信頼する
 minimumReleaseAge={{ if not .isWork }}1440{{ else }}4320{{ end }}
 block-exotic-subdeps=true
 trust-policy=no-downgrade
 trust-policy-exclude=semver@6.3.1
-trust-policy-ignore-after=1440
+// 30日(43200分)経過したパッケージは信頼する
+trust-policy-ignore-after=43200

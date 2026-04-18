@@ -9,6 +9,7 @@
     command = "nu"
 
 [data]
+    isWork = {{ promptBool "仕事用マシンですか？" false }}
     homebrew = {{ and (or (eq .chezmoi.os "darwin") (ne .chezmoi.os "linux") (not (contains "arm" (output "uname" "-m")))) (promptBool "install or update homebrew?" false) }}
 
 [edit]

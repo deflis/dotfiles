@@ -23,8 +23,10 @@ packages:
       - k1LoW/tap/git-wt
     darwin_brews:
       - awscli
+      - xcodes
     linux_brews:
       - xclip
+    work_brews: []
     casks:
       - 1password-cli
       - font-hackgen
@@ -32,13 +34,19 @@ packages:
       - font-hasklig
       - rectangle
       - scroll-reverser
-      - session-manager-plugin
       - alt-tab
       - visual-studio-code
       - raycast
       - espanso
       - ghostty
       - azookey
+      - cmux
+      # Tahoe対応がbetaなので、安定版が出るまではこちらを使用
+      - jordanbaird-ice@beta
+      - xcodes-app
+      - github-copilot-for-xcode
+    work_casks:
+      - session-manager-plugin
 
   # Windows (Scoop)
   scoop:

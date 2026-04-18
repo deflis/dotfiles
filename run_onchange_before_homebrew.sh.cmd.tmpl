@@ -48,9 +48,19 @@ brew {{ . | quote }}
 {{ range .packages.homebrew.casks -}}
 cask {{ . | quote }}
 {{ end -}}
+{{ if .isWork -}}
+{{ range .packages.homebrew.work_casks -}}
+cask {{ . | quote }}
+{{ end -}}
+{{ end -}}
 {{ end -}}
 {{ if eq .chezmoi.os "linux" -}}
 {{ range .packages.homebrew.linux_brews -}}
+brew {{ . | quote }}
+{{ end -}}
+{{ end -}}
+{{ if .isWork -}}
+{{ range .packages.homebrew.work_brews -}}
 brew {{ . | quote }}
 {{ end -}}
 {{ end -}}

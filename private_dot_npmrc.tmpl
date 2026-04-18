@@ -1,0 +1,9 @@
+min-release-age=3
+ignore-scripts=true
+
+{{ if not .isWork }}
+# Takumi Guard npm repository
+registry=https://npm.flatt.tech/
+# 1Password "op://Private/Takumi guard/credential"
+//npm.flatt.tech/:_authToken={{ onepasswordRead "op://Private/Takumi guard/credential" }}
+{{ end }}

@@ -277,11 +277,23 @@ const BAR_CHAR = "\u2588"; // █
 //     foreground/background を差し替えれば色替え、
 //     separator を差し替えれば区切り文字変更。
 const SEGMENTS: SegmentConfig[] = [
+  // cwd (theme.yaml path segment 相当)
+  {
+    type: "cwd",
+    foreground: "dark-blue",
+    background: "light-blue",
+    separator: SEPARATORS.roundRight,
+    properties: {
+      folderSeparator: SEPARATORS.thinRight, // path 要素間は thin
+      folderSeparatorColor: "blue",
+      maxParts: 4,
+    },
+  },
   // 5h rate limit (残時間つき) — bg は固定、残量はバー色と数値で示す
   {
     type: "rate",
-    foreground: "light-cyan",
-    background: "dark-cyan",
+    foreground: "dark-magenta",
+    background: "light-magenta",
     separator: SEPARATORS.roundRight,
     properties: {
       scope: "five_hour",
@@ -299,18 +311,6 @@ const SEGMENTS: SegmentConfig[] = [
     background: "#c15f3c", // Claude Orange
     separator: SEPARATORS.roundRight,
     properties: { steps: USAGE_STEPS },
-  },
-  // cwd (theme.yaml path segment 相当)
-  {
-    type: "cwd",
-    foreground: "dark-blue",
-    background: "light-blue",
-    separator: SEPARATORS.roundRight,
-    properties: {
-      folderSeparator: SEPARATORS.thinRight, // path 要素間は thin
-      folderSeparatorColor: "blue",
-      maxParts: 4,
-    },
   },
   // 7d rate limit (残時間なし) — bg 固定
   {

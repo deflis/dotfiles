@@ -100,52 +100,43 @@ type ThemePalette = Record<PaletteName, string>;
 
 type UsageStep = {
   minRemain: number;
-  bg: PaletteName;
-  fg: PaletteName;
   barEmpty: PaletteName;
 };
 
 // oh-my-posh 風のセグメント定義。type で種類を指定、foreground/background は
 // theme.yaml パレット名で指定、segment 固有の設定は properties に入れる。
 // separator はこのセグメントと次のセグメントの間に描く区切り文字 (powerline_symbol
-// 相当)。最後のセグメントの場合は行末記号になる。省略時は SEPARATORS.solidRight。
+// 相当)。最後のセグメントの場合は行末記号になる。
+// model 型は末尾固定で常に END_SYMBOL が使われる。
 type SegmentConfig =
   | {
     type: "cwd";
     foreground: PaletteName;
     background: PaletteName;
-    separator?: string;
-    properties?: {
-      folderSeparator?: string;        // path 要素間の区切り (default SEPARATORS.thinRight)
-      folderSeparatorColor?: PaletteName; // 同 色 (default foreground)
-      maxParts?: number;               // 何要素を超えたら中略するか (default 4)
+    separator: string;
+    properties: {
+      folderSeparator: string;          // path 要素間の区切り
+      folderSeparatorColor: PaletteName; // 同 色
+      maxParts: number;                  // 何要素を超えたら中略するか
     };
   }
   | {
     type: "context";
-    // foreground / background を指定すると、残量しきい値に関係なく固定される。
-    // 省略時は properties.steps の該当 step.fg / step.bg が使われる。
-    foreground?: PaletteName;
-    background?: PaletteName;
-    separator?: string;
-    properties: {
-      steps: readonly UsageStep[];
-    };
+    foreground: PaletteName;
+    background: PaletteName;
+    separator: string;
   }
   | {
     type: "rate";
-    // foreground / background を指定すると固定。省略時は step.fg / step.bg。
-    // バーの残容量色 (barEmpty) は常に step から動的に決まる。
-    foreground?: PaletteName;
-    background?: PaletteName;
-    separator?: string;
+    foreground: PaletteName;
+    background: PaletteName;
+    separator: string;
     properties: {
       scope: "five_hour" | "seven_day";
       icon: string;
       label: string;
-      postfix?: string;
-      showRemain?: "none" | "min" | "dhm";
       barFill: PaletteName;
+      // バーの残容量色 (step.barEmpty) は使用率しきい値で動的に決まる。
       steps: readonly UsageStep[];
     };
   }
@@ -153,72 +144,28 @@ type SegmentConfig =
     type: "model";
     foreground: PaletteName;
     background: PaletteName;
-    separator?: string;
   };
 
 // ============================================================================
 // 2. CONFIG  ←← ここを編集
 // ============================================================================
 
-// 2.1 theme.yaml からパレットを読む (見つからなければ fallback)
-const THEME_YAML_CANDIDATES = [
-  `${process.env.HOME ?? ""}/.config/powershell/theme.yaml`,
-  `${process.env.HOME ?? ""}/.local/share/chezmoi/private_dot_config/powershell/theme.yaml`,
-];
+// 2.1 theme.yaml からパレットを読む
+const THEME_YAML_PATH = `${process.env.HOME!}/.config/powershell/theme.yaml`;
 
 async function loadThemePalette(): Promise<ThemePalette> {
-  for (const path of THEME_YAML_CANDIDATES) {
-    try {
-      const raw = await Bun.file(path).text();
-      const block = /^palette:\s*\n((?:[ \t]+.*\n?)+)/m.exec(raw);
-      if (!block) continue;
-      const palette = {} as ThemePalette;
-      for (const line of block[1]!.split("\n")) {
-        const trimmed = line.trim();
-        if (!trimmed || trimmed.startsWith("#")) continue;
-        const mm = /^\s+([\w-]+):\s*"?(#[0-9a-fA-F]{3,8})"?/.exec(line);
-        if (mm) palette[mm[1] as PaletteName] = mm[2]!;
-      }
-      if (Object.keys(palette).length > 0) return palette;
-    } catch {
-      // 次候補へ
-    }
+  const raw = await Bun.file(THEME_YAML_PATH).text();
+  const block = /^palette:\s*\n((?:[ \t]+.*\n?)+)/m.exec(raw);
+  if (!block) throw new Error(`palette block not found in ${THEME_YAML_PATH}`);
+  const palette = {} as ThemePalette;
+  for (const line of block[1]!.split("\n")) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) continue;
+    const mm = /^\s+([\w-]+):\s*"?(#[0-9a-fA-F]{3,8})"?/.exec(line);
+    if (mm) palette[mm[1] as PaletteName] = mm[2]!;
   }
-  return FALLBACK_PALETTE;
+  return palette;
 }
-
-// theme.yaml が無い/壊れているときの最低限の色 (Hue 360)
-const FALLBACK_PALETTE: ThemePalette = {
-  "black": "#111111",
-  "blue": "#3261ab",
-  "cyan": "#007fb1",
-  "dark-blue": "#142744",
-  "dark-cyan": "#003347",
-  "dark-green": "#0e4506",
-  "dark-lime": "#565a07",
-  "dark-magenta": "#4c0c23",
-  "dark-orange": "#5f4504",
-  "dark-red": "#500e17",
-  "dark-yellow": "#665c00",
-  "dark-yelloworange": "#625002",
-  "green": "#23ac0e",
-  "light-blue": "#d5e0f1",
-  "light-cyan": "#cae7f2",
-  "light-green": "#d1f1cc",
-  "light-lime": "#eef5d3",
-  "light-magenta": "#f4d2de",
-  "light-orange": "#f9dfd5",
-  "light-red": "#f6d4d8",
-  "light-yellow": "#fffbd5",
-  "light-yelloworange": "#fcf1d3",
-  "lime": "#a4c520",
-  "magenta": "#bf1e56",
-  "orange": "#da5019",
-  "red": "#c7243a",
-  "white": "#d6deeb",
-  "yellow": "#ffe600",
-  "yelloworange": "#edad0b",
-};
 
 const THEME = await loadThemePalette();
 
@@ -233,15 +180,12 @@ const ICONS = {
 } as const;
 
 // 2.3 残り% のしきい値と配色 (上から順にマッチ)
-//     theme.yaml の右側 (time / executiontime) と同じく
-//     「dark-<色> bg + white fg」基調。安全域は blue 系、警告域は段階的に
-//     yelloworange → orange → red と寄せる。緑は使わない (目に痛いため)。
-//     barEmpty = バーの残容量部分に使う色 (dark-bg 上に浮かぶ同系統の基本色)。
+//     barEmpty = バーの残容量部分に使う色。
 const USAGE_STEPS: readonly UsageStep[] = [
-  { minRemain: 50, bg: "dark-blue",         fg: "white", barEmpty: "blue" },
-  { minRemain: 25, bg: "dark-yelloworange", fg: "light-yelloworange", barEmpty: "dark-yelloworange" },
-  { minRemain: 10, bg: "dark-orange",       fg: "light-orange", barEmpty: "dark-orange" },
-  { minRemain: 0,  bg: "dark-red",          fg: "light-red", barEmpty: "dark-red" },
+  { minRemain: 50, barEmpty: "blue" },
+  { minRemain: 25, barEmpty: "dark-yelloworange" },
+  { minRemain: 10, barEmpty: "dark-orange" },
+  { minRemain: 0,  barEmpty: "dark-red" },
 ];
 
 // 2.4 Powerline 区切り文字 (Nerd Font)
@@ -289,7 +233,7 @@ const SEGMENTS: SegmentConfig[] = [
       maxParts: 4,
     },
   },
-  // 5h rate limit (残時間つき) — bg は固定、残量はバー色と数値で示す
+  // 5h rate limit — bg は固定、残量はバー色と数値で示す
   {
     type: "rate",
     foreground: "dark-magenta",
@@ -299,7 +243,6 @@ const SEGMENTS: SegmentConfig[] = [
       scope: "five_hour",
       icon: ICONS.timer,
       label: "",
-      showRemain: "min",
       barFill: "white",
       steps: USAGE_STEPS,
     },
@@ -310,9 +253,8 @@ const SEGMENTS: SegmentConfig[] = [
     foreground: "white",
     background: "#c15f3c", // Claude Orange
     separator: SEPARATORS.roundRight,
-    properties: { steps: USAGE_STEPS },
   },
-  // 7d rate limit (残時間なし) — bg 固定
+  // 7d rate limit — bg 固定
   {
     type: "rate",
     foreground: "white",
@@ -322,13 +264,11 @@ const SEGMENTS: SegmentConfig[] = [
       scope: "seven_day",
       icon: ICONS.calendar,
       label: "",
-      showRemain: "min",
       barFill: "white",
       steps: USAGE_STEPS,
     },
   },
-  // model (theme.yaml time segment 相当 = 末尾セグメント)
-  // separator は最後なら行末記号として使われる (省略時は END_SYMBOL)
+  // model (theme.yaml time segment 相当 = 末尾セグメント、行末は END_SYMBOL)
   {
     type: "model",
     foreground: "white",
@@ -353,13 +293,9 @@ const RESET = "\x1b[0m";
 const fg = ([r, g, b]: RGB) => `\x1b[38;2;${r};${g};${b}m`;
 const bg = ([r, g, b]: RGB) => `\x1b[48;2;${r};${g};${b}m`;
 
-// theme.yaml のキー名 (kebab-case) で色を引く。無ければマゼンタ (目立つエラー色)
-function p(key: PaletteName): string {
-  return THEME[key] ?? "#ff00ff";
-}
-
-function hex(color: PaletteName | string): RGB {
-  const c = color.startsWith("#") ? color : p(color as PaletteName);
+// theme.yaml のキー名 (kebab-case) で色を引く
+function hex(color: PaletteName): RGB {
+  const c = color.startsWith("#") ? color : THEME[color]!;
   const n = parseInt(c.slice(1), 16);
   return [(n >> 16) & 255, (n >> 8) & 255, n & 255] as const;
 }
@@ -375,13 +311,11 @@ function render(segs: Seg[]): string {
     out += bg(s.bg) + fg(s.fg) + ` ${s.text} `;
     const next = segs[i + 1];
     if (next) {
-      // 中間: このセグメントの separator を使う (省略時は solid right)
-      const sep = s.separator ?? DEFAULT_SEPARATOR;
-      out += bg(next.bg) + fg(s.bg) + sep;
+      // 中間: このセグメントの separator (model は未設定なので DEFAULT_SEPARATOR)
+      out += bg(next.bg) + fg(s.bg) + (s.separator ?? DEFAULT_SEPARATOR);
     } else {
-      // 末尾: separator が指定されていればそれ、無ければ END_SYMBOL
-      const endSym = s.separator ?? END_SYMBOL;
-      out += RESET + fg(s.bg) + endSym + RESET;
+      // 末尾: separator があれば使い、無ければ END_SYMBOL (model 用)
+      out += RESET + fg(s.bg) + (s.separator ?? END_SYMBOL) + RESET;
     }
   }
   return out;
@@ -404,14 +338,14 @@ function bar(
   filledFg: RGB,
   emptyFg: RGB,
   segBg: RGB,
-  overlay?: string,
+  overlay: string,
 ): string {
   const clamped = Math.max(0, Math.min(100, usedPct));
   const fillCells = Math.max(
     0,
     Math.min(BAR_WIDTH, Math.round((clamped / 100) * BAR_WIDTH)),
   );
-  const chars = [...(overlay ?? "")];
+  const chars = [...(overlay)];
   const start = Math.floor((BAR_WIDTH - chars.length) / 2);
 
   let out = "";
@@ -421,62 +355,37 @@ function bar(
     if (idx >= 0 && idx < chars.length) {
       // overlay cell: bg=バーの色。fg は塗り上=黒、空き上=filledFg (通常は白) で
       // コントラスト確保。seg.background が light 色でも読めるよう、segBg は参照しない。
-      const cellBg = isFilled ? filledFg : emptyFg;
-      const cellFg = isFilled ? hex("black") : filledFg;
-      out += bg(cellBg) + fg(cellFg) + chars[idx]!;
+      out += bg(isFilled ? filledFg : emptyFg)
+           + fg(isFilled ? hex("black") : filledFg)
+           + chars[idx]!;
     } else {
-      const cellFg = isFilled ? filledFg : emptyFg;
-      out += bg(segBg) + fg(cellFg) + BAR_CHAR;
+      out += bg(segBg) + fg(isFilled ? filledFg : emptyFg) + BAR_CHAR;
     }
   }
   // セル単位で変えた bg をセグメント背景に戻す
   return out + bg(segBg);
 }
 
-// mode:
-//   "min" — 最小表記。最大単位だけ ("6d" / "27h" / "59m" / "<1m")
-//   "dhm" — 複数単位連結 ("6d22h" / "1h30m" / "45m" / "<1m")
-function formatRemain(
-  resetsAt: number | undefined,
-  mode: "min" | "dhm",
-): string | null {
+// 最大単位だけの最小表記 ("6d" / "27h" / "59m" / "<1m")
+// resets_at は Unix epoch seconds (Claude Code の statusline 仕様)
+function formatRemain(resetsAt: number | undefined): string | null {
   if (typeof resetsAt !== "number") return null;
-  const ms = resetsAt > 1e12 ? resetsAt : resetsAt * 1000;
-  const diffMs = ms - Date.now();
-  if (diffMs <= 0) return "<1m";
+  const diffSec = resetsAt - Date.now() / 1000;
 
-  const totalM = Math.floor(diffMs / 60_000);
+  const totalM = Math.floor(diffSec / 60);
   const d = Math.floor(totalM / (24 * 60));
   const h = Math.floor((totalM - d * 24 * 60) / 60);
-  const m = totalM % 60;
 
-  if (mode === "min") {
-    if (d > 0) return `${d}d`;
-    if (h > 0) return `${h}h`;
-    return totalM > 0 ? `${totalM}m` : "<1m";
-  }
-  // dhm
-  if (d > 0) return `${d}d${h.toString().padStart(2, "0")}h`;
-  if (h > 0) return `${h}h${m.toString().padStart(2, "0")}m`;
+  if (d > 0) return `${d}d`;
+  if (h > 0) return `${h}h`;
   return totalM > 0 ? `${totalM}m` : "<1m";
 }
 
 function shortModel(m?: { id?: string; display_name?: string }): string {
-  const raw = m?.id ?? m?.display_name ?? "";
-  const re = /claude-(opus|sonnet|haiku)-(\d+)-(\d+)(?:\[(1m)\])?/i;
-  const mm = re.exec(raw);
-  if (mm) {
-    const init = mm[1]![0]!.toUpperCase();
-    const star = mm[4] ? "*" : "";
-    return `${init}${mm[2]}.${mm[3]}${star}`;
-  }
-  // fallback: "Opus 4.7 (1M context)" -> "O4.7*"
-  const dn = m?.display_name ?? "";
-  const mm2 = /(Opus|Sonnet|Haiku)\s+(\d+)\.(\d+)(.*1M.*)?/i.exec(dn);
-  if (mm2) {
-    return `${mm2[1]![0]!.toUpperCase()}${mm2[2]}.${mm2[3]}${mm2[4] ? "*" : ""}`;
-  }
-  return m?.display_name ?? "Claude";
+  const raw = `${m?.id ?? ""} ${m?.display_name ?? ""}`;
+  const mm = /(opus|sonnet|haiku)[\s-](\d+)[.\-](\d+)/i.exec(raw);
+  if (!mm) return m?.display_name ?? "Claude";
+  return `${mm[1]![0]!.toUpperCase()}${mm[2]}.${mm[3]}${/\[1m\]|1M/i.test(raw) ? "*" : ""}`;
 }
 
 // 3.2 Segment renderers (type ごとに 1 つ)
@@ -489,24 +398,24 @@ function renderCwd(
   if (!current) return null;
   const projectDir = input.workspace?.project_dir;
   const home = process.env.HOME ?? "";
-  const maxParts = seg.properties?.maxParts ?? 4;
-  const folderSep = seg.properties?.folderSeparator ?? SEPARATORS.thinRight;
+  const { maxParts, folderSeparator, folderSeparatorColor } = seg.properties;
 
+  const stripPrefix = (s: string, prefix: string): string[] | null =>
+    s === prefix ? []
+    : s.startsWith(prefix + "/") ? s.slice(prefix.length).split("/").filter(Boolean)
+    : null;
+
+  const projectRest = projectDir ? stripPrefix(current, projectDir) : null;
+  const homeRest = home ? stripPrefix(current, home) : null;
   let parts: string[];
-  if (
-    projectDir &&
-    (current === projectDir || current.startsWith(projectDir + "/"))
-  ) {
-    const projectName =
-      projectDir.split("/").filter(Boolean).pop() ?? projectDir;
-    const rest = current.slice(projectDir.length).split("/").filter(Boolean);
-    parts = [projectName, ...rest];
-  } else if (home && (current === home || current.startsWith(home + "/"))) {
-    const rest = current.slice(home.length).split("/").filter(Boolean);
-    parts = ["~", ...rest];
+  if (projectRest) {
+    const projectName = projectDir!.split("/").filter(Boolean).pop() ?? projectDir!;
+    parts = [projectName, ...projectRest];
+  } else if (homeRest) {
+    parts = ["~", ...homeRest];
   } else {
-    parts = current.split("/").filter(Boolean);
-    if (parts.length === 0) parts = ["/"];
+    const abs = current.split("/").filter(Boolean);
+    parts = abs.length ? abs : ["/"];
   }
 
   if (parts.length > maxParts) {
@@ -518,15 +427,11 @@ function renderCwd(
     ];
   }
 
-  const iconLead = parts[0] === "~" ? ICONS.home : ICONS.folder;
   const dirFg = hex(seg.foreground);
-  const sepFg = hex(seg.properties?.folderSeparatorColor ?? seg.foreground);
   // theme.yaml path segment の folder_separator_icon と同じ構造: " <color>sep</color> "
-  const sep = `${fg(sepFg)} ${folderSep} ${fg(dirFg)}`;
-  const text = `${iconLead} ${parts.join(sep)}`;
-
+  const sep = `${fg(hex(folderSeparatorColor))} ${folderSeparator} ${fg(dirFg)}`;
   return {
-    text,
+    text: `${parts[0] === "~" ? ICONS.home : ICONS.folder} ${parts.join(sep)}`,
     fg: dirFg,
     bg: hex(seg.background),
     separator: seg.separator,
@@ -539,12 +444,10 @@ function renderContext(
 ): Seg | null {
   const remain = input.context_window?.remaining_percentage;
   if (typeof remain !== "number") return null;
-  const step = pickStep(remain, seg.properties.steps);
-  const text = `${ICONS.context} ${Math.round(remain)}%`;
   return {
-    text,
-    fg: hex(seg.foreground ?? step.fg),
-    bg: hex(seg.background ?? step.bg),
+    text: `${ICONS.context} ${Math.round(remain)}%`,
+    fg: hex(seg.foreground),
+    bg: hex(seg.background),
     separator: seg.separator,
   };
 }
@@ -557,8 +460,8 @@ function renderRate(
   if (!r) return null;
   const used = typeof r.used_percentage === "number" ? r.used_percentage : 0;
   const step = pickStep(100 - used, seg.properties.steps);
-  const textFg = hex(seg.foreground ?? step.fg);
-  const segBg = hex(seg.background ?? step.bg);
+  const textFg = hex(seg.foreground);
+  const segBg = hex(seg.background);
   // バー: 塗り=barFill / 空き=step.barEmpty、中央に "NN%" を重ねる。
   const barStr =
     bar(
@@ -568,20 +471,15 @@ function renderRate(
       segBg,
       `${Math.round(used)}%`,
     ) + fg(textFg);
-  
-  const prefix = [seg.properties.icon, seg.properties.label].filter(Boolean).join(" ");
-  const postfix = [seg.properties.postfix].filter(Boolean).join(" ");
-  const pieces = [
-    prefix,
+
+  const text = [
+    seg.properties.icon,
+    seg.properties.label,
     barStr,
-  ];
-  if (seg.properties.showRemain && seg.properties.showRemain !== "none") {
-    const remain = formatRemain(r.resets_at, seg.properties.showRemain);
-    if (remain) pieces.push(remain);
-  }
-  pieces.push(postfix);
+    formatRemain(r.resets_at),
+  ].filter(Boolean).join(" ");
   return {
-    text: pieces.join(" "),
+    text,
     fg: textFg,
     bg: segBg,
     separator: seg.separator,
@@ -592,12 +490,10 @@ function renderModel(
   seg: Extract<SegmentConfig, { type: "model" }>,
   input: HookInput,
 ): Seg {
-  const text = `${ICONS.robot} ${shortModel(input.model)}`;
   return {
-    text,
+    text: `${ICONS.robot} ${shortModel(input.model)}`,
     fg: hex(seg.foreground),
     bg: hex(seg.background),
-    separator: seg.separator,
   };
 }
 

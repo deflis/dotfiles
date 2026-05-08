@@ -442,10 +442,10 @@ function renderContext(
   seg: Extract<SegmentConfig, { type: "context" }>,
   input: HookInput,
 ): Seg | null {
-  const remain = input.context_window?.remaining_percentage;
-  if (typeof remain !== "number") return null;
+  const used = input.context_window?.used_percentage;
+  if (typeof used !== "number") return null;
   return {
-    text: `${ICONS.context} ${Math.round(remain)}%`,
+    text: `${ICONS.context} ${Math.round(used)}%`,
     fg: hex(seg.foreground),
     bg: hex(seg.background),
     separator: seg.separator,

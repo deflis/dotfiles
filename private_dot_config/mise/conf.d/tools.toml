@@ -4,7 +4,7 @@ codex = "latest"
 gemini = "latest"
 opencode = "latest"
 claude-code = { version = "latest", install_before = "0d" }
-"npm:@github/copilot" = "latest"
+pi = "latest"
 
 # tools
 "npm:ccusage" = "latest"

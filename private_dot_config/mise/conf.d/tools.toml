@@ -5,6 +5,7 @@ gemini = "latest"
 opencode = "latest"
 claude-code = { version = "latest", install_before = "0d" }
 pi = "latest"
+copilot = "latest"
 
 # tools
 "npm:ccusage" = "latest"

@@ -1,0 +1,9 @@
+{{ if not .isWork -}}
+{{ if lookPath "op" -}}
+[global]
+index-url = https://token:{{ onepasswordRead "op://Private/Takumi guard/credential" }}@pypi.flatt.tech/simple/
+{{ else -}}
+[global]
+index-url = https://pypi.flatt.tech/simple/
+{{ end -}}
+{{ end -}}

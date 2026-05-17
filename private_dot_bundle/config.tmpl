@@ -1,0 +1,9 @@
+{{ if not .isWork -}}
+{{ if lookPath "op" -}}
+---
+BUNDLE_MIRROR__HTTPS://RUBYGEMS__ORG: "https://token:{{ onepasswordRead "op://Private/Takumi guard/credential" }}@rubygems.flatt.tech/"
+{{ else -}}
+---
+BUNDLE_MIRROR__HTTPS://RUBYGEMS__ORG: "https://rubygems.flatt.tech/"
+{{ end -}}
+{{ end -}}

@@ -1,0 +1,10 @@
+.config/starship
+.config/sheldon
+.config/kitty
+.config/wezterm
+.config/nushell
+Library/Application Support/nushell
+.asdfrc
+.config/zsh/plugins/ni.zsh
+.config/kitty/kitty.d/onehalfdark.conf
+AppData/Roaming/nushell

@@ -4,5 +4,7 @@ ignore-scripts=true
 {{ if not .isWork }}
 # Takumi Guard npm repository
 registry=https://npm.flatt.tech/
+{{ if lookPath "op" -}}
 //npm.flatt.tech/:_authToken={{ onepasswordRead "op://Private/Takumi guard/credential" }}
+{{ end -}}
 {{ end }}

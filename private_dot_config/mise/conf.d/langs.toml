@@ -3,9 +3,10 @@ node = "lts"
 uv = "latest"
 pnpm = "latest"
 bun = "latest"
+aube = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = ["ruby", "node", "perl"]
 
 [settings.npm]
-package_manager = "pnpm"
+package_manager = "aube"

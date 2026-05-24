@@ -30,11 +30,24 @@ source $ZDOTDIR/sync/{{ $name | replace "dot_" "." | trimSuffix ".tmpl" }}
 zsh-defer source $ZDOTDIR/defer/{{ $name | replace "dot_" "." | trimSuffix ".tmpl" }}
 {{-   end }}
 {{- end }}
-# plugins
-zsh-defer source $ZDOTDIR/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
-zsh-defer source $ZDOTDIR/plugins/autosuggestions/zsh-autosuggestions.zsh
 ## load user .zshrc configuration file
 #
 if [ -f ${HOME}/.zshrc.mine ]; then
     source ${HOME}/.zshrc.mine
+fi
+
+# ZLE plugins that redraw the command line must not be deferred.
+# Load autosuggestions before syntax highlighting, and keep highlighting last.
+if [[ -n ${SSH_TTY:-} || -n ${SSH_CONNECTION:-} ]]; then
+  ZSH_AUTOSUGGEST_MANUAL_REBIND=1
+  __DOTFILES_SSH_ZSH_AUTOSUGGEST_SYNC=1
+fi
+source $ZDOTDIR/plugins/autosuggestions/zsh-autosuggestions.zsh
+if [[ -n ${__DOTFILES_SSH_ZSH_AUTOSUGGEST_SYNC:-} ]]; then
+  unset ZSH_AUTOSUGGEST_USE_ASYNC
+  unset __DOTFILES_SSH_ZSH_AUTOSUGGEST_SYNC
+fi
+source $ZDOTDIR/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+if [[ -n ${ZSH_AUTOSUGGEST_MANUAL_REBIND:-} ]]; then
+  _zsh_autosuggest_bind_widgets
 fi

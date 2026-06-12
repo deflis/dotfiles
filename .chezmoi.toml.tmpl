@@ -8,6 +8,22 @@
 [data]
     isWork = {{ promptBool "仕事用マシンですか？" false }}
     homebrew = {{ and (or (eq .chezmoi.os "darwin") (ne .chezmoi.os "linux") (not (contains "arm" (output "uname" "-m")))) (promptBool "install or update homebrew?" false) }}
+{{- $useTakumiGuard := eq (promptChoiceOnce . "useTakumiGuard" "Takumi Guardを使いますか？" (list "no" "yes")) "yes" }}
+{{- $takumiGuard := "none" }}
+{{- if $useTakumiGuard }}
+{{- $useOnePasswordForTakumiGuard := eq (promptChoiceOnce . "useOnePasswordForTakumiGuard" "1Passwordを使いますか？" (list "no" "yes")) "yes" }}
+{{- if $useOnePasswordForTakumiGuard }}
+{{- $takumiGuard = "op" }}
+{{- else }}
+{{- $takumiGuard = "manual" }}
+{{- end }}
+{{- end }}
+    takumiGuard = {{ $takumiGuard | quote }}
+{{ if eq $takumiGuard "op" }}
+    takumiGuardToken = {{ onepasswordRead "op://Private/Takumi guard/credential" | quote }}
+{{ else if eq $takumiGuard "manual" }}
+    takumiGuardToken = {{ promptStringOnce . "takumiGuardToken" "Takumi GuardのAPIキーを入力してください" | quote }}
+{{ end }}
 
 [edit]
     command = "code"

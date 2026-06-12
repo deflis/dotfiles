@@ -1,9 +1,7 @@
-{{ if not .isWork -}}
-{{ if lookPath "op" -}}
+{{ if ne (get . "takumiGuard" | default "none") "none" -}}
 ---
-BUNDLE_MIRROR__HTTPS://RUBYGEMS__ORG: "https://token:{{ onepasswordRead "op://Private/Takumi guard/credential" }}@rubygems.flatt.tech/"
+BUNDLE_MIRROR__HTTPS://RUBYGEMS__ORG: "https://token:{{ .takumiGuardToken }}@rubygems.flatt.tech/"
 {{ else -}}
 ---
 BUNDLE_MIRROR__HTTPS://RUBYGEMS__ORG: "https://rubygems.flatt.tech/"
-{{ end -}}
 {{ end -}}

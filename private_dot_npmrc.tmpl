@@ -1,10 +1,8 @@
 min-release-age={{ if not .isWork }}1{{ else }}3{{ end }}
 ignore-scripts=true
 
-{{ if not .isWork }}
+{{ if ne (get . "takumiGuard" | default "none") "none" -}}
 # Takumi Guard npm repository
 registry=https://npm.flatt.tech/
-{{ if lookPath "op" -}}
-//npm.flatt.tech/:_authToken={{ onepasswordRead "op://Private/Takumi guard/credential" }}
+//npm.flatt.tech/:_authToken={{ .takumiGuardToken }}
 {{ end -}}
-{{ end }}

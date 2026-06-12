@@ -1,6 +1,6 @@
 ---
 name: jj-create-pr
-description: jj（Jujutsu）とgh CLIを使ったPR作成ワークフロー。ブランチ作成、プッシュ、PR作成までを一連で行う。
+description: jj（Jujutsu）とgh CLIを使ったPR作成ワークフロー。jjを使ったリポジトリでブランチ作成、プッシュ、PR作成までを一連で行う。
 ---
 
 # jj + gh CLI によるPR作成ワークフロー

@@ -5,6 +5,6 @@
       // Copilot の Grok modelを使用する
       // TODO: 無料モデルではなくなったのでほかのモデルを探したい
       // "model": "github-copilot/grok-code-fast-1"
-    }
-  }
+    },
+  },
 }

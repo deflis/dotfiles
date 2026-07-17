@@ -3,6 +3,7 @@
 .config/kitty
 .config/wezterm
 .config/nushell
+.config/pnpm/rc
 Library/Application Support/nushell
 .asdfrc
 .config/zsh/plugins/ni.zsh

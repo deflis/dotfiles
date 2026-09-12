@@ -1,6 +1,8 @@
 theme = "One Half Dark"
 background-opacity = 0.8
 
+confirm-close-surface = false
+
 font-family = "HackGen Console NF"
 font-family = "HackGen Console NFJ"
 font-family = "HackGen Console"

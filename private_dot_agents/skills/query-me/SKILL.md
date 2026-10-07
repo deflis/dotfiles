@@ -1,6 +1,7 @@
 ---
 name: query-me
 description: 複雑な計画や要件について、実装前にユーザーと認識をすり合わせたいときに使うスキル。
+disable-model-invocation: true
 ---
 
 この計画について、お互いの認識がそろうまで、いろいろな角度から私に質問してください。

@@ -3,7 +3,7 @@
 codex = "latest"
 gemini = "latest"
 opencode = "latest"
-claude-code = { version = "latest", install_before = "0d" }
+claude-code = { version = "latest", minimum_release_age = "0d" }
 pi = "latest"
 copilot = "latest"
 

@@ -3,6 +3,7 @@ name: review-agent
 description: >-
   ルートのオーケストレータが独立したエージェントへレビューと反証を委譲し、結果を整理する。
   ユーザーが実装・変更・差分のレビューを求めたときに使う。
+disable-model-invocation: true
 ---
 
 # Review Agent

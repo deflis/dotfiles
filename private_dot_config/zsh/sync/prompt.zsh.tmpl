@@ -59,6 +59,8 @@ typeset -g _dp_hostname={{ .chezmoi.hostname | quote }}
 typeset -g _dp_ps1= _dp_time= _dp_async_pwd=
 typeset -gi _dp_status=0 _dp_exec_ms=-1 _dp_async_fd=0
 typeset -ga _dp_async_segs=()
+# 非同期結果のディレクトリ別キャッシュ（値はセグメントを改行で連結したもの）
+typeset -gA _dp_async_cache=()
 typeset -g _dp_cmd_start=
 
 # 右側のセグメントは「区切り記号\t背景色\t文字色\t本文」の形式で扱う
@@ -368,9 +370,9 @@ _dp_async_done() {
   local -a lines=("${(@f)data}")
   [[ $lines[1] == $PWD ]] || return
   local -a segs=("${(@)lines[2,-1]}")
+  _dp_async_cache[$PWD]=${(pj:\n:)segs}
   # 結果が変わらなければ再描画しない
-  [[ $_dp_async_pwd == $PWD && "${(pj:\n:)segs}" == "${(pj:\n:)_dp_async_segs}" ]] && return
-  _dp_async_pwd=$PWD
+  [[ "${(pj:\n:)segs}" == "${(pj:\n:)_dp_async_segs}" ]] && return
   _dp_async_segs=("${(@)segs}")
   _dp_render
   zle reset-prompt
@@ -400,8 +402,11 @@ _dp_precmd() {
   else
     _dp_exec_ms=-1
   fi
-  # ディレクトリが変わったら前回の非同期結果は捨てる
-  [[ $_dp_async_pwd == $PWD ]] || { _dp_async_pwd=; _dp_async_segs=() }
+  # ディレクトリが変わったら、そのディレクトリのキャッシュを表示しておき、非同期で更新する
+  if [[ $_dp_async_pwd != $PWD ]]; then
+    _dp_async_pwd=$PWD
+    _dp_async_segs=(${(f)_dp_async_cache[$PWD]})
+  fi
   strftime -s _dp_time '%H:%M:%S' $EPOCHSECONDS
   _dp_set_title
   _dp_render

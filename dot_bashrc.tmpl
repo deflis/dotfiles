@@ -141,7 +141,54 @@ fi
 {{   end -}}
 {{ end -}}
 
-eval "$(oh-my-posh --init --shell bash --config ~/.config/powershell/theme.yaml)"
+# 簡易プロンプト（powerlineフォントやNerd Fontがない環境でも崩れないよう特殊なグリフを使わず、1行に収める）
+# 例: SW user@host:~/src/repo [1] $
+# - 先頭は接続している環境を1文字ずつ並べたもの（S: ssh / W: wsl / C: container / R: chroot）。何もなければ表示しない
+#   全角/半角の幅が曖昧な記号は端末によってカーソル位置がずれるため、ASCIIの1文字にしている
+# - user@host はSSH接続時のみ表示（rootは赤、それ以外は黄色）。ローカルではディレクトリから始める
+# - [n] は直前のコマンドが失敗したときの終了ステータス
+__dp_env=
+if [ -n "$SSH_CONNECTION" ] || [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+  __dp_env+='S'
+fi
+{{ if and (eq .chezmoi.os "linux") (.chezmoi.kernel.osrelease | lower | contains "microsoft") -}}
+__dp_env+='W'
+{{ end -}}
+if [ -f /.dockerenv ] || [ -f /run/.containerenv ]; then
+  __dp_env+='C'
+fi
+[ -n "${debian_chroot:-}" ] && __dp_env+='R'
+
+if [ -t 1 ] && [ "$(tput colors 2>/dev/null || echo 0)" -ge 8 ]; then
+  __dp_reset=$'\e[0m' __dp_red=$'\e[1;31m' __dp_cyan=$'\e[36m' __dp_blue=$'\e[1;34m'
+  if [ "$(id -u)" -eq 0 ]; then
+    __dp_host=$'\e[1;31m'
+  else
+    __dp_host=$'\e[1;33m'
+  fi
+else
+  __dp_reset='' __dp_red='' __dp_cyan='' __dp_blue='' __dp_host=''
+fi
+
+__dp_prompt() {
+  local ec=$?
+  local ps=
+
+  # 端末のタイトルを user@host:dir に設定する
+  case "$TERM" in
+    xterm*|rxvt*|screen*|tmux*) ps+='\[\e]0;\u@\h: \w\a\]' ;;
+  esac
+  [ -n "$__dp_env" ] && ps+="\[$__dp_cyan\]$__dp_env\[$__dp_reset\] "
+  case $__dp_env in
+    *S*) ps+="\[$__dp_host\]\u@\h\[$__dp_reset\]:" ;;
+  esac
+  ps+="\[$__dp_blue\]\w\[$__dp_reset\]"
+  [ "$ec" -ne 0 ] && ps+=" \[$__dp_red\][$ec]\[$__dp_reset\]"
+  ps+=' \$ '
+  PS1=$ps
+  return $ec
+}
+PROMPT_COMMAND="__dp_prompt${PROMPT_COMMAND:+; $PROMPT_COMMAND}"
 
 ## load user .zshrc configuration file
 #

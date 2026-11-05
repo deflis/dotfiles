@@ -1,0 +1,421 @@
+# oh-my-posh（~/.config/powershell/theme.yaml）相当のプロンプトをzshだけで実装したもの
+# - 環境ごとの違い（OSアイコン・WSL・ホスト名・バッテリーの取得方法）はchezmoiのテンプレートで振り分ける
+# - 重い処理（git・バッテリー・言語バージョン）はzle -Fで非同期に取得し、取得後にプロンプトを再描画する
+
+zmodload zsh/datetime
+autoload -Uz add-zsh-hook
+setopt prompt_subst
+
+# [Hue 360](https://hue360.herokuapp.com/) で作成
+typeset -gA _dp_c=(
+  black        '#111111'
+  blue         '#3261ab'
+  cyan         '#007fb1'
+  dark-blue    '#142744'
+  dark-green   '#0e4506'
+  green        '#23ac0e'
+  light-blue   '#d5e0f1'
+  light-red    '#f6d4d8'
+  lime         '#a4c520'
+  magenta      '#bf1e56'
+  orange       '#da5019'
+  red          '#c7243a'
+  white        '#d6deeb'
+  yelloworange '#edad0b'
+)
+
+# OSセグメント
+{{ if eq .chezmoi.os "darwin" -}}
+typeset -g _dp_os_text=$'\uf179 ' _dp_os_bg=$_dp_c[black] _dp_os_fg=$_dp_c[white]
+{{- else if eq .chezmoi.os "linux" -}}
+{{-   $id := "" -}}
+{{-   if hasKey .chezmoi.osRelease "id" -}}
+{{-     $id = .chezmoi.osRelease.id -}}
+{{-   end -}}
+{{-   if eq $id "ubuntu" }}
+typeset -g _dp_os_text=$'\uf31b ' _dp_os_bg=$_dp_c[orange] _dp_os_fg=$_dp_c[white]
+{{-   else if eq $id "arch" }}
+typeset -g _dp_os_text=$'\uf303 ' _dp_os_bg=$_dp_c[cyan] _dp_os_fg=$_dp_c[white]
+{{-   else if eq $id "debian" }}
+typeset -g _dp_os_text=$'\uf306 ' _dp_os_bg=$_dp_c[magenta] _dp_os_fg=$_dp_c[white]
+{{-   else if eq $id "raspbian" }}
+typeset -g _dp_os_text=$'\uf315 ' _dp_os_bg=$_dp_c[magenta] _dp_os_fg=$_dp_c[white]
+{{-   else if eq $id "manjaro" }}
+typeset -g _dp_os_text=$'\uf312 ' _dp_os_bg=$_dp_c[dark-green] _dp_os_fg=$_dp_c[green]
+{{-   else if eq $id "centos" }}
+typeset -g _dp_os_text=$'\uf304 ' _dp_os_bg=$_dp_c[yelloworange] _dp_os_fg=$_dp_c[black]
+{{-   else }}
+typeset -g _dp_os_text=$'\uf17c ' _dp_os_bg=$_dp_c[black] _dp_os_fg=$_dp_c[white]
+{{-   end }}
+{{-   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
+# WSL
+_dp_os_text+=$'\U000F0372 '
+{{-   end }}
+{{- else }}
+typeset -g _dp_os_text=$'\uf17c ' _dp_os_bg=$_dp_c[black] _dp_os_fg=$_dp_c[white]
+{{- end }}
+typeset -g _dp_hostname={{ .chezmoi.hostname | quote }}
+
+typeset -g _dp_ps1= _dp_time= _dp_async_pwd=
+typeset -gi _dp_status=0 _dp_exec_ms=-1 _dp_async_fd=0
+typeset -ga _dp_async_segs=()
+typeset -g _dp_cmd_start=
+
+# 右側のセグメントは「区切り記号\t背景色\t文字色\t本文」の形式で扱う
+_dp_seg() {
+  REPLY="$1"$'\t'"$2"$'\t'"$3"$'\t'"$4"
+}
+
+# 実行時間（roundrock相当: 1h 2m 3s 456ms）
+_dp_fmt_ms() {
+  local -i ms=$1 h m s
+  (( h = ms / 3600000, ms %= 3600000, m = ms / 60000, ms %= 60000, s = ms / 1000, ms %= 1000 ))
+  local -a p
+  (( h )) && p+=("${h}h")
+  (( h || m )) && p+=("${m}m")
+  (( h || m || s )) && p+=("${s}s")
+  p+=("${ms}ms")
+  REPLY=${(j: :)p}
+}
+
+_dp_is_ssh() {
+  [[ -n $SSH_CONNECTION || -n $SSH_CLIENT || -n $SSH_TTY ]]
+}
+
+_dp_set_title() {
+  [[ $TERM == dumb ]] && return
+  local t="${(%):-%~} ${(%):-%(!.#.$)}"
+  _dp_is_ssh && t="[${(%):-%n}@${_dp_hostname}] $t"
+  print -rn -- $'\e]0;'"$t"$'\a'
+}
+
+_dp_render() {
+  local left right line2
+
+  # 左: OS（+SSH時はホスト名）→ パス
+  local os=$_dp_os_text
+  _dp_is_ssh && os+=${_dp_hostname//\%/%%}
+  left="%K{$_dp_os_bg}%F{$_dp_os_fg}${os}%K{$_dp_c[light-blue]}%F{$_dp_os_bg}"$'\ue0b4'
+
+  local p=${(%):-%~}
+  p=${p//\%/%%}
+  local -a parts=(${(s:/:)p})
+  [[ $p == /* ]] && parts=(/ $parts)
+  local sep="%F{$_dp_c[blue]} "$'\ue0b1'" %F{$_dp_c[dark-blue]}"
+  left+="%F{$_dp_c[dark-blue]} ${(pj:$sep:)parts} %k%F{$_dp_c[light-blue]}"$'\ue0b4'"%f"
+
+  # 右: git・バッテリー・言語（非同期）→ 実行時間 → シェル → 時刻
+  local -a segs=("${(@)_dp_async_segs}")
+  if (( _dp_exec_ms >= 0 )); then
+    _dp_fmt_ms $_dp_exec_ms
+    _dp_seg $'\ue0b2' $_dp_c[dark-blue] $_dp_c[white] "$REPLY"; segs+=("$REPLY")
+  fi
+  _dp_seg $'\ue0b2' '#d6deeb' '#011627' $'\uf489 zsh'; segs+=("$REPLY")
+  _dp_seg $'\ue0b2' $_dp_c[blue] $_dp_c[white] $'\U000F0954 '"$_dp_time"; segs+=("$REPLY")
+
+  # 2行目: 終了ステータス → $ / #
+  local ec=$_dp_c[green]
+  (( _dp_status )) && ec=$_dp_c[red]
+  line2="%F{$ec}"$'\ue285'"%f%(!.%F{$_dp_c[light-red]}#.%F{$_dp_c[white]}\$) %f"
+
+  # 右ブロックを1行目の右端に寄せる。幅が足りなければ末尾のセグメントから削る
+  local zero='%([BSUbfksu]|([FK]|){*})'
+  local -i lw=${(m)#${(S%%)left//$~zero/}} rw pad
+  local seg prev
+  local -a f
+  while (( $#segs )); do
+    right= prev=
+    for seg in "${segs[@]}"; do
+      f=("${(@ps:\t:)seg}")
+      if [[ -z $prev ]]; then
+        right+="%F{$f[2]}$f[1]"
+      else
+        right+="%K{$prev}%F{$f[2]}$f[1]"
+      fi
+      right+="%K{$f[2]}%F{$f[3]}$f[4]%k%f"
+      prev=$f[2]
+    done
+    right+="%F{$prev}"$'\ue0b4'"%f"
+    rw=${(m)#${(S%%)right//$~zero/}}
+    pad=$(( COLUMNS - lw - rw - 1 ))
+    (( pad >= 1 )) && break
+    segs=("${(@)segs[1,-2]}")
+  done
+
+  if (( $#segs )); then
+    local sp=
+    sp=${(l:pad:)sp}
+    _dp_ps1="${left}${sp}${right}"$'\n'"${line2}"
+  else
+    _dp_ps1="${left}"$'\n'"${line2}"
+  fi
+}
+
+# ---- 非同期ワーカー（サブシェルで実行し、結果を標準出力に書く） ----
+
+_dp_gitstr() {
+  local -a p
+  (( $1 )) && p+=("?$1")
+  (( $2 )) && p+=("+$2")
+  (( $3 )) && p+=("~$3")
+  (( $4 )) && p+=("-$4")
+  (( $5 )) && p+=(">$5")
+  (( $6 )) && p+=("x$6")
+  REPLY=${(j: :)p}
+}
+
+_dp_w_git() {
+  local st
+  st=$(GIT_OPTIONAL_LOCKS=0 command git status --porcelain=v2 --branch --show-stash 2>/dev/null) || return
+
+  local line oid head upstream
+  local -a ab
+  local -i has_ab=0 ahead=0 behind=0 stash=0
+  local -i wq=0 wa=0 wm=0 wd=0 wx=0 sa=0 sm=0 sd=0 sr=0
+  for line in "${(@f)st}"; do
+    case $line in
+      ('# branch.oid '*) oid=${line#\# branch.oid } ;;
+      ('# branch.head '*) head=${line#\# branch.head } ;;
+      ('# branch.upstream '*) upstream=${line#\# branch.upstream } ;;
+      ('# branch.ab '*)
+        has_ab=1
+        ab=(${=${line#\# branch.ab }})
+        ahead=${ab[1]#+}
+        behind=${ab[2]#-}
+        ;;
+      ('# stash '*) stash=${line#\# stash } ;;
+      ([12]' '*)
+        case ${line[3]} in
+          (A) (( sa++ )) ;;
+          (M|T) (( sm++ )) ;;
+          (D) (( sd++ )) ;;
+          (R|C) (( sr++ )) ;;
+        esac
+        case ${line[4]} in
+          (A) (( wa++ )) ;;
+          (M|T) (( wm++ )) ;;
+          (D) (( wd++ )) ;;
+        esac
+        ;;
+      ('u '*) (( wx++ )) ;;
+      ('? '*) (( wq++ )) ;;
+    esac
+  done
+
+  # UpstreamIcon
+  local remote=${upstream%%/*} url icon=
+  [[ -n $remote ]] || remote=origin
+  url=$(command git config --get "remote.${remote}.url" 2>/dev/null)
+  case $url in
+    ('') ;;
+    (*github*) icon=$'\uf408' ;;
+    (*gitlab*) icon=$'\uf296' ;;
+    (*bitbucket*) icon=$'\uf171' ;;
+    (*dev.azure.com*|*visualstudio.com*) icon=$'\uebe8' ;;
+    (*) icon=$'\ue5fb' ;;
+  esac
+
+  # HEAD
+  local text=$icon
+  if [[ $head == '(detached)' ]]; then
+    text+=$'\uf417 '${oid[1,7]}
+  else
+    text+=$'\ue725 '$head
+  fi
+
+  # BranchStatus
+  if [[ -n $upstream ]]; then
+    if (( ! has_ab )); then
+      text+='≢'
+    elif (( ahead == 0 && behind == 0 )); then
+      text+='≡'
+    else
+      (( ahead )) && text+="↑$ahead"
+      (( ahead && behind )) && text+=' '
+      (( behind )) && text+="↓$behind"
+    fi
+  fi
+
+  local wstr sstr
+  _dp_gitstr $wq $wa $wm $wd 0 $wx; wstr=$REPLY
+  _dp_gitstr 0 $sa $sm $sd $sr 0; sstr=$REPLY
+  [[ -n $wstr ]] && text+=" "$'\uf044'" $wstr"
+  [[ -n $wstr && -n $sstr ]] && text+=" |"
+  [[ -n $sstr ]] && text+=" "$'\uf046'" $sstr"
+  (( stash )) && text+=" "$'\uf692'" $stash"
+
+  local bg=$_dp_c[green] fg=$_dp_c[black]
+  if [[ -n $wstr$sstr ]]; then
+    bg=$_dp_c[lime] fg=$_dp_c[black]
+  elif (( ahead && behind )); then
+    bg=$_dp_c[magenta] fg=$_dp_c[white]
+  elif (( ahead )); then
+    bg=$_dp_c[yelloworange] fg=$_dp_c[black]
+  elif (( behind )); then
+    bg=$_dp_c[cyan] fg=$_dp_c[white]
+  fi
+
+  _dp_seg $'\ue0b6' $bg $fg "${text//\%/%%}"; out+=("$REPLY")
+}
+
+_dp_w_battery() {
+  local pct state icon
+{{- if eq .chezmoi.os "darwin" }}
+  local b re=$'\t([0-9]+)%; ([^;]+)'
+  b=$(command pmset -g batt 2>/dev/null) || return
+  [[ $b =~ $re ]] || return
+  pct=$match[1]
+  state=$match[2]
+{{- else if eq .chezmoi.os "linux" }}
+  local -a bat=(/sys/class/power_supply/BAT*(N[1]))
+  (( $#bat )) && [[ -r $bat[1]/capacity ]] || return
+  pct=$(<$bat[1]/capacity)
+  state=${(L)$(<$bat[1]/status)}
+{{- else }}
+  return
+{{- end }}
+  case $state in
+    (discharging*) icon=$'\U000F007E' ;;
+    (charging*|finishing*) icon=$'\U000F0085' ;;
+    (*) icon=$'\U000F0079' ;;
+  esac
+  _dp_seg $'\ue0b2' '#8f43f3' '#ffffff' " $icon $pct"$'\uf295 '; out+=("$REPLY")
+}
+
+_dp_has() { (( $# )) }
+
+# 言語のバージョンはmiseからまとめて1回で取得し、mise管理外のものだけコマンドで取得する
+# 使い方: _dp_ver <miseのツール名> <フォールバックのコマンド...>（結果はREPLY）
+# _dp_w_langs のローカル変数 _dp_mv / _dp_mloaded を使う
+_dp_ver() {
+  if (( ! _dp_mloaded )); then
+    _dp_mloaded=1
+{{- if lookPath "mise" }}
+    local l
+    for l in "${(@f)$(command mise current 2>/dev/null)}"; do
+      [[ -n $l ]] && _dp_mv[${l%% *}]=${${l#* }%% *}
+    done
+{{- end }}
+  fi
+  REPLY=$_dp_mv[$1]
+  [[ -n $REPLY ]] && return 0
+  shift
+  REPLY=$("$@" 2>/dev/null) && [[ -n $REPLY ]]
+}
+
+_dp_w_langs() {
+  local pm
+  local -A _dp_mv
+  local -i _dp_mloaded=0
+
+  if _dp_has package.json(N) .nvmrc(N) .node-version(N) *.(js|mjs|cjs|ts|mts|cts|jsx|tsx)(N[1]); then
+    if _dp_ver node command node --version; then
+      pm=
+      if [[ -e yarn.lock ]]; then
+        pm="%F{#348cba}"$'\U000F011B'"%F{#3C873A} "
+      elif [[ -e package-lock.json ]]; then
+        pm="%F{#cc3a3a}"$'\ue71e'"%F{#3C873A} "
+      elif [[ -e pnpm-lock.yaml ]]; then
+        pm=$'\U000F02C1 '
+      elif [[ -e bun.lock || -e bun.lockb ]]; then
+        pm=$'\ue76f '
+      fi
+      _dp_seg $'\ue0b2' '#303030' '#3C873A' $'\ue718 '"$pm${REPLY#v}"; out+=("$REPLY")
+    fi
+  fi
+
+  if _dp_has composer.json(N) .php-version(N) *.php(N[1]); then
+    _dp_ver php command php -r 'echo PHP_VERSION;' &&
+      { _dp_seg $'\ue0b2' '#787CB5' '#000000' $'\ue73d '"$REPLY"; out+=("$REPLY") }
+  fi
+
+  if _dp_has .perl-version(N) *.(pl|pm|t)(N[1]); then
+    _dp_ver perl command perl -e 'print substr($^V, 1)' &&
+      { _dp_seg $'\ue0b2' '#5F8CC2' '#000000' $'\ue769 '"$REPLY"; out+=("$REPLY") }
+  fi
+
+  if _dp_has global.json(N) *.(cs|csproj|vb|vbproj|fs|fsproj|sln|slnx)(N[1]); then
+    _dp_ver dotnet command dotnet --version &&
+      { _dp_seg $'\ue0b2' '#0e0e0e' '#0d6da8' $'\ue77f '"$REPLY"; out+=("$REPLY") }
+  fi
+
+  if _dp_has go.mod(N) go.work(N) *.go(N[1]); then
+    _dp_ver go command go env GOVERSION &&
+      { _dp_seg $'\ue0b2' '#ffffff' '#06aad5' $'ﳑ '"${REPLY#go}"; out+=("$REPLY") }
+  fi
+
+  if _dp_has Gemfile(N) Rakefile(N) *.rb(N[1]); then
+    _dp_ver ruby command ruby -e 'print RUBY_VERSION' &&
+      { _dp_seg $'\ue0b2' '#ffffff' '#9c1006' $'\ue791 '"$REPLY"; out+=("$REPLY") }
+  fi
+}
+
+_dp_worker() {
+  local -a out=("$PWD")
+  _dp_w_git
+  _dp_w_battery
+  _dp_w_langs
+  print -rn -- "${(pj:\n:)out}"
+}
+
+_dp_async_done() {
+  local fd=$1 data
+  IFS= read -r -d '' -u $fd data
+  zle -F $fd
+  exec {fd}<&-
+  (( fd == _dp_async_fd )) && _dp_async_fd=0
+
+  local -a lines=("${(@f)data}")
+  [[ $lines[1] == $PWD ]] || return
+  local -a segs=("${(@)lines[2,-1]}")
+  # 結果が変わらなければ再描画しない
+  [[ $_dp_async_pwd == $PWD && "${(pj:\n:)segs}" == "${(pj:\n:)_dp_async_segs}" ]] && return
+  _dp_async_pwd=$PWD
+  _dp_async_segs=("${(@)segs}")
+  _dp_render
+  zle reset-prompt
+}
+
+_dp_async_start() {
+  if (( _dp_async_fd )); then
+    zle -F $_dp_async_fd 2>/dev/null
+    exec {_dp_async_fd}<&-
+    _dp_async_fd=0
+  fi
+  exec {_dp_async_fd}< <(_dp_worker)
+  zle -F $_dp_async_fd _dp_async_done
+}
+
+# ---- フック ----
+
+_dp_preexec() {
+  _dp_cmd_start=$EPOCHREALTIME
+}
+
+_dp_precmd() {
+  _dp_status=$?
+  if [[ -n $_dp_cmd_start ]]; then
+    (( _dp_exec_ms = (EPOCHREALTIME - _dp_cmd_start) * 1000 ))
+    _dp_cmd_start=
+  else
+    _dp_exec_ms=-1
+  fi
+  # ディレクトリが変わったら前回の非同期結果は捨てる
+  [[ $_dp_async_pwd == $PWD ]] || { _dp_async_pwd=; _dp_async_segs=() }
+  strftime -s _dp_time '%H:%M:%S' $EPOCHSECONDS
+  _dp_set_title
+  _dp_render
+  _dp_async_start
+}
+
+TRAPWINCH() {
+  _dp_render
+  zle && zle reset-prompt
+}
+
+add-zsh-hook preexec _dp_preexec
+# $? を正しく拾うため、precmdは先頭で実行する
+precmd_functions=(_dp_precmd ${precmd_functions:#_dp_precmd})
+
+PROMPT='${_dp_ps1}'
+RPROMPT=

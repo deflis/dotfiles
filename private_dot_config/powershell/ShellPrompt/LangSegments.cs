@@ -1,5 +1,3 @@
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Text;
 
 namespace ShellPrompt;
@@ -42,7 +40,7 @@ internal static class LangSegments
                 goVer = goVer[2..];
             }
 
-            result.Add(new Segment(Ansi.PowerlineLeft, Palette.GoBg, Palette.GoFg, $"\ue724 {goVer}"));
+            result.Add(new Segment(Ansi.PowerlineLeft, Palette.GoBg, Palette.GoFg, $"\ufcd1 {goVer}"));
         }
 
         if ((HasMarkers(cwd, "Cargo.toml", "rust-toolchain", "rust-toolchain.toml") || HasExtension(cwd, ".rs"))
@@ -134,8 +132,15 @@ internal static class LangSegments
 
     private static bool HasExtension(string cwd, params string[] exts)
     {
+        const int maxFiles = 200;
+        var n = 0;
         foreach (var file in Directory.EnumerateFiles(cwd))
         {
+            if (++n > maxFiles)
+            {
+                break;
+            }
+
             var ext = Path.GetExtension(file);
             foreach (var want in exts)
             {
@@ -149,39 +154,8 @@ internal static class LangSegments
         return false;
     }
 
-    private static string Run(string cwd, string fileName, params string[] args)
-    {
-        var psi = new ProcessStartInfo
-        {
-            FileName = fileName,
-            WorkingDirectory = cwd,
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-            UseShellExecute = false,
-            CreateNoWindow = true,
-        };
-        foreach (var arg in args)
-        {
-            psi.ArgumentList.Add(arg);
-        }
-
-        try
-        {
-            using var proc = Process.Start(psi);
-            if (proc is null)
-            {
-                return string.Empty;
-            }
-
-            var stdout = proc.StandardOutput.ReadToEnd().Trim();
-            proc.WaitForExit();
-            return proc.ExitCode == 0 ? stdout : string.Empty;
-        }
-        catch (Exception ex) when (ex is FileNotFoundException or InvalidOperationException or Win32Exception)
-        {
-            return string.Empty;
-        }
-    }
+    private static string Run(string cwd, string fileName, params string[] args) =>
+        ProcessRunner.Run(cwd, fileName, args)?.Trim() ?? string.Empty;
 
     /// <summary>zsh の _dp_mv / _dp_mloaded: 初回アクセスで mise current を一括ロード。</summary>
     private sealed class MiseVersions(string cwd)
@@ -209,44 +183,19 @@ internal static class LangSegments
             }
 
             _map = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-            var psi = new ProcessStartInfo
+            var output = ProcessRunner.Run(cwd, "mise", ["current"]);
+            if (output is null)
             {
-                FileName = "mise",
-                ArgumentList = { "current" },
-                WorkingDirectory = cwd,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                UseShellExecute = false,
-                CreateNoWindow = true,
-            };
-
-            try
-            {
-                using var proc = Process.Start(psi);
-                if (proc is null)
-                {
-                    return;
-                }
-
-                var output = proc.StandardOutput.ReadToEnd();
-                proc.WaitForExit();
-                if (proc.ExitCode != 0)
-                {
-                    return;
-                }
-
-                foreach (var line in output.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
-                {
-                    var sp = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-                    if (sp.Length >= 2)
-                    {
-                        _map[sp[0]] = sp[1];
-                    }
-                }
+                return;
             }
-            catch (Exception ex) when (ex is FileNotFoundException or InvalidOperationException or Win32Exception)
+
+            foreach (var line in output.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
             {
-                // mise が無い場合は CLI 側へ
+                var sp = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                if (sp.Length >= 2)
+                {
+                    _map[sp[0]] = sp[1];
+                }
             }
         }
     }

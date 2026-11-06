@@ -4,28 +4,34 @@ namespace ShellPrompt;
 
 /// <summary>
 /// zsh の _dp_async_* 相当: プロンプト毎に前回ワーカーをキャンセルして再実行し、
-/// cwd 別キャッシュを先に表示してから非同期更新→InvokePrompt で再描画する。
+/// cwd 別キャッシュを先に表示してから非同期更新→再描画要求する。
 /// </summary>
 internal static class AsyncSegmentCache
 {
-    private static readonly ConcurrentDictionary<string, IReadOnlyList<Segment>> Cache = new(StringComparer.Ordinal);
+    private static readonly ConcurrentDictionary<string, IReadOnlyList<Segment>> Cache =
+        new(StringComparer.OrdinalIgnoreCase);
+
     private static readonly object Gate = new();
     private static CancellationTokenSource? _cts;
     private static string? _displayCwd;
     private static IReadOnlyList<Segment> _displaySegs = Array.Empty<Segment>();
     private static Exception? _pendingError;
+    private const int MaxCachedCwds = 64;
 
     public static IReadOnlyList<Segment> GetAndRefresh(string cwd)
     {
-        if (_pendingError is { } err)
+        var err = Interlocked.Exchange(ref _pendingError, null);
+        if (err is not null)
         {
-            _pendingError = null;
             throw new InvalidOperationException("Async prompt segment collection failed.", err);
         }
 
         lock (Gate)
         {
-            if (!string.Equals(_displayCwd, cwd, StringComparison.Ordinal))
+            var sameCwd = _displayCwd is not null
+                          && string.Equals(_displayCwd, cwd, StringComparison.OrdinalIgnoreCase);
+
+            if (!sameCwd)
             {
                 _displayCwd = cwd;
                 _displaySegs = Cache.TryGetValue(cwd, out var cached)
@@ -33,9 +39,12 @@ internal static class AsyncSegmentCache
                     : Array.Empty<Segment>();
             }
 
-            _cts?.Cancel();
+            var old = _cts;
             _cts = new CancellationTokenSource();
             var token = _cts.Token;
+            old?.Cancel();
+            old?.Dispose();
+
             var snapshot = _displaySegs;
             _ = Task.Run(() => Worker(cwd, token), token);
             return snapshot;
@@ -66,8 +75,6 @@ internal static class AsyncSegmentCache
             segs.AddRange(LangSegments.Build(cwd));
             token.ThrowIfCancellationRequested();
 
-            Cache[cwd] = segs;
-
             bool shouldRedraw;
             lock (Gate)
             {
@@ -76,7 +83,12 @@ internal static class AsyncSegmentCache
                     return;
                 }
 
-                if (!string.Equals(_displayCwd, cwd, StringComparison.Ordinal))
+                Cache[cwd] = segs;
+                TrimCache(cwd);
+
+                var sameCwd = _displayCwd is not null
+                              && string.Equals(_displayCwd, cwd, StringComparison.OrdinalIgnoreCase);
+                if (!sameCwd)
                 {
                     return;
                 }
@@ -87,7 +99,7 @@ internal static class AsyncSegmentCache
 
             if (shouldRedraw)
             {
-                PromptRefresh.Invoke();
+                PromptRefresh.Request();
             }
         }
         catch (OperationCanceledException)
@@ -96,14 +108,27 @@ internal static class AsyncSegmentCache
         }
         catch (Exception ex)
         {
-            _pendingError = ex;
-            try
+            Interlocked.Exchange(ref _pendingError, ex);
+            PromptRefresh.Request();
+        }
+    }
+
+    private static void TrimCache(string keepCwd)
+    {
+        if (Cache.Count <= MaxCachedCwds)
+        {
+            return;
+        }
+
+        foreach (var key in Cache.Keys)
+        {
+            if (!string.Equals(key, keepCwd, StringComparison.OrdinalIgnoreCase))
             {
-                PromptRefresh.Invoke();
-            }
-            catch
-            {
-                // 次回 Get-ShellPrompt で再送出
+                Cache.TryRemove(key, out _);
+                if (Cache.Count <= MaxCachedCwds / 2)
+                {
+                    break;
+                }
             }
         }
     }

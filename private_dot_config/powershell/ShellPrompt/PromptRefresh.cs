@@ -2,18 +2,43 @@ using System.Reflection;
 
 namespace ShellPrompt;
 
+/// <summary>
+/// ワーカースレッドから直接 InvokePrompt せず、フラグ経由でパイプライン側が再描画する。
+/// </summary>
 internal static class PromptRefresh
 {
-    public static void Invoke()
+    private static int _pending;
+    private static MethodInfo? _invokePrompt;
+
+    public static void Request() => Interlocked.Exchange(ref _pending, 1);
+
+    public static void Pump()
     {
-        var type = FindPsConsoleReadLine()
-                   ?? throw new InvalidOperationException(
-                       "Microsoft.PowerShell.PSConsoleReadLine was not found. Load PSReadLine before using ShellPrompt.");
+        if (Interlocked.Exchange(ref _pending, 0) == 0)
+        {
+            return;
+        }
 
-        var method = type.GetMethod("InvokePrompt", BindingFlags.Public | BindingFlags.Static, binder: null, types: Type.EmptyTypes, modifiers: null)
-                     ?? throw new InvalidOperationException("PSConsoleReadLine.InvokePrompt() was not found.");
+        InvokePrompt();
+    }
 
-        method.Invoke(null, null);
+    private static void InvokePrompt()
+    {
+        _invokePrompt ??= ResolveInvokePrompt()
+                          ?? throw new InvalidOperationException(
+                              "PSConsoleReadLine.InvokePrompt() was not found. Load PSReadLine before using ShellPrompt.");
+        _invokePrompt.Invoke(null, null);
+    }
+
+    private static MethodInfo? ResolveInvokePrompt()
+    {
+        var type = FindPsConsoleReadLine();
+        return type?.GetMethod(
+            "InvokePrompt",
+            BindingFlags.Public | BindingFlags.Static,
+            binder: null,
+            types: Type.EmptyTypes,
+            modifiers: null);
     }
 
     private static Type? FindPsConsoleReadLine()

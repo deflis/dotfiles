@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Text;
 
 namespace ShellPrompt;
@@ -46,14 +45,22 @@ internal static class GitSegment
             }
             else if (line.StartsWith("# branch.ab ", StringComparison.Ordinal))
             {
-                hasAb = true;
                 var ab = line["# branch.ab ".Length..].Split(' ', StringSplitOptions.RemoveEmptyEntries);
-                ahead = int.Parse(ab[0].TrimStart('+'));
-                behind = int.Parse(ab[1].TrimStart('-'));
+                if (ab.Length < 2
+                    || !int.TryParse(ab[0].TrimStart('+'), out ahead)
+                    || !int.TryParse(ab[1].TrimStart('-'), out behind))
+                {
+                    continue;
+                }
+
+                hasAb = true;
             }
             else if (line.StartsWith("# stash ", StringComparison.Ordinal))
             {
-                stash = int.Parse(line["# stash ".Length..]);
+                if (!int.TryParse(line["# stash ".Length..], out stash))
+                {
+                    stash = 0;
+                }
             }
             else if (line.Length >= 4 && line[0] is '1' or '2' && line[1] == ' ')
             {
@@ -257,32 +264,6 @@ internal static class GitSegment
         return "\ue5fb";
     }
 
-    private static string? RunGit(string cwd, params string[] args)
-    {
-        var psi = new ProcessStartInfo
-        {
-            FileName = "git",
-            WorkingDirectory = cwd,
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-            UseShellExecute = false,
-            CreateNoWindow = true,
-        };
-        psi.Environment["GIT_OPTIONAL_LOCKS"] = "0";
-        foreach (var arg in args)
-        {
-            psi.ArgumentList.Add(arg);
-        }
-
-        using var proc = Process.Start(psi)
-                        ?? throw new InvalidOperationException("Failed to start git.");
-        var stdout = proc.StandardOutput.ReadToEnd();
-        proc.WaitForExit();
-        if (proc.ExitCode != 0)
-        {
-            return null;
-        }
-
-        return stdout;
-    }
+    private static string? RunGit(string cwd, params string[] args) =>
+        ProcessRunner.Run(cwd, "git", args, new Dictionary<string, string> { ["GIT_OPTIONAL_LOCKS"] = "0" });
 }

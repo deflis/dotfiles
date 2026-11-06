@@ -14,6 +14,7 @@ function script:Enable-OhMyPoshFallback {
 }
 
 if (-not (Test-Path -LiteralPath $script:ShellPrompt_Dll)) {
+    Write-Warning "ShellPrompt module failed to load: $($script:ShellPrompt_Dll) not found."
     Enable-OhMyPoshFallback
 }
 else {
@@ -26,15 +27,13 @@ else {
         return
     }
 
-    if (-not (Get-Module -Name PSReadLine)) {
-        return
-    }
+    Import-Module PSReadLine -ErrorAction Stop
 
-    $script:ShellPrompt_CmdStart = $null
-    $script:ShellPrompt_StickyExit = 0
-    $script:ShellPrompt_StickyExecMs = -1L
-    $script:ShellPrompt_StickyNow = [DateTimeOffset]::Now
-    $script:ShellPrompt_LastColumns = 0
+    $global:ShellPrompt_CmdStart = $null
+    $global:ShellPrompt_StickyExit = 0
+    $global:ShellPrompt_StickyExecMs = -1L
+    $global:ShellPrompt_StickyNow = [DateTimeOffset]::Now
+    $global:ShellPrompt_LastColumns = 0
     $script:ShellPrompt_HostName = [System.Net.Dns]::GetHostName()
     $script:ShellPrompt_UserName = $env:USERNAME
     $script:ShellPrompt_IsRoot = [Security.Principal.WindowsPrincipal]::new(
@@ -42,18 +41,18 @@ else {
         [Security.Principal.WindowsBuiltInRole]::Administrator)
 
     Set-PSReadLineKeyHandler -Key Enter -ScriptBlock {
-        $script:ShellPrompt_CmdStart = [System.Diagnostics.Stopwatch]::StartNew()
+        $global:ShellPrompt_CmdStart = [System.Diagnostics.Stopwatch]::StartNew()
         [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
     }
 
     function prompt {
-        if ($null -ne $script:ShellPrompt_CmdStart) {
+        if ($nestedPromptLevel -le 0 -and $null -ne $global:ShellPrompt_CmdStart) {
             $ok = $?
             $native = $LASTEXITCODE
-            $script:ShellPrompt_StickyExit = if ($ok) { 0 } elseif ($native) { $native } else { 1 }
-            $script:ShellPrompt_StickyExecMs = [long]$script:ShellPrompt_CmdStart.ElapsedMilliseconds
-            $script:ShellPrompt_StickyNow = [DateTimeOffset]::Now
-            $script:ShellPrompt_CmdStart = $null
+            $global:ShellPrompt_StickyExit = if ($ok) { 0 } elseif ($native) { $native } else { 1 }
+            $global:ShellPrompt_StickyExecMs = [long]$global:ShellPrompt_CmdStart.ElapsedMilliseconds
+            $global:ShellPrompt_StickyNow = [DateTimeOffset]::Now
+            $global:ShellPrompt_CmdStart = $null
         }
 
         $cwd = $PWD.ProviderPath
@@ -63,6 +62,12 @@ else {
         $isSsh = [bool]($env:SSH_CONNECTION -or $env:SSH_CLIENT -or $env:SSH_TTY)
         $isRoot = $script:ShellPrompt_IsRoot
         $marker = if ($isRoot) { '#' } else { '$' }
+        $columns = [Math]::Max(1, [Console]::WindowWidth)
+        $global:ShellPrompt_LastColumns = $columns
+
+        if ($PWD.Provider.Name -ne 'FileSystem' -or [string]::IsNullOrWhiteSpace($cwd)) {
+            return "$($executionContext.SessionState.Path.CurrentLocation) $marker "
+        }
 
         if ($env:TERM -ne 'dumb') {
             $titlePath = $cwd.Replace('\', '/')
@@ -81,26 +86,28 @@ else {
             }
         }
 
-        $columns = [Math]::Max(1, [Console]::WindowWidth)
-        $script:ShellPrompt_LastColumns = $columns
-
         Get-ShellPrompt `
-            -ExitCode $script:ShellPrompt_StickyExit `
-            -ExecutionMs $script:ShellPrompt_StickyExecMs `
+            -ExitCode $global:ShellPrompt_StickyExit `
+            -ExecutionMs $global:ShellPrompt_StickyExecMs `
             -Cwd $cwd `
             -ShellName 'pwsh' `
             -Columns $columns `
             -HomeDir $homeDir `
             -HostName $hostName `
-            -Now $script:ShellPrompt_StickyNow
+            -Now $global:ShellPrompt_StickyNow
+    }
+
+    $onIdleSubscribers = @(Get-EventSubscriber -Force | Where-Object { $_.SourceIdentifier -eq 'PowerShell.OnIdle' })
+    if ($onIdleSubscribers.Count -gt 0) {
+        Unregister-Event -SourceIdentifier PowerShell.OnIdle -Force
     }
 
     $null = Register-EngineEvent -SourceIdentifier PowerShell.OnIdle -Action {
         [ShellPrompt.ShellPromptRuntime]::PumpRefresh()
 
         $cols = [Console]::WindowWidth
-        if ($cols -gt 0 -and $cols -ne $script:ShellPrompt_LastColumns) {
-            $script:ShellPrompt_LastColumns = $cols
+        if ($cols -gt 0 -and $cols -ne $global:ShellPrompt_LastColumns) {
+            $global:ShellPrompt_LastColumns = $cols
             [Microsoft.PowerShell.PSConsoleReadLine]::InvokePrompt()
         }
     }

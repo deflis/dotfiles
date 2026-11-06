@@ -1,5 +1,12 @@
 {{- if and (eq .chezmoi.os "windows") (lookPath "dotnet") -}}
-{{- range (glob "private_dot_config/powershell/ShellPrompt/*.{cs,csproj,psd1}") }}
+{{- $shellPromptSrc := joinPath .chezmoi.sourceDir "private_dot_config/powershell/ShellPrompt" -}}
+{{- range (glob (joinPath $shellPromptSrc "*.cs")) }}
+# {{ . | base }} {{ include . | sha256sum }}
+{{- end }}
+{{- range (glob (joinPath $shellPromptSrc "*.csproj")) }}
+# {{ . | base }} {{ include . | sha256sum }}
+{{- end }}
+{{- range (glob (joinPath $shellPromptSrc "*.psd1")) }}
 # {{ . | base }} {{ include . | sha256sum }}
 {{- end }}
 
@@ -42,9 +49,6 @@ try {
         }
         throw
     }
-    if (Test-Path -LiteralPath $bak) {
-        Remove-Item -LiteralPath $bak -Recurse -Force
-    }
     Write-Host "ShellPrompt published to $out"
 }
 catch {
@@ -53,6 +57,15 @@ catch {
     }
     Write-Warning "ShellPrompt build failed: $_"
     Write-Warning 'Previous module kept if present. Re-run chezmoi apply after fixing the build, or use oh-my-posh when the DLL is missing.'
-    exit 0
+    exit 1
+}
+if ($bak -and (Test-Path -LiteralPath $bak)) {
+    try {
+        Remove-Item -LiteralPath $bak -Recurse -Force -ErrorAction Stop
+    }
+    catch {
+        Write-Warning "ShellPrompt install succeeded, but removing the temporary backup of the previous module failed: $bak ($_)"
+        exit 0
+    }
 }
 {{- end -}}

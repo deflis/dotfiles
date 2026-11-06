@@ -1,7 +1,126 @@
 {{ if lookPath "mise" -}}
 # 起動のたびに GitHub へ更新確認へ行くのを止める。ツールの解決や hook-env はそのまま。
 $env:MISE_DISABLE_UPDATE_WARNING = '1'
-{{ output "mise" "activate" "pwsh" }}
+$script:MiseExe = {{ lookPath "mise" | quote }}
+
+function script:Get-MiseHookStamp {
+    $sb = [System.Text.StringBuilder]::new()
+    [void]$sb.AppendLine($PWD.ProviderPath)
+    [void]$sb.AppendLine([string]$env:MISE_ENV)
+    $exeItem = Get-Item -LiteralPath $script:MiseExe
+    [void]$sb.AppendLine("$($exeItem.Length)|$($exeItem.LastWriteTimeUtc.Ticks)")
+
+    $configs = [System.Collections.Generic.List[string]]::new()
+    $global = Join-Path $HOME '.config\mise'
+    if (Test-Path -LiteralPath $global) {
+        foreach ($f in (Get-ChildItem -LiteralPath $global -Recurse -File -Filter *.toml)) {
+            $configs.Add($f.FullName)
+        }
+    }
+
+    $dir = $PWD.ProviderPath
+    $names = @(
+        'mise.toml', '.mise.toml', 'mise.local.toml', '.tool-versions',
+        '.node-version', '.nvmrc', '.ruby-version', '.perl-version'
+    )
+    while ($true) {
+        foreach ($name in $names) {
+            $path = Join-Path $dir $name
+            if (Test-Path -LiteralPath $path) {
+                $configs.Add($path)
+            }
+        }
+        $parent = Split-Path -Path $dir -Parent
+        if (-not $parent -or $parent -eq $dir) {
+            break
+        }
+        $dir = $parent
+    }
+
+    foreach ($path in $configs) {
+        $item = Get-Item -LiteralPath $path
+        [void]$sb.AppendLine("$($item.FullName)|$($item.Length)|$($item.LastWriteTimeUtc.Ticks)")
+    }
+
+    $shims = Join-Path $env:LOCALAPPDATA 'mise\shims'
+    if (Test-Path -LiteralPath $shims) {
+        $ticks = [int64]0
+        $len = [int64]0
+        $n = 0
+        foreach ($f in (Get-ChildItem -LiteralPath $shims -File)) {
+            $n++
+            $len += $f.Length
+            if ($f.LastWriteTimeUtc.Ticks -gt $ticks) {
+                $ticks = $f.LastWriteTimeUtc.Ticks
+            }
+        }
+        [void]$sb.AppendLine("shims|$n|$len|$ticks")
+    }
+
+    $sha = [System.Security.Cryptography.SHA256]::Create()
+    try {
+        $bytes = $sha.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($sb.ToString()))
+    }
+    finally {
+        $sha.Dispose()
+    }
+    return [Convert]::ToHexString($bytes)
+}
+
+function Global:_mise_hook {
+    if ($env:MISE_SHELL -ne 'pwsh') {
+        return
+    }
+    if ($args.Count -gt 0) {
+        & _mise_hook_impl @args
+        return
+    }
+
+    $stamp = script:Get-MiseHookStamp
+    if ($script:MiseHookStamp -eq $stamp) {
+        return
+    }
+
+    $dir = Join-Path $HOME '.cache\powershell'
+    $cache = Join-Path $dir 'mise-hook.ps1'
+    $meta = Join-Path $dir 'mise-hook.stamp'
+    $status = $global:LASTEXITCODE
+    $fresh = $false
+    $cacheable = $false
+    if ((Test-Path -LiteralPath $meta) -and (Test-Path -LiteralPath $cache)) {
+        $saved = [System.IO.File]::ReadAllText($meta).Trim()
+        $fresh = $saved -eq $stamp
+    }
+
+    if ($fresh) {
+        $output = [System.IO.File]::ReadAllText($cache)
+        $cacheable = $true
+    }
+    else {
+        $output = & $script:MiseExe hook-env -s pwsh | Out-String
+        $cacheable = $LASTEXITCODE -eq 0
+        if ($cacheable) {
+            New-Item -ItemType Directory -Force -Path $dir | Out-Null
+            $utf8 = [System.Text.UTF8Encoding]::new($false)
+            $tmp = "$cache.$PID.tmp"
+            [System.IO.File]::WriteAllText($tmp, $output, $utf8)
+            Move-Item -LiteralPath $tmp -Destination $cache -Force
+            [System.IO.File]::WriteAllText($meta, $stamp, $utf8)
+        }
+    }
+
+    if ($output -and $output.Trim()) {
+        $output | Invoke-Expression
+    }
+    if ($cacheable) {
+        $script:MiseHookStamp = $stamp
+    }
+    $global:LASTEXITCODE = $status
+}
+
+{{- $raw := output "mise" "activate" "pwsh" -}}
+{{- $raw = replace "function Global:_mise_hook" "function Global:_mise_hook_impl" $raw -}}
+{{ $raw }}
 
 # bunのglobalインストール先をPATHに追加
 $bunBinPath = "{{ joinPath .chezmoi.homeDir ".bun" "bin" }}"
@@ -10,4 +129,3 @@ if ($env:PATH -notlike "*$bunBinPath*") {
 }
 
 {{ end -}}
-

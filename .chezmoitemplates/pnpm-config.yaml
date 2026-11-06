@@ -1,0 +1,8 @@
+# 公開後、個人1日／仕事3日待つ（単位: 分）
+minimumReleaseAge: {{ mul (includeTemplate "release-age-days" . | atoi) 1440 }}
+blockExoticSubdeps: true
+trustPolicy: no-downgrade
+trustPolicyExclude:
+  - semver@6.3.1
+# 30日(43200分)経過したパッケージは信頼する
+trustPolicyIgnoreAfter: 43200

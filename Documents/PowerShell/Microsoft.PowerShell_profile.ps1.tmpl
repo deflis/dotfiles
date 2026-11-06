@@ -1,7 +1,3 @@
-# oh-my-posh --init --shell pwsh --config "$(scoop prefix oh-my-posh)/themes/night-owl.omp.json" | Invoke-Expression
-# oh-my-posh --init --shell pwsh --config "~/.config/powershell/theme.yaml" | Invoke-Expression
-# output "oh-my-posh" "init" "pwsh" "--config=~/.config/powershell/theme.yaml"
-
 Get-ChildItem -Path "$HOME\.config\powershell\profile.d" -Filter *.ps1 | ForEach-Object {
   . $_.FullName
 }

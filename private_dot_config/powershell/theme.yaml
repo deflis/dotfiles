@@ -153,15 +153,6 @@ blocks:
         invert_powerline: true
       - properties:
           cache_duration: none
-        template:  {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}
-        foreground: "#000000"
-        powerline_symbol: 
-        background: "#787CB5"
-        type: php
-        style: powerline
-        invert_powerline: true
-      - properties:
-          cache_duration: none
         template:  {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}
         foreground: "#000000"
         powerline_symbol: 
@@ -171,20 +162,20 @@ blocks:
         invert_powerline: true
       - properties:
           cache_duration: none
-        template:  {{ if .Unsupported }}{{ else }}{{ .Full }}{{ end }}
-        foreground: "#0d6da8"
-        powerline_symbol: 
-        background: "#0e0e0e"
-        type: dotnet
-        style: powerline
-        invert_powerline: true
-      - properties:
-          cache_duration: none
         template: ﳑ {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}
         foreground: "#06aad5"
         powerline_symbol: 
         background: "#ffffff"
         type: go
+        style: powerline
+        invert_powerline: true
+      - properties:
+          cache_duration: none
+        template: "\ue7a8 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
+        foreground: "#000000"
+        powerline_symbol: 
+        background: "#dea584"
+        type: rust
         style: powerline
         invert_powerline: true
       - properties:

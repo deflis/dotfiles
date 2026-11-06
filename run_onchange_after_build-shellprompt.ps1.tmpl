@@ -41,6 +41,24 @@ function script:Get-ShellPromptDotnetSdk {
     throw 'No .NET SDK found. PATH resolves to a runtime-only dotnet (for example C:\Program Files\dotnet\dotnet.exe). Install an SDK or set DOTNET_ROOT to the SDK root (e.g. scoop apps/dotnet-sdk/current).'
 }
 
+function script:Remove-ShellPromptTempDirs {
+    param(
+        [Parameter(Mandatory)]
+        [string]$TempRoot,
+        [Parameter(Mandatory)]
+        [string[]]$NamePrefixes
+    )
+    foreach ($prefix in $NamePrefixes) {
+        Get-ChildItem -LiteralPath $TempRoot -Directory -Filter ($prefix + '*') -ErrorAction SilentlyContinue |
+            ForEach-Object {
+                Remove-Item -LiteralPath $_.FullName -Recurse -Force -ErrorAction SilentlyContinue
+            }
+    }
+}
+
+$tempRoot = [System.IO.Path]::GetTempPath()
+Remove-ShellPromptTempDirs -TempRoot $tempRoot -NamePrefixes @('ShellPrompt-bak-', 'ShellPrompt-build-')
+
 $tmp = $null
 $bak = $null
 try {
@@ -53,8 +71,8 @@ try {
 
     $out = Join-Path $HOME '.config/powershell/Modules/ShellPrompt'
     $parent = Split-Path $out -Parent
-    $tmp = Join-Path ([System.IO.Path]::GetTempPath()) ("ShellPrompt-build-" + [guid]::NewGuid().ToString('N'))
-    $bak = Join-Path ([System.IO.Path]::GetTempPath()) ("ShellPrompt-bak-" + [guid]::NewGuid().ToString('N'))
+    $tmp = Join-Path $tempRoot ("ShellPrompt-build-" + [guid]::NewGuid().ToString('N'))
+    $bak = Join-Path $tempRoot ("ShellPrompt-bak-" + [guid]::NewGuid().ToString('N'))
     New-Item -ItemType Directory -Force -Path $tmp | Out-Null
 
     & $dotnet publish $proj -c Release -o $tmp --nologo
@@ -93,8 +111,7 @@ if ($bak -and (Test-Path -LiteralPath $bak)) {
         Remove-Item -LiteralPath $bak -Recurse -Force -ErrorAction Stop
     }
     catch {
-        Write-Warning "ShellPrompt install succeeded, but removing the temporary backup of the previous module failed: $bak ($_)"
-        exit 0
+        Write-Warning "ShellPrompt published to $out. Old module backup is locked (close pwsh sessions that loaded ShellPrompt.dll) and left at: $bak. Leftovers are cleaned on the next apply when unlocked."
     }
 }
 {{- end -}}

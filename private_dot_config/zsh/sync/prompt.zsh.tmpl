@@ -326,24 +326,22 @@ _dp_w_langs() {
     fi
   fi
 
-  if _dp_has composer.json(N) .php-version(N) *.php(N[1]); then
-    _dp_ver php command php -r 'echo PHP_VERSION;' &&
-      { _dp_seg $'\ue0b2' '#787CB5' '#000000' $'\ue73d '"$REPLY"; out+=("$REPLY") }
-  fi
-
   if _dp_has .perl-version(N) *.(pl|pm|t)(N[1]); then
     _dp_ver perl command perl -e 'print substr($^V, 1)' &&
       { _dp_seg $'\ue0b2' '#5F8CC2' '#000000' $'\ue769 '"$REPLY"; out+=("$REPLY") }
   fi
 
-  if _dp_has global.json(N) *.(cs|csproj|vb|vbproj|fs|fsproj|sln|slnx)(N[1]); then
-    _dp_ver dotnet command dotnet --version &&
-      { _dp_seg $'\ue0b2' '#0e0e0e' '#0d6da8' $'\ue77f '"$REPLY"; out+=("$REPLY") }
-  fi
-
   if _dp_has go.mod(N) go.work(N) *.go(N[1]); then
     _dp_ver go command go env GOVERSION &&
       { _dp_seg $'\ue0b2' '#ffffff' '#06aad5' $'ﳑ '"${REPLY#go}"; out+=("$REPLY") }
+  fi
+
+  if _dp_has Cargo.toml(N) rust-toolchain(N) rust-toolchain.toml(N) *.rs(N[1]); then
+    if _dp_ver rust command rustc --version; then
+      local rv=${REPLY#rustc }
+      rv=${rv%% *}
+      _dp_seg $'\ue0b2' '#dea584' '#000000' $'\ue7a8 '"$rv"; out+=("$REPLY")
+    fi
   fi
 
   if _dp_has Gemfile(N) Rakefile(N) *.rb(N[1]); then

@@ -27,11 +27,19 @@ public sealed class GetShellPromptCommand : PSCmdlet
     [Parameter(Mandatory = true)]
     public string HostName { get; set; } = null!;
 
+    [Parameter(Mandatory = true)]
+    public DateTimeOffset Now { get; set; }
+
     protected override void EndProcessing()
     {
         if (string.IsNullOrWhiteSpace(Cwd))
         {
             throw new PSArgumentException("Cwd must not be empty.", nameof(Cwd));
+        }
+
+        if (string.IsNullOrWhiteSpace(HomeDir))
+        {
+            throw new PSArgumentException("HomeDir must not be empty.", nameof(HomeDir));
         }
 
         if (Columns < 1)
@@ -53,7 +61,7 @@ public sealed class GetShellPromptCommand : PSCmdlet
         }
 
         right.Add(MiscSegments.Shell(ShellName));
-        right.Add(MiscSegments.Time(DateTimeOffset.Now));
+        right.Add(MiscSegments.Time(Now));
 
         var rendered = PromptRenderer.Render(
             osText,

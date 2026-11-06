@@ -1,58 +1,110 @@
 {{- if and (eq .chezmoi.os "windows") (lookPath "dotnet") -}}
-Import-Module (Join-Path $HOME '.config/powershell/Modules/ShellPrompt') -Force
+$script:ShellPrompt_ModuleDir = Join-Path $HOME '.config/powershell/Modules/ShellPrompt'
+$script:ShellPrompt_Dll = Join-Path $script:ShellPrompt_ModuleDir 'ShellPrompt.dll'
 
-$script:ShellPrompt_CmdStart = $null
-
-Set-PSReadLineKeyHandler -Key Enter -ScriptBlock {
-    $script:ShellPrompt_CmdStart = [System.Diagnostics.Stopwatch]::StartNew()
-    [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
+function script:Enable-OhMyPoshFallback {
+{{- if lookPath "oh-my-posh" }}
+    {{ output "oh-my-posh" "init" "pwsh" "--config=~/.config/powershell/theme.yaml" }}
+{{- else }}
+    Write-Warning 'ShellPrompt module is unavailable and oh-my-posh was not found.'
+    function prompt {
+        "PS $($executionContext.SessionState.Path.CurrentLocation)$('>' * ($nestedPromptLevel + 1)) "
+    }
+{{- end }}
 }
 
-function script:Get-ShellPromptIsRoot {
-    $id = [Security.Principal.WindowsIdentity]::GetCurrent()
-    return [Security.Principal.WindowsPrincipal]::new($id).IsInRole(
-        [Security.Principal.WindowsBuiltInRole]::Administrator)
+if (-not (Test-Path -LiteralPath $script:ShellPrompt_Dll)) {
+    Enable-OhMyPoshFallback
 }
-
-function prompt {
-    $ok = $?
-    $native = $LASTEXITCODE
-    $exitCode = if ($ok) { 0 } elseif ($native) { $native } else { 1 }
-
-    $executionMs = -1L
-    if ($null -ne $script:ShellPrompt_CmdStart) {
-        $executionMs = [long]$script:ShellPrompt_CmdStart.ElapsedMilliseconds
-        $script:ShellPrompt_CmdStart = $null
+else {
+    try {
+        Import-Module $script:ShellPrompt_ModuleDir -ErrorAction Stop
+    }
+    catch {
+        Write-Warning "ShellPrompt module failed to load: $_"
+        Enable-OhMyPoshFallback
+        return
     }
 
-    $cwd = $PWD.ProviderPath
-    $homeDir = $HOME
-    $hostName = [System.Net.Dns]::GetHostName()
-    $userName = $env:USERNAME
-    $isSsh = [bool]($env:SSH_CONNECTION -or $env:SSH_CLIENT -or $env:SSH_TTY)
-    $isRoot = Get-ShellPromptIsRoot
-    $marker = if ($isRoot) { '#' } else { '$' }
-
-    $titlePath = $cwd.Replace('\', '/')
-    $homeNorm = $homeDir.Replace('\', '/')
-    if ($titlePath.StartsWith($homeNorm, [System.StringComparison]::OrdinalIgnoreCase)) {
-        $titlePath = '~' + $titlePath.Substring($homeNorm.Length)
+    if (-not (Get-Module -Name PSReadLine)) {
+        throw 'ShellPrompt requires PSReadLine.'
     }
 
-    $Host.UI.RawUI.WindowTitle = if ($isSsh) {
-        "[${userName}@${hostName}] $titlePath $marker"
-    } else {
-        "$titlePath $marker"
+    $script:ShellPrompt_CmdStart = $null
+    $script:ShellPrompt_StickyExit = 0
+    $script:ShellPrompt_StickyExecMs = -1L
+    $script:ShellPrompt_StickyNow = [DateTimeOffset]::Now
+    $script:ShellPrompt_LastColumns = 0
+
+    Set-PSReadLineKeyHandler -Key Enter -ScriptBlock {
+        $script:ShellPrompt_CmdStart = [System.Diagnostics.Stopwatch]::StartNew()
+        [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
     }
 
-    Get-ShellPrompt `
-        -ExitCode $exitCode `
-        -ExecutionMs $executionMs `
-        -Cwd $cwd `
-        -ShellName 'pwsh' `
-        -Columns ([Math]::Max(1, [Console]::WindowWidth)) `
-        -HomeDir $homeDir `
-        -HostName $hostName
+    function script:Get-ShellPromptIsRoot {
+        $id = [Security.Principal.WindowsIdentity]::GetCurrent()
+        return [Security.Principal.WindowsPrincipal]::new($id).IsInRole(
+            [Security.Principal.WindowsBuiltInRole]::Administrator)
+    }
+
+    function prompt {
+        if ($null -ne $script:ShellPrompt_CmdStart) {
+            $ok = $?
+            $native = $LASTEXITCODE
+            $script:ShellPrompt_StickyExit = if ($ok) { 0 } elseif ($native) { $native } else { 1 }
+            $script:ShellPrompt_StickyExecMs = [long]$script:ShellPrompt_CmdStart.ElapsedMilliseconds
+            $script:ShellPrompt_StickyNow = [DateTimeOffset]::Now
+            $script:ShellPrompt_CmdStart = $null
+        }
+
+        $cwd = $PWD.ProviderPath
+        $homeDir = $HOME
+        $hostName = [System.Net.Dns]::GetHostName()
+        $userName = $env:USERNAME
+        $isSsh = [bool]($env:SSH_CONNECTION -or $env:SSH_CLIENT -or $env:SSH_TTY)
+        $isRoot = Get-ShellPromptIsRoot
+        $marker = if ($isRoot) { '#' } else { '$' }
+
+        if ($env:TERM -ne 'dumb') {
+            $titlePath = $cwd.Replace('\', '/')
+            $homeNorm = $homeDir.Replace('\', '/')
+            if ($homeNorm.Length -gt 0 -and $titlePath.StartsWith($homeNorm, [System.StringComparison]::OrdinalIgnoreCase)) {
+                $rest = $titlePath.Substring($homeNorm.Length)
+                if ($rest.Length -eq 0 -or $rest.StartsWith('/')) {
+                    $titlePath = '~' + $rest
+                }
+            }
+
+            $Host.UI.RawUI.WindowTitle = if ($isSsh) {
+                "[${userName}@${hostName}] $titlePath $marker"
+            } else {
+                "$titlePath $marker"
+            }
+        }
+
+        $columns = [Math]::Max(1, [Console]::WindowWidth)
+        $script:ShellPrompt_LastColumns = $columns
+
+        Get-ShellPrompt `
+            -ExitCode $script:ShellPrompt_StickyExit `
+            -ExecutionMs $script:ShellPrompt_StickyExecMs `
+            -Cwd $cwd `
+            -ShellName 'pwsh' `
+            -Columns $columns `
+            -HomeDir $homeDir `
+            -HostName $hostName `
+            -Now $script:ShellPrompt_StickyNow
+    }
+
+    $null = Register-EngineEvent -SourceIdentifier PowerShell.OnIdle -Action {
+        [ShellPrompt.ShellPromptRuntime]::PumpRefresh()
+
+        $cols = [Console]::WindowWidth
+        if ($cols -gt 0 -and $cols -ne $script:ShellPrompt_LastColumns) {
+            $script:ShellPrompt_LastColumns = $cols
+            [Microsoft.PowerShell.PSConsoleReadLine]::InvokePrompt()
+        }
+    }
 }
 {{- else if lookPath "oh-my-posh" -}}
 {{ output "oh-my-posh" "init" "pwsh" "--config=~/.config/powershell/theme.yaml" }}

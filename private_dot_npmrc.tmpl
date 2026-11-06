@@ -1,4 +1,5 @@
-min-release-age={{ if not .isWork }}1{{ else }}3{{ end }}
+# 公開後、個人1日／仕事3日待つ（単位: 日）
+min-release-age={{ includeTemplate "release-age-days" . }}
 ignore-scripts=true
 
 {{ if ne (get . "takumiGuard" | default "none") "none" -}}

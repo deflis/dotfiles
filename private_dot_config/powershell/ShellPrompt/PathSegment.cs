@@ -7,7 +7,7 @@ internal static class PathSegment
     public static string Format(string cwd, string homeDir)
     {
         var path = cwd;
-        if (path.StartsWith(homeDir, OperatingSystem.IsWindows() ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal))
+        if (!string.IsNullOrEmpty(homeDir) && IsHomePrefix(path, homeDir))
         {
             path = "~" + path[homeDir.Length..];
         }
@@ -34,17 +34,43 @@ internal static class PathSegment
         return sb.ToString();
     }
 
+    private static bool IsHomePrefix(string path, string homeDir)
+    {
+        if (!path.StartsWith(homeDir, StringComparison.OrdinalIgnoreCase))
+        {
+            return false;
+        }
+
+        if (path.Length == homeDir.Length)
+        {
+            return true;
+        }
+
+        var next = path[homeDir.Length];
+        return next is '/' or '\\';
+    }
+
     private static List<string> SplitPath(string path)
     {
-        if (path == "/")
+        if (path is "/" or "~")
         {
-            return ["/"];
+            return [path];
         }
 
         var parts = new List<string>();
         if (path.StartsWith('/'))
         {
             parts.Add("/");
+            path = path[1..];
+        }
+        else if (path.StartsWith("~/"))
+        {
+            parts.Add("~");
+            path = path[2..];
+        }
+        else if (path.StartsWith('~'))
+        {
+            parts.Add("~");
             path = path[1..];
         }
 

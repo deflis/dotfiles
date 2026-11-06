@@ -25,8 +25,8 @@ internal static class PromptRenderer
             right = BuildRight(segs);
             var leftW = Ansi.VisibleWidth(left);
             var rightW = Ansi.VisibleWidth(right);
-            pad = columns - leftW - rightW - 1;
-            if (pad >= 1 || segs.Count == 0)
+            pad = columns - leftW - rightW;
+            if (pad >= 0 || segs.Count == 0)
             {
                 break;
             }
@@ -37,6 +37,11 @@ internal static class PromptRenderer
         if (segs.Count == 0)
         {
             return left + "\n" + line2;
+        }
+
+        if (pad < 0)
+        {
+            pad = 0;
         }
 
         return left + new string(' ', pad) + right + "\n" + line2;

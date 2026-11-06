@@ -12,10 +12,39 @@
 
 $ErrorActionPreference = 'Stop'
 
+function script:Get-ShellPromptDotnetSdk {
+    $candidates = [System.Collections.Generic.List[string]]::new()
+    if (-not [string]::IsNullOrWhiteSpace($env:DOTNET_ROOT)) {
+        $candidates.Add((Join-Path $env:DOTNET_ROOT 'dotnet.exe'))
+    }
+    $candidates.Add((Join-Path $HOME 'scoop/apps/dotnet-sdk/current/dotnet.exe'))
+    $pathDotnet = Get-Command dotnet -ErrorAction SilentlyContinue
+    if ($pathDotnet) {
+        $candidates.Add($pathDotnet.Source)
+    }
+
+    $seen = @{}
+    foreach ($dotnet in $candidates) {
+        if ([string]::IsNullOrWhiteSpace($dotnet) -or $seen.ContainsKey($dotnet)) {
+            continue
+        }
+        $seen[$dotnet] = $true
+        if (-not (Test-Path -LiteralPath $dotnet)) {
+            continue
+        }
+        $sdks = & $dotnet --list-sdks 2>$null
+        if ($LASTEXITCODE -eq 0 -and @($sdks).Count -gt 0) {
+            return $dotnet
+        }
+    }
+
+    throw 'No .NET SDK found. PATH resolves to a runtime-only dotnet (for example C:\Program Files\dotnet\dotnet.exe). Install an SDK or set DOTNET_ROOT to the SDK root (e.g. scoop apps/dotnet-sdk/current).'
+}
+
 $tmp = $null
 $bak = $null
 try {
-    $dotnet = Get-Command dotnet -ErrorAction Stop | Select-Object -ExpandProperty Source
+    $dotnet = Get-ShellPromptDotnetSdk
     $src = Join-Path '{{ .chezmoi.sourceDir }}' 'private_dot_config/powershell/ShellPrompt'
     $proj = Join-Path $src 'ShellPrompt.csproj'
     if (-not (Test-Path -LiteralPath $proj)) {

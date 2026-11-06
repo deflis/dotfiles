@@ -15,41 +15,46 @@ internal static class PromptRenderer
         int columns)
     {
         var left = BuildLeft(osText, osBg, osFg, pathText);
-        var line2 = BuildLine2(exitCode, isRoot);
-
-        var segs = rightSegments.ToList();
-        string right;
-        int pad;
-        while (true)
+        var leftW = Ansi.VisibleWidth(left);
+        if (leftW > columns)
         {
-            right = BuildRight(segs);
-            var leftW = Ansi.VisibleWidth(left);
-            var rightW = Ansi.VisibleWidth(right);
-            pad = columns - leftW - rightW;
-            if (pad >= 0 || segs.Count == 0)
+            var maxPath = columns - (leftW - Ansi.VisibleWidth(pathText));
+            if (maxPath < 0)
             {
-                break;
+                maxPath = 0;
             }
 
-            segs.RemoveAt(segs.Count - 1);
+            pathText = PathSegment.Shorten(pathText, maxPath);
+            left = BuildLeft(osText, osBg, osFg, pathText);
+            leftW = Ansi.VisibleWidth(left);
         }
 
-        if (segs.Count == 0)
+        var line2 = BuildLine2(exitCode, isRoot);
+        var available = columns - leftW;
+        for (var start = 0; start < rightSegments.Count; start++)
         {
-            return left + "\n" + line2;
+            var suffix = new List<Segment>(rightSegments.Count - start);
+            for (var i = start; i < rightSegments.Count; i++)
+            {
+                suffix.Add(rightSegments[i]);
+            }
+
+            var right = BuildRight(suffix);
+            var rightW = Ansi.VisibleWidth(right);
+            if (rightW <= available)
+            {
+                var pad = available - rightW;
+                return left + new string(' ', pad) + right + "\n" + line2;
+            }
         }
 
-        if (pad < 0)
-        {
-            pad = 0;
-        }
-
-        return left + new string(' ', pad) + right + "\n" + line2;
+        return left + "\n" + line2;
     }
 
     private static string BuildLeft(string osText, Rgb osBg, Rgb osFg, string pathText)
     {
         var sb = new StringBuilder();
+        sb.Append(Ansi.Reset);
         Ansi.FgBg(sb, osFg, osBg);
         sb.Append(osText);
         Ansi.FgBg(sb, osBg, Palette.LightBlue);

@@ -1,3 +1,0 @@
-[settings]
-# 3日以上たったパッケージのみインストールする
-minimum_release_age = "3d"

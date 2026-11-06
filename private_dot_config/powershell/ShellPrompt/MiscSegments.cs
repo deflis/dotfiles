@@ -1,3 +1,5 @@
+using System.Security.Principal;
+
 namespace ShellPrompt;
 
 internal static class MiscSegments
@@ -55,16 +57,7 @@ internal static class MiscSegments
 
     public static bool IsRoot()
     {
-        if (OperatingSystem.IsWindows())
-        {
-            using var identity = System.Security.Principal.WindowsIdentity.GetCurrent();
-            var principal = new System.Security.Principal.WindowsPrincipal(identity);
-            return principal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator);
-        }
-
-        return Geteuid() == 0;
+        using var identity = WindowsIdentity.GetCurrent();
+        return new WindowsPrincipal(identity).IsInRole(WindowsBuiltInRole.Administrator);
     }
-
-    [System.Runtime.InteropServices.DllImport("libc", EntryPoint = "geteuid")]
-    private static extern uint Geteuid();
 }

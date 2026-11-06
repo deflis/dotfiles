@@ -1,0 +1,3 @@
+[install]
+# 公開後、個人1日／仕事3日待つ（Bun 1.4.4以降の期間文字列）
+minimumReleaseAge = "{{ includeTemplate "release-age-days" . }}d"

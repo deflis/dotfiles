@@ -1,4 +1,6 @@
 {{ if lookPath "mise" -}}
+# 起動のたびに GitHub へ更新確認へ行くのを止める。ツールの解決や hook-env はそのまま。
+$env:MISE_DISABLE_UPDATE_WARNING = '1'
 {{ output "mise" "activate" "pwsh" }}
 
 # bunのglobalインストール先をPATHに追加

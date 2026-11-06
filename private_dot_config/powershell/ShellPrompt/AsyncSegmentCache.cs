@@ -16,7 +16,12 @@ internal static class AsyncSegmentCache
     private static string? _displayCwd;
     private static IReadOnlyList<Segment> _displaySegs = Array.Empty<Segment>();
     private static Exception? _pendingError;
+    private static int _redrawDepth;
     private const int MaxCachedCwds = 64;
+
+    public static void EnterRedraw() => Interlocked.Increment(ref _redrawDepth);
+
+    public static void ExitRedraw() => Interlocked.Decrement(ref _redrawDepth);
 
     public static IReadOnlyList<Segment> GetAndRefresh(string cwd)
     {
@@ -37,6 +42,11 @@ internal static class AsyncSegmentCache
                 _displaySegs = Cache.TryGetValue(cwd, out var cached)
                     ? cached
                     : Array.Empty<Segment>();
+            }
+
+            if (Volatile.Read(ref _redrawDepth) > 0)
+            {
+                return _displaySegs;
             }
 
             var old = _cts;

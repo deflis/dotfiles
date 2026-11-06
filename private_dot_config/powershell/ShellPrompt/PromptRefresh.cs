@@ -27,7 +27,15 @@ internal static class PromptRefresh
         _invokePrompt ??= ResolveInvokePrompt()
                           ?? throw new InvalidOperationException(
                               "PSConsoleReadLine.InvokePrompt() was not found. Load PSReadLine before using ShellPrompt.");
-        _invokePrompt.Invoke(null, null);
+        AsyncSegmentCache.EnterRedraw();
+        try
+        {
+            _invokePrompt.Invoke(null, null);
+        }
+        finally
+        {
+            AsyncSegmentCache.ExitRedraw();
+        }
     }
 
     private static MethodInfo? ResolveInvokePrompt()

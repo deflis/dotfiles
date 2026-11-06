@@ -27,7 +27,7 @@ else {
     }
 
     if (-not (Get-Module -Name PSReadLine)) {
-        throw 'ShellPrompt requires PSReadLine.'
+        return
     }
 
     $script:ShellPrompt_CmdStart = $null
@@ -35,16 +35,15 @@ else {
     $script:ShellPrompt_StickyExecMs = -1L
     $script:ShellPrompt_StickyNow = [DateTimeOffset]::Now
     $script:ShellPrompt_LastColumns = 0
+    $script:ShellPrompt_HostName = [System.Net.Dns]::GetHostName()
+    $script:ShellPrompt_UserName = $env:USERNAME
+    $script:ShellPrompt_IsRoot = [Security.Principal.WindowsPrincipal]::new(
+        [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(
+        [Security.Principal.WindowsBuiltInRole]::Administrator)
 
     Set-PSReadLineKeyHandler -Key Enter -ScriptBlock {
         $script:ShellPrompt_CmdStart = [System.Diagnostics.Stopwatch]::StartNew()
         [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
-    }
-
-    function script:Get-ShellPromptIsRoot {
-        $id = [Security.Principal.WindowsIdentity]::GetCurrent()
-        return [Security.Principal.WindowsPrincipal]::new($id).IsInRole(
-            [Security.Principal.WindowsBuiltInRole]::Administrator)
     }
 
     function prompt {
@@ -59,10 +58,10 @@ else {
 
         $cwd = $PWD.ProviderPath
         $homeDir = $HOME
-        $hostName = [System.Net.Dns]::GetHostName()
-        $userName = $env:USERNAME
+        $hostName = $script:ShellPrompt_HostName
+        $userName = $script:ShellPrompt_UserName
         $isSsh = [bool]($env:SSH_CONNECTION -or $env:SSH_CLIENT -or $env:SSH_TTY)
-        $isRoot = Get-ShellPromptIsRoot
+        $isRoot = $script:ShellPrompt_IsRoot
         $marker = if ($isRoot) { '#' } else { '$' }
 
         if ($env:TERM -ne 'dumb') {

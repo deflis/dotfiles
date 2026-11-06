@@ -4,12 +4,27 @@ namespace ShellPrompt;
 
 internal static class GitSegment
 {
-    public static Segment? TryBuild(string cwd)
+    private static readonly Dictionary<string, string> GitEnv = new()
     {
-        var output = RunGit(cwd, "status", "--porcelain=v2", "--branch", "--show-stash");
-        if (output is null)
+        ["GIT_OPTIONAL_LOCKS"] = "0",
+    };
+
+    public static Segment? TryBuild(string cwd, CancellationToken cancellationToken)
+    {
+        var status = RunGit(cwd, cancellationToken, "status", "--porcelain=v2", "--branch", "--show-stash");
+        if (status is null)
         {
             return null;
+        }
+
+        if (status.Value.ExitCode != 0)
+        {
+            if (IsNotARepository(status.Value.Stderr))
+            {
+                return null;
+            }
+
+            ThrowGitFailure(status.Value);
         }
 
         string? oid = null;
@@ -29,7 +44,7 @@ internal static class GitSegment
         var sd = 0;
         var sr = 0;
 
-        foreach (var line in output.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+        foreach (var line in status.Value.Stdout.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
         {
             if (line.StartsWith("# branch.oid ", StringComparison.Ordinal))
             {
@@ -77,6 +92,13 @@ internal static class GitSegment
             }
         }
 
+        var detached = head == "(detached)";
+        if (detached && TrySymbolicHead(cwd, cancellationToken, out var symbolicHead))
+        {
+            head = symbolicHead;
+            detached = false;
+        }
+
         var remote = "origin";
         if (!string.IsNullOrEmpty(upstream))
         {
@@ -84,11 +106,11 @@ internal static class GitSegment
             remote = slash >= 0 ? upstream[..slash] : upstream;
         }
 
-        var url = RunGit(cwd, "config", "--get", $"remote.{remote}.url") ?? string.Empty;
+        var url = ReadRemoteUrl(cwd, cancellationToken, remote);
         var icon = UpstreamIcon(url);
 
         var text = new StringBuilder(icon);
-        if (head == "(detached)")
+        if (detached)
         {
             text.Append("\uf417 ");
             text.Append(oid is { Length: >= 7 } ? oid[..7] : oid);
@@ -159,6 +181,11 @@ internal static class GitSegment
             bg = Palette.Lime;
             fg = Palette.Black;
         }
+        else if (!string.IsNullOrEmpty(upstream) && !hasAb)
+        {
+            bg = Palette.Magenta;
+            fg = Palette.White;
+        }
         else if (ahead > 0 && behind > 0)
         {
             bg = Palette.Magenta;
@@ -181,6 +208,79 @@ internal static class GitSegment
         }
 
         return new Segment(Ansi.PowerlineLeftRound, bg, fg, text.ToString());
+    }
+
+    private static string ReadRemoteUrl(string cwd, CancellationToken cancellationToken, string remote)
+    {
+        var config = RunGit(cwd, cancellationToken, "config", "--get", $"remote.{remote}.url");
+        if (config is null)
+        {
+            throw new InvalidOperationException("git config failed to start.");
+        }
+
+        if (config.Value.ExitCode == 1)
+        {
+            return string.Empty;
+        }
+
+        if (config.Value.ExitCode != 0)
+        {
+            ThrowGitFailure(config.Value);
+        }
+
+        return config.Value.Stdout.Trim();
+    }
+
+    /// <summary>
+    /// porcelain が detached でも symbolic-ref が ref を返せば通常ブランチとして扱う。
+    /// -q の終了コード 1 は本物の detached。
+    /// </summary>
+    private static bool TrySymbolicHead(string cwd, CancellationToken cancellationToken, out string branch)
+    {
+        var symbolic = RunGit(cwd, cancellationToken, "symbolic-ref", "-q", "HEAD");
+        if (symbolic is null)
+        {
+            throw new InvalidOperationException("git symbolic-ref failed to start.");
+        }
+
+        if (symbolic.Value.ExitCode == 1)
+        {
+            branch = string.Empty;
+            return false;
+        }
+
+        if (symbolic.Value.ExitCode != 0)
+        {
+            ThrowGitFailure(symbolic.Value);
+        }
+
+        var refName = symbolic.Value.Stdout.Trim();
+        const string heads = "refs/heads/";
+        if (refName.StartsWith(heads, StringComparison.Ordinal))
+        {
+            refName = refName[heads.Length..];
+        }
+
+        if (refName.Length == 0)
+        {
+            branch = string.Empty;
+            return false;
+        }
+
+        branch = refName;
+        return true;
+    }
+
+    private static bool IsNotARepository(string stderr) =>
+        stderr.Contains("not a git repository", StringComparison.OrdinalIgnoreCase);
+
+    private static void ThrowGitFailure(ProcessResult result)
+    {
+        var stderr = result.Stderr.Trim();
+        var message = stderr.Length > 0
+            ? stderr
+            : $"git exited with code {result.ExitCode}.";
+        throw new InvalidOperationException(message);
     }
 
     private static void CountStaged(char c, ref int a, ref int m, ref int d, ref int r)
@@ -240,23 +340,27 @@ internal static class GitSegment
             return string.Empty;
         }
 
-        if (url.Contains("github", StringComparison.OrdinalIgnoreCase))
+        if (!TryGetGitHost(url, out var host))
+        {
+            return "\ue5fb";
+        }
+
+        if (HostIs(host, "github.com"))
         {
             return "\uf408";
         }
 
-        if (url.Contains("gitlab", StringComparison.OrdinalIgnoreCase))
+        if (HostIs(host, "gitlab.com"))
         {
             return "\uf296";
         }
 
-        if (url.Contains("bitbucket", StringComparison.OrdinalIgnoreCase))
+        if (HostIs(host, "bitbucket.org"))
         {
             return "\uf171";
         }
 
-        if (url.Contains("dev.azure.com", StringComparison.OrdinalIgnoreCase)
-            || url.Contains("visualstudio.com", StringComparison.OrdinalIgnoreCase))
+        if (HostIs(host, "dev.azure.com") || HostIs(host, "visualstudio.com"))
         {
             return "\uebe8";
         }
@@ -264,6 +368,53 @@ internal static class GitSegment
         return "\ue5fb";
     }
 
-    private static string? RunGit(string cwd, params string[] args) =>
-        ProcessRunner.Run(cwd, "git", args, new Dictionary<string, string> { ["GIT_OPTIONAL_LOCKS"] = "0" });
+    private static bool HostIs(string host, string domain) =>
+        host.Equals(domain, StringComparison.OrdinalIgnoreCase)
+        || host.EndsWith("." + domain, StringComparison.OrdinalIgnoreCase);
+
+    private static bool TryGetGitHost(string url, out string host)
+    {
+        host = string.Empty;
+        var trimmed = url.Trim();
+        if (trimmed.Length == 0)
+        {
+            return false;
+        }
+
+        var scheme = trimmed.IndexOf("://", StringComparison.Ordinal);
+        if (scheme > 0)
+        {
+            if (Uri.TryCreate(trimmed, UriKind.Absolute, out var uri) && !string.IsNullOrEmpty(uri.Host))
+            {
+                host = uri.Host;
+                return true;
+            }
+
+            return false;
+        }
+
+        var colon = trimmed.IndexOf(':');
+        if (colon <= 0)
+        {
+            return false;
+        }
+
+        var authority = trimmed[..colon];
+        var at = authority.LastIndexOf('@');
+        if (at >= 0)
+        {
+            authority = authority[(at + 1)..];
+        }
+
+        if (authority.Length == 0 || authority.Contains('/') || authority.Contains('\\'))
+        {
+            return false;
+        }
+
+        host = authority;
+        return true;
+    }
+
+    private static ProcessResult? RunGit(string cwd, CancellationToken cancellationToken, params string[] args) =>
+        ProcessRunner.Run(cwd, "git", args, cancellationToken, GitEnv);
 }

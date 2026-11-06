@@ -16,6 +16,7 @@ internal static class AsyncSegmentCache
     private static string? _displayCwd;
     private static IReadOnlyList<Segment> _displaySegs = Array.Empty<Segment>();
     private static Exception? _pendingError;
+    private static string? _pendingErrorCwd;
     private static int _redrawDepth;
     private const int MaxCachedCwds = 64;
 
@@ -25,11 +26,9 @@ internal static class AsyncSegmentCache
 
     public static IReadOnlyList<Segment> GetAndRefresh(string cwd)
     {
-        var err = Interlocked.Exchange(ref _pendingError, null);
-        if (err is not null)
-        {
-            throw new InvalidOperationException("Async prompt segment collection failed.", err);
-        }
+        CancellationTokenSource? cts = null;
+        Exception? sticky;
+        IReadOnlyList<Segment> segs;
 
         lock (Gate)
         {
@@ -44,21 +43,49 @@ internal static class AsyncSegmentCache
                     : Array.Empty<Segment>();
             }
 
-            if (Volatile.Read(ref _redrawDepth) > 0)
+            if (Volatile.Read(ref _redrawDepth) == 0)
             {
-                return _displaySegs;
+                cts = new CancellationTokenSource();
+                var previous = _cts;
+                _cts = cts;
+                CancelQuiet(previous);
             }
 
-            var old = _cts;
-            _cts = new CancellationTokenSource();
-            var token = _cts.Token;
-            old?.Cancel();
-            old?.Dispose();
-
-            var snapshot = _displaySegs;
-            _ = Task.Run(() => Worker(cwd, token), token);
-            return snapshot;
+            sticky = StickyError(cwd);
+            segs = _displaySegs;
         }
+
+        if (cts is not null)
+        {
+            var workerCts = cts;
+            _ = Task.Run(() =>
+            {
+                try
+                {
+                    Worker(cwd, workerCts.Token);
+                }
+                finally
+                {
+                    workerCts.Dispose();
+                }
+            });
+        }
+
+        lock (Gate)
+        {
+            sticky = StickyError(cwd);
+            if (sticky is null)
+            {
+                segs = _displaySegs;
+            }
+        }
+
+        if (sticky is not null)
+        {
+            throw new InvalidOperationException("Async prompt segment collection failed.", sticky);
+        }
+
+        return segs;
     }
 
     private static void Worker(string cwd, CancellationToken token)
@@ -68,7 +95,7 @@ internal static class AsyncSegmentCache
             token.ThrowIfCancellationRequested();
 
             var segs = new List<Segment>();
-            var git = GitSegment.TryBuild(cwd);
+            var git = GitSegment.TryBuild(cwd, token);
             token.ThrowIfCancellationRequested();
             if (git is { } g)
             {
@@ -82,7 +109,7 @@ internal static class AsyncSegmentCache
                 segs.Add(b);
             }
 
-            segs.AddRange(LangSegments.Build(cwd));
+            segs.AddRange(LangSegments.Build(cwd, token));
             token.ThrowIfCancellationRequested();
 
             bool shouldRedraw;
@@ -96,6 +123,14 @@ internal static class AsyncSegmentCache
                 Cache[cwd] = segs;
                 TrimCache(cwd);
 
+                var clearedError = _pendingError is not null
+                                   && string.Equals(_pendingErrorCwd, cwd, StringComparison.OrdinalIgnoreCase);
+                if (clearedError)
+                {
+                    _pendingError = null;
+                    _pendingErrorCwd = null;
+                }
+
                 var sameCwd = _displayCwd is not null
                               && string.Equals(_displayCwd, cwd, StringComparison.OrdinalIgnoreCase);
                 if (!sameCwd)
@@ -103,7 +138,7 @@ internal static class AsyncSegmentCache
                     return;
                 }
 
-                shouldRedraw = !SegmentsEqual(_displaySegs, segs);
+                shouldRedraw = clearedError || !SegmentsEqual(_displaySegs, segs);
                 _displaySegs = segs;
             }
 
@@ -114,12 +149,55 @@ internal static class AsyncSegmentCache
         }
         catch (OperationCanceledException)
         {
-            // 新しいプロンプト描画で置き換えられた
+            // 新しいプロンプト描画で置き換えられた。結果は採用しない。
         }
         catch (Exception ex)
         {
-            Interlocked.Exchange(ref _pendingError, ex);
+            if (token.IsCancellationRequested)
+            {
+                return;
+            }
+
+            lock (Gate)
+            {
+                if (token.IsCancellationRequested)
+                {
+                    return;
+                }
+
+                _pendingError = ex;
+                _pendingErrorCwd = cwd;
+            }
+
             PromptRefresh.Request();
+        }
+    }
+
+    private static Exception? StickyError(string cwd)
+    {
+        if (_pendingError is null
+            || !string.Equals(_pendingErrorCwd, cwd, StringComparison.OrdinalIgnoreCase))
+        {
+            return null;
+        }
+
+        return _pendingError;
+    }
+
+    private static void CancelQuiet(CancellationTokenSource? cts)
+    {
+        if (cts is null)
+        {
+            return;
+        }
+
+        try
+        {
+            cts.Cancel();
+        }
+        catch (ObjectDisposedException)
+        {
+            // 前のワーカーがすでに終了してソースを破棄した。
         }
     }
 

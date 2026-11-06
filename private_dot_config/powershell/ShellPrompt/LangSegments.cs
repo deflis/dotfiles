@@ -8,12 +8,13 @@ namespace ShellPrompt;
 /// </summary>
 internal static class LangSegments
 {
-    public static List<Segment> Build(string cwd)
+    public static List<Segment> Build(string cwd, CancellationToken cancellationToken)
     {
-        var mise = new MiseVersions(cwd);
+        cancellationToken.ThrowIfCancellationRequested();
+        var mise = new MiseVersions(cwd, cancellationToken);
         var result = new List<Segment>();
 
-        if (HasNodeMarkers(cwd) && TryVersion(mise, "node", cwd, out var nodeVer, "node", "--version"))
+        if (HasNodeMarkers(cwd, cancellationToken) && TryVersion(mise, "node", cwd, cancellationToken, out var nodeVer, "node", "--version"))
         {
             var text = new StringBuilder("\ue718 ");
             var pm = DetectNodePackageManager(cwd);
@@ -26,14 +27,14 @@ internal static class LangSegments
             result.Add(new Segment(Ansi.PowerlineLeft, Palette.NodeBg, Palette.NodeFg, text.ToString()));
         }
 
-        if ((HasMarkers(cwd, ".perl-version") || HasExtension(cwd, ".pl", ".pm", ".t"))
-            && TryVersion(mise, "perl", cwd, out var perlVer, "perl", "-e", "print substr($^V, 1)"))
+        if ((HasMarkers(cwd, cancellationToken, ".perl-version") || HasExtension(cwd, cancellationToken, ".pl", ".pm"))
+            && TryVersion(mise, "perl", cwd, cancellationToken, out var perlVer, "perl", "-e", "print substr($^V, 1)"))
         {
             result.Add(new Segment(Ansi.PowerlineLeft, Palette.PerlBg, Palette.PerlFg, $"\ue769 {perlVer}"));
         }
 
-        if ((HasMarkers(cwd, "go.mod", "go.work") || HasExtension(cwd, ".go"))
-            && TryVersion(mise, "go", cwd, out var goVer, "go", "env", "GOVERSION"))
+        if ((HasMarkers(cwd, cancellationToken, "go.mod", "go.work") || HasExtension(cwd, cancellationToken, ".go"))
+            && TryVersion(mise, "go", cwd, cancellationToken, out var goVer, "go", "env", "GOVERSION"))
         {
             if (goVer.StartsWith("go", StringComparison.Ordinal))
             {
@@ -43,8 +44,8 @@ internal static class LangSegments
             result.Add(new Segment(Ansi.PowerlineLeft, Palette.GoBg, Palette.GoFg, $"\ufcd1 {goVer}"));
         }
 
-        if ((HasMarkers(cwd, "Cargo.toml", "rust-toolchain", "rust-toolchain.toml") || HasExtension(cwd, ".rs"))
-            && TryVersion(mise, "rust", cwd, out var rustVer, "rustc", "--version"))
+        if ((HasMarkers(cwd, cancellationToken, "Cargo.toml", "rust-toolchain", "rust-toolchain.toml") || HasExtension(cwd, cancellationToken, ".rs"))
+            && TryVersion(mise, "rust", cwd, cancellationToken, out var rustVer, "rustc", "--version"))
         {
             if (rustVer.StartsWith("rustc ", StringComparison.Ordinal))
             {
@@ -60,8 +61,8 @@ internal static class LangSegments
             result.Add(new Segment(Ansi.PowerlineLeft, Palette.RustBg, Palette.RustFg, $"\ue7a8 {rustVer}"));
         }
 
-        if ((HasMarkers(cwd, "Gemfile", "Rakefile") || HasExtension(cwd, ".rb"))
-            && TryVersion(mise, "ruby", cwd, out var rubyVer, "ruby", "-e", "print RUBY_VERSION"))
+        if ((HasMarkers(cwd, cancellationToken, "Gemfile", "Rakefile") || HasExtension(cwd, cancellationToken, ".rb"))
+            && TryVersion(mise, "ruby", cwd, cancellationToken, out var rubyVer, "ruby", "-e", "print RUBY_VERSION"))
         {
             result.Add(new Segment(Ansi.PowerlineLeft, Palette.RubyBg, Palette.RubyFg, $"\ue791 {rubyVer}"));
         }
@@ -73,6 +74,7 @@ internal static class LangSegments
         MiseVersions mise,
         string tool,
         string cwd,
+        CancellationToken cancellationToken,
         out string version,
         string fileName,
         params string[] args)
@@ -82,11 +84,23 @@ internal static class LangSegments
             return true;
         }
 
-        version = Run(cwd, fileName, args);
+        version = Run(cwd, fileName, cancellationToken, args);
         return !string.IsNullOrWhiteSpace(version);
     }
 
     private static string? DetectNodePackageManager(string cwd)
+    {
+        try
+        {
+            return DetectNodePackageManagerCore(cwd);
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            return null;
+        }
+    }
+
+    private static string? DetectNodePackageManagerCore(string cwd)
     {
         if (File.Exists(Path.Combine(cwd, "yarn.lock")))
         {
@@ -113,40 +127,27 @@ internal static class LangSegments
 
     private static string Fg(Rgb c) => $"\x1b[38;2;{c.R};{c.G};{c.B}m";
 
-    private static bool HasNodeMarkers(string cwd) =>
-        HasMarkers(cwd, "package.json", ".nvmrc", ".node-version")
-        || HasExtension(cwd, ".js", ".mjs", ".cjs", ".ts", ".mts", ".cts", ".jsx", ".tsx");
+    private static bool HasNodeMarkers(string cwd, CancellationToken cancellationToken) =>
+        HasMarkers(cwd, cancellationToken, "package.json", ".nvmrc", ".node-version")
+        || HasExtension(cwd, cancellationToken, ".js", ".mjs", ".cjs", ".ts", ".mts", ".cts", ".jsx", ".tsx");
 
-    private static bool HasMarkers(string cwd, params string[] names)
+    private static bool HasMarkers(string start, CancellationToken cancellationToken, params string[] names)
     {
-        foreach (var name in names)
+        for (var dir = start; dir is not null; dir = ParentDirectory(dir))
         {
-            if (File.Exists(Path.Combine(cwd, name)))
+            cancellationToken.ThrowIfCancellationRequested();
+            foreach (var name in names)
             {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private static bool HasExtension(string cwd, params string[] exts)
-    {
-        const int maxFiles = 200;
-        var n = 0;
-        foreach (var file in Directory.EnumerateFiles(cwd))
-        {
-            if (++n > maxFiles)
-            {
-                break;
-            }
-
-            var ext = Path.GetExtension(file);
-            foreach (var want in exts)
-            {
-                if (ext.Equals(want, StringComparison.OrdinalIgnoreCase))
+                try
                 {
-                    return true;
+                    if (File.Exists(Path.Combine(dir, name)))
+                    {
+                        return true;
+                    }
+                }
+                catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+                {
+                    // 読めないディレクトリは飛ばして親を見る。
                 }
             }
         }
@@ -154,26 +155,94 @@ internal static class LangSegments
         return false;
     }
 
-    private static string Run(string cwd, string fileName, params string[] args) =>
-        ProcessRunner.Run(cwd, fileName, args)?.Trim() ?? string.Empty;
+    private static bool HasExtension(string start, CancellationToken cancellationToken, params string[] exts)
+    {
+        const int maxFiles = 200;
+        for (var dir = start; dir is not null; dir = ParentDirectory(dir))
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            try
+            {
+                var n = 0;
+                foreach (var file in Directory.EnumerateFiles(dir))
+                {
+                    if (++n > maxFiles)
+                    {
+                        break;
+                    }
+
+                    var ext = Path.GetExtension(file);
+                    foreach (var want in exts)
+                    {
+                        if (ext.Equals(want, StringComparison.OrdinalIgnoreCase))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+            {
+                // ディレクトリが無い、または列挙できない。親へ続ける。
+            }
+        }
+
+        return false;
+    }
+
+    private static string? ParentDirectory(string dir)
+    {
+        string? parent;
+        try
+        {
+            parent = Directory.GetParent(dir)?.FullName;
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or ArgumentException)
+        {
+            return null;
+        }
+
+        if (parent is null || string.Equals(parent, dir, StringComparison.OrdinalIgnoreCase))
+        {
+            return null;
+        }
+
+        return parent;
+    }
+
+    private static string Run(string cwd, string fileName, CancellationToken cancellationToken, params string[] args)
+    {
+        var result = ProcessRunner.Run(cwd, fileName, args, cancellationToken);
+        if (result is null || result.Value.ExitCode != 0)
+        {
+            return string.Empty;
+        }
+
+        return result.Value.Stdout.Trim();
+    }
 
     /// <summary>zsh の _dp_mv / _dp_mloaded: 初回アクセスで mise current を一括ロード。</summary>
-    private sealed class MiseVersions(string cwd)
+    private sealed class MiseVersions(string cwd, CancellationToken cancellationToken)
     {
         private Dictionary<string, string>? _map;
 
         public bool TryGet(string tool, out string version)
         {
             EnsureLoaded();
-            if (_map!.TryGetValue(tool, out var v) && !string.IsNullOrWhiteSpace(v))
+            if (_map!.TryGetValue(tool, out var value) && !IsFallback(value))
             {
-                version = v;
+                version = value;
                 return true;
             }
 
             version = string.Empty;
             return false;
         }
+
+        private static bool IsFallback(string value) =>
+            string.IsNullOrWhiteSpace(value)
+            || value.Equals("system", StringComparison.OrdinalIgnoreCase)
+            || value.Equals("path", StringComparison.OrdinalIgnoreCase);
 
         private void EnsureLoaded()
         {
@@ -183,13 +252,13 @@ internal static class LangSegments
             }
 
             _map = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-            var output = ProcessRunner.Run(cwd, "mise", ["current"]);
-            if (output is null)
+            var result = ProcessRunner.Run(cwd, "mise", ["current"], cancellationToken);
+            if (result is null || result.Value.ExitCode != 0)
             {
                 return;
             }
 
-            foreach (var line in output.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+            foreach (var line in result.Value.Stdout.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
             {
                 var sp = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
                 if (sp.Length >= 2)

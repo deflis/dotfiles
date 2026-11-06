@@ -26,11 +26,11 @@ internal static class PromptRefresh
     {
         _invokePrompt ??= ResolveInvokePrompt()
                           ?? throw new InvalidOperationException(
-                              "PSConsoleReadLine.InvokePrompt() was not found. Load PSReadLine before using ShellPrompt.");
+                              "PSConsoleReadLine.InvokePrompt(ConsoleKeyInfo?, object) was not found. Load PSReadLine before using ShellPrompt.");
         AsyncSegmentCache.EnterRedraw();
         try
         {
-            _invokePrompt.Invoke(null, null);
+            _invokePrompt.Invoke(null, new object?[] { null, null });
         }
         finally
         {
@@ -38,6 +38,10 @@ internal static class PromptRefresh
         }
     }
 
+    /// <summary>
+    /// PSReadLine 2.4 系は引数なし InvokePrompt を持たず、
+    /// InvokePrompt(ConsoleKeyInfo?, object) の省略可能引数だけがある。
+    /// </summary>
     private static MethodInfo? ResolveInvokePrompt()
     {
         var type = FindPsConsoleReadLine();
@@ -45,7 +49,7 @@ internal static class PromptRefresh
             "InvokePrompt",
             BindingFlags.Public | BindingFlags.Static,
             binder: null,
-            types: Type.EmptyTypes,
+            types: new[] { typeof(ConsoleKeyInfo?), typeof(object) },
             modifiers: null);
     }
 

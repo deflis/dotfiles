@@ -5,18 +5,22 @@
 
 $ErrorActionPreference = 'Stop'
 
-$dotnet = Get-Command dotnet -ErrorAction Stop | Select-Object -ExpandProperty Source
-$src = Join-Path '{{ .chezmoi.sourceDir }}' 'private_dot_config/powershell/ShellPrompt'
-$proj = Join-Path $src 'ShellPrompt.csproj'
-if (-not (Test-Path -LiteralPath $proj)) {
-    throw "ShellPrompt project not found: $proj"
-}
-
-$out = Join-Path $HOME '.config/powershell/Modules/ShellPrompt'
-$tmp = Join-Path ([System.IO.Path]::GetTempPath()) ("ShellPrompt-build-" + [guid]::NewGuid().ToString('N'))
-New-Item -ItemType Directory -Force -Path $tmp | Out-Null
-
+$tmp = $null
+$bak = $null
 try {
+    $dotnet = Get-Command dotnet -ErrorAction Stop | Select-Object -ExpandProperty Source
+    $src = Join-Path '{{ .chezmoi.sourceDir }}' 'private_dot_config/powershell/ShellPrompt'
+    $proj = Join-Path $src 'ShellPrompt.csproj'
+    if (-not (Test-Path -LiteralPath $proj)) {
+        throw "ShellPrompt project not found: $proj"
+    }
+
+    $out = Join-Path $HOME '.config/powershell/Modules/ShellPrompt'
+    $parent = Split-Path $out -Parent
+    $tmp = Join-Path ([System.IO.Path]::GetTempPath()) ("ShellPrompt-build-" + [guid]::NewGuid().ToString('N'))
+    $bak = Join-Path ([System.IO.Path]::GetTempPath()) ("ShellPrompt-bak-" + [guid]::NewGuid().ToString('N'))
+    New-Item -ItemType Directory -Force -Path $tmp | Out-Null
+
     & $dotnet publish $proj -c Release -o $tmp --nologo
     if ($LASTEXITCODE -ne 0) {
         throw "dotnet publish failed with exit code $LASTEXITCODE"
@@ -25,19 +29,30 @@ try {
         throw 'dotnet publish succeeded but ShellPrompt.dll was not produced.'
     }
 
+    New-Item -ItemType Directory -Force -Path $parent | Out-Null
     if (Test-Path -LiteralPath $out) {
-        Remove-Item -LiteralPath $out -Recurse -Force
+        Move-Item -LiteralPath $out -Destination $bak -Force
     }
-    New-Item -ItemType Directory -Force -Path (Split-Path $out -Parent) | Out-Null
-    Move-Item -LiteralPath $tmp -Destination $out
+    try {
+        Move-Item -LiteralPath $tmp -Destination $out
+    }
+    catch {
+        if (Test-Path -LiteralPath $bak) {
+            Move-Item -LiteralPath $bak -Destination $out -Force
+        }
+        throw
+    }
+    if (Test-Path -LiteralPath $bak) {
+        Remove-Item -LiteralPath $bak -Recurse -Force
+    }
     Write-Host "ShellPrompt published to $out"
 }
 catch {
-    if (Test-Path -LiteralPath $tmp) {
-        Remove-Item -LiteralPath $tmp -Recurse -Force
+    if ($tmp -and (Test-Path -LiteralPath $tmp)) {
+        Remove-Item -LiteralPath $tmp -Recurse -Force -ErrorAction SilentlyContinue
     }
     Write-Warning "ShellPrompt build failed: $_"
-    Write-Warning 'Keeping the previous module if present; otherwise the profile will use oh-my-posh.'
+    Write-Warning 'Previous module kept if present. Re-run chezmoi apply after fixing the build, or use oh-my-posh when the DLL is missing.'
     exit 0
 }
 {{- end -}}

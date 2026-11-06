@@ -1,3 +1,4 @@
 anyframe
 plugins/syntax-highlighting
 sync/oh-my-posh.zsh
+sync/starship.zsh
